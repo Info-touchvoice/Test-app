@@ -153,6 +153,7 @@ dependencies:
   flutter_svga: ^0.0.13
   dio: ^5.9.2
   camera: ^0.10.5+7
+  flutter_plugin_android_lifecycle: ^2.0.35
   flutter_cache_manager: ^3.4.1
   youtube_player_flutter: ^9.1.3
 
