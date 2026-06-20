@@ -446,9 +446,9 @@ TextStyle SafeGoogleFont(
       decorationThickness: decorationThickness,
     );
   } catch (ex) {
-    // Avoid spamming logs + janking frames; just fall back to a safe Google font.
-    return GoogleFonts.getFont(
-      "Source Sans Pro",
+    // Avoid spamming logs + janking frames; just fall back to our bundled font.
+    return SafeGoogleFont(
+      'SFProDisplay',
       textStyle: textStyle,
       color: color,
       backgroundColor: backgroundColor,
