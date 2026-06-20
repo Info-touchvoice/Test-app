@@ -63,6 +63,9 @@ android {
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
         multiDexEnabled true
+        manifestPlaceholders = [
+                facebookAutoInitEnabled: "true"
+        ]
     }
 
     signingConfigs {
@@ -77,6 +80,9 @@ android {
     buildTypes {
         debug {
             versionNameSuffix "-debug"
+            manifestPlaceholders = [
+                    facebookAutoInitEnabled: "false"
+            ]
         }
         release {
             // TODO: Add your own signing config for the release build.

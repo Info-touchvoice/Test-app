@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:location/location.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tiki/data/app/setup.dart';
 import 'package:tiki/parse/UserModel.dart';
 import 'package:tiki/view/screens/dashboard_screen.dart';
 import 'package:tiki/view/screens/splash_screen.dart';
@@ -77,6 +78,10 @@ class _DispatchScreenState extends State<DispatchScreen> {
   }
 
   loginUserPurchase(String userId) async {
+    if (!Setup.isPurchasesEnabled) {
+      return;
+    }
+
     LogInResult result = await Purchases.logIn(userId);
     if (result.created) {
       print("purchase created");
@@ -114,6 +119,10 @@ class _DispatchScreenState extends State<DispatchScreen> {
   }
 
   logoutUserPurchase() async {
+    if (!Setup.isPurchasesEnabled) {
+      return;
+    }
+
     await Purchases.logOut().then((value) => print("purchase logout"));
   }
 }

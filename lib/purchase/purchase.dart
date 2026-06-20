@@ -1,5 +1,6 @@
 import 'package:flutter/services.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
+import 'package:tiki/data/app/setup.dart';
 
 
 class Coin{
@@ -11,17 +12,22 @@ class PurchaseApi{
   static const _apiKey='goog_ktrhyGbCrWyfYXUlrStILIkzoIN';
 
   static Future init()async{
+    if (!Setup.isPurchasesEnabled) return;
+
     await Purchases.setDebugLogsEnabled(true);
     await Purchases.setup(_apiKey);
 
   }
   static Future<List<Offering>> fetchOfferByIds(List<String> ids)async{
+    if (!Setup.isPurchasesEnabled) return [];
 
     final offers=await fetchOffer(ids);
    print("offers${offers.length}");
     return offers.where((element) => ids.contains(element.identifier)).toList();
   }
   static Future<List<Offering>> fetchOffer(List<String> ids)async{
+    if (!Setup.isPurchasesEnabled) return [];
+
     try{
       final offering=await Purchases.getOfferings();
       final current=offering.all;

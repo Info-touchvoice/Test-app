@@ -7,6 +7,9 @@ import 'constants.dart';
 class Setup {
 
   static final bool isDebug = kDebugMode;
+  static bool get isDevelopmentMode => isDebug;
+  static bool get isFacebookSdkEnabled => !isDevelopmentMode;
+  static bool get isPurchasesEnabled => !isDevelopmentMode;
 
   static String appName = Config.appName;
   static String appPackageName = Constants.appPackageName();
