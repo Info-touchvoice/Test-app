@@ -10,6 +10,13 @@ allprojects {
     configurations.configureEach {
         resolutionStrategy {
             force "com.google.android.gms:play-services-location:21.0.1"
+            eachDependency { details ->
+                if (details.requested.group == "com.google.firebase" &&
+                        details.requested.name == "firebase-dynamic-links" &&
+                        !details.requested.version) {
+                    details.useVersion "22.1.0"
+                }
+            }
         }
     }
 }
