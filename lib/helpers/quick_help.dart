@@ -1476,6 +1476,9 @@ class QuickHelp {
     VoidCallback? onTap,
     UserModel? user,
     String? avatarUrl,
+    int? titleMaxLines,
+    int? messageMaxLines,
+    double? notificationHeight,
   }) {
     showTopSnackBar(
       context,
@@ -1503,6 +1506,9 @@ class QuickHelp {
           color: Colors.white,
         ),
         isError: isError,
+        titleMaxLines: titleMaxLines ?? 2,
+        messageMaxLines: messageMaxLines ?? 2,
+        height: notificationHeight ?? 80,
       ),
       onTap: onTap,
       overlayState: null,

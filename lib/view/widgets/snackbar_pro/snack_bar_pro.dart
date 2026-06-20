@@ -18,6 +18,9 @@ class SnackBarPro extends StatefulWidget {
   final double iconPositionLeft;
   final EdgeInsetsGeometry messagePadding;
   final double textScaleFactor;
+  final int? titleMaxLines;
+  final int? messageMaxLines;
+  final double height;
 
   const SnackBarPro.success({
     Key? key,
@@ -47,6 +50,9 @@ class SnackBarPro extends StatefulWidget {
     this.boxShadow = kDefaultBoxShadow,
     this.borderRadius = kDefaultBorderRadius,
     this.textScaleFactor = 1.0,
+    this.titleMaxLines = 2,
+    this.messageMaxLines = 2,
+    this.height = 80,
   });
 
   const SnackBarPro.info({
@@ -77,6 +83,9 @@ class SnackBarPro extends StatefulWidget {
     this.boxShadow = kDefaultBoxShadow,
     this.borderRadius = kDefaultBorderRadius,
     this.textScaleFactor = 1.0,
+    this.titleMaxLines = 2,
+    this.messageMaxLines = 2,
+    this.height = 80,
   });
 
   const SnackBarPro.error({
@@ -107,6 +116,9 @@ class SnackBarPro extends StatefulWidget {
     this.boxShadow = kDefaultBoxShadow,
     this.borderRadius = kDefaultBorderRadius,
     this.textScaleFactor = 1.0,
+    this.titleMaxLines = 2,
+    this.messageMaxLines = 2,
+    this.height = 80,
   });
 
   const SnackBarPro.custom({
@@ -133,6 +145,9 @@ class SnackBarPro extends StatefulWidget {
     this.boxShadow = kDefaultBoxShadow,
     this.borderRadius = kDefaultBorderRadius,
     this.textScaleFactor = 1.0,
+    this.titleMaxLines = 2,
+    this.messageMaxLines = 2,
+    this.height = 80,
   });
 
   @override
@@ -147,7 +162,7 @@ class _SnackBarProState extends State<SnackBarPro> {
     if (widget.message != null) {
       return Container(
         clipBehavior: Clip.hardEdge,
-        height: 80,
+        height: widget.height,
         decoration: BoxDecoration(
           color: widget.isError == null
               ? Colors.white
@@ -195,23 +210,27 @@ class _SnackBarProState extends State<SnackBarPro> {
                         widget.textStyleTitle,
                       ),
                       textAlign: TextAlign.start,
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 2,
+                      overflow: widget.titleMaxLines == null
+                          ? null
+                          : TextOverflow.ellipsis,
+                      maxLines: widget.titleMaxLines,
                       textScaleFactor: widget.textScaleFactor,
                     ),
-                    Visibility(
-                      visible: widget.message != null,
-                      child: Text(
-                        widget.message != null ? widget.message! : "",
-                        style: theme.textTheme.bodyMedium?.merge(
-                          widget.textStyleMessage,
+                    if (widget.message != null)
+                      Flexible(
+                        child: Text(
+                          widget.message!,
+                          style: theme.textTheme.bodyMedium?.merge(
+                            widget.textStyleMessage,
+                          ),
+                          textAlign: TextAlign.start,
+                          overflow: widget.messageMaxLines == null
+                              ? null
+                              : TextOverflow.ellipsis,
+                          maxLines: widget.messageMaxLines,
+                          textScaleFactor: widget.textScaleFactor,
                         ),
-                        textAlign: TextAlign.start,
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 2,
-                        textScaleFactor: widget.textScaleFactor,
                       ),
-                    ),
                   ],
                 ),
               ),
@@ -223,7 +242,7 @@ class _SnackBarProState extends State<SnackBarPro> {
 
     return Container(
       clipBehavior: Clip.hardEdge,
-      height: 80,
+      height: widget.height,
       decoration: BoxDecoration(
         color: widget.backgroundColor,
         borderRadius: widget.borderRadius,
@@ -252,8 +271,10 @@ class _SnackBarProState extends State<SnackBarPro> {
                   widget.textStyleTitle,
                 ),
                 textAlign: TextAlign.center,
-                overflow: TextOverflow.ellipsis,
-                maxLines: 2,
+                overflow: widget.titleMaxLines == null
+                    ? null
+                    : TextOverflow.ellipsis,
+                maxLines: widget.titleMaxLines,
                 textScaleFactor: widget.textScaleFactor,
               ),
             ),

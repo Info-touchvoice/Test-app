@@ -7,42 +7,6 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1092328407075:android:c2077b1f6187df56ea7196",
-        "android_client_info": {
-          "package_name": "com.dating.rulove"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "1092328407075-m93b104pldkih38vetgehabpmn2rcebp.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyAdEHcQL0xphyKNKb3SXgOzirS002txYCA"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "1092328407075-m93b104pldkih38vetgehabpmn2rcebp.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "1092328407075-3o946j66g05vkrafgjfcq0h5e5j5vggk.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.livestream.touchvoice"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
         "mobilesdk_app_id": "1:1092328407075:android:fa16682a494750e2ea7196",
         "android_client_info": {
           "package_name": "com.livestream.touchvoice"
