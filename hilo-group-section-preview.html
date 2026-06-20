@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TouchVoice — Group Section (extracted from APK)</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #12121f; color: #eee;
+      padding: 28px 20px 60px;
+    }
+    h1 { font-size: 22px; font-weight: 600; margin-bottom: 4px; }
+    .subtitle { color: #888; font-size: 14px; margin-bottom: 24px; max-width: 800px; line-height: 1.5; }
+
+    .layout { display: grid; grid-template-columns: 380px 1fr; gap: 28px; max-width: 1300px; align-items: start; }
+    @media (max-width: 980px) { .layout { grid-template-columns: 1fr; } }
+
+    .phone {
+      width: 380px; border-radius: 32px; overflow: hidden;
+      border: 2px solid #333; box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+      position: sticky; top: 16px;
+    }
+
+    /* Header with purple gradient bg */
+    .group-header {
+      position: relative;
+      background: url('.apk-inspect-temp/group-section-demo/ic_group_top_bg_all.webp') center top / cover no-repeat;
+      min-height: 151px;
+    }
+    .header-bar {
+      display: flex; align-items: center; justify-content: center;
+      height: 32px; padding: 8px 9px 0; position: relative;
+    }
+    .main-tabs {
+      display: flex; gap: 24px; align-items: center;
+    }
+    .main-tabs button {
+      background: none; border: none; cursor: pointer;
+      font-size: 15px; font-weight: 700; color: rgba(255,255,255,0.5);
+      padding: 4px 0;
+    }
+    .main-tabs button.active { color: #fff; }
+    .search-btn {
+      position: absolute; right: 9px; top: 8px;
+      width: 26px; height: 26px; padding: 5px; cursor: pointer;
+    }
+    .search-btn img { width: 100%; height: 100%; }
+
+    .screen-body {
+      background: #fff; min-height: 560px;
+      max-height: 580px; overflow-y: auto;
+    }
+    .panel { display: none; }
+    .panel.active { display: block; }
+
+    /* ---- POPULAR TAB ---- */
+    .banner {
+      margin: 5px 15px 0; height: 111px; border-radius: 10px; overflow: hidden;
+    }
+    .banner img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    .rank-row {
+      display: flex; gap: 7px; padding: 7px 15px 8px; background: #fff;
+    }
+    .rank-card {
+      flex: 1; height: 68px; border-radius: 8px; position: relative; overflow: hidden;
+      display: flex; flex-direction: column; align-items: center;
+    }
+    .rank-card img.bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .rank-card span {
+      position: relative; z-index: 1; font-size: 12px; font-weight: 700; color: #fff;
+      margin-top: 7px;
+    }
+    .rank-card .avatars {
+      position: relative; z-index: 1; display: flex; gap: 4px; margin-top: auto; margin-bottom: 6px;
+    }
+    .rank-card .avatars img {
+      width: 28px; height: 28px; border-radius: 50%; border: 1px solid #fff; object-fit: cover;
+    }
+
+    .sub-tabs {
+      display: flex; height: 37px; background: rgba(244,235,255,0.1);
+      border-bottom: 0.5px solid #eee;
+    }
+    .sub-tabs button {
+      flex: 1; background: none; border: none; font-size: 14px; cursor: pointer;
+      color: rgba(51,51,51,0.5); font-weight: 600; position: relative;
+    }
+    .sub-tabs button.active { color: #333; }
+    .sub-tabs button.active::after {
+      content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+      width: 16px; height: 3px; background: #9036FF; border-radius: 1.5px;
+    }
+
+    .popular-sub { display: none; }
+    .popular-sub.active { display: block; }
+
+    .new-list-wrap {
+      background: #fff; border-radius: 10px 10px 0 0; margin-top: 5px;
+      min-height: 320px;
+    }
+    .new-list-header {
+      padding: 10px 15px 6px; font-size: 12px; color: #999;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    .room-item .new-badge {
+      display: inline-block; font-size: 9px; font-weight: 700; color: #fff;
+      background: #9036FF; padding: 2px 6px; border-radius: 4px;
+      margin-left: 6px; vertical-align: middle;
+    }
+    .room-item.fresh .avatar { border: 2px solid #9036FF; }
+
+    .video-match {
+      margin: 8px 22px; min-height: 49px; border-radius: 24px;
+      background: linear-gradient(90deg, #ffeef8, #f8e8ff);
+      display: flex; align-items: center; padding: 0 19px; gap: 5px;
+    }
+    .video-match .heart { width: 49px; height: 49px; border-radius: 50%; background: #ff6b9d; flex-shrink: 0; }
+    .video-match span { font-size: 13px; color: #4c3148; font-weight: 500; flex: 1; }
+    .video-match img.arrow { width: 20px; height: 20px; }
+
+    .quick-row {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 7px;
+      padding: 3px 15px 0;
+    }
+    .quick-item {
+      position: relative; height: 49px; border-radius: 8px; overflow: hidden;
+    }
+    .quick-item img.bg { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .quick-item .txt {
+      position: absolute; left: 11px; top: 6px; z-index: 1;
+    }
+    .quick-item .title { font-size: 13px; font-weight: 700; color: #fff; }
+    .quick-item .sub {
+      font-size: 11px; color: #fff; display: flex; align-items: center; gap: 3px; margin-top: 2px;
+    }
+    .quick-item .sub img { width: 12px; height: 12px; }
+
+    .room-item {
+      display: flex; align-items: center; padding: 7px 15px; min-height: 87px;
+      border-bottom: 1px solid #f5f5f5;
+    }
+    .room-item .avatar {
+      width: 73px; height: 73px; border-radius: 10px; object-fit: cover; flex-shrink: 0;
+    }
+    .room-item .info { flex: 1; margin-left: 10px; min-width: 0; }
+    .room-item .name { font-size: 15px; font-weight: 600; color: #333; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .room-item .announce { font-size: 12px; color: #999; margin-top: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .room-item .meta { display: flex; align-items: center; gap: 4px; margin-top: 4px; }
+    .room-item .meta img.rocket { width: 15px; height: 20px; }
+    .room-item .on-mic {
+      display: flex; align-items: center; gap: 6px; margin-left: auto; flex-shrink: 0;
+    }
+    .room-item .on-mic img { width: 16px; height: 16px; }
+    .room-item .on-mic span { font-size: 12px; color: #9036FF; font-weight: 600; }
+
+    /* ---- RELATED TAB ---- */
+    .my-groups-scroll {
+      display: flex; gap: 10px; padding: 5px 14px 4px; overflow-x: auto;
+    }
+    .my-group-chip {
+      width: 72px; flex-shrink: 0; text-align: center;
+    }
+    .my-group-chip img {
+      width: 58px; height: 58px; border-radius: 10px; object-fit: cover;
+    }
+    .my-group-chip span { font-size: 11px; color: #333; display: block; margin-top: 4px; }
+
+    .create-group {
+      margin: 0 14px 10px; padding: 16px 15px;
+      background: #fff; border-radius: 10px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+      display: flex; align-items: center; gap: 10px;
+    }
+    .create-group img { width: 58px; height: 58px; }
+    .create-group .t1 { font-size: 15px; color: #333; font-weight: 500; }
+    .create-group .t2 { font-size: 12px; color: #999; margin-top: 2px; }
+
+    .pill-row { display: flex; gap: 10px; padding: 4px 15px 8px; }
+    .pill {
+      min-width: 71px; min-height: 27px; padding: 4px 12px;
+      border-radius: 14px; font-size: 12px; text-align: center;
+      border: none; cursor: pointer;
+    }
+    .pill.active { background: #f0e6ff; color: #8829fe; font-weight: 600; }
+    .pill.inactive { background: #f5f5f5; color: #636b80; }
+
+    .group-card {
+      margin: 0 14px 10px; padding: 14px 15px;
+      background: #fff; border-radius: 10px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+      display: flex; align-items: center;
+    }
+    .group-card .avatar { width: 63px; height: 63px; border-radius: 10px; object-fit: cover; }
+    .group-card .info { flex: 1; margin-left: 10px; }
+    .group-card .name { font-size: 15px; color: #333; font-weight: 600; }
+    .group-card .announce { font-size: 12px; color: #999; margin-top: 4px; }
+
+    /* ---- DISCOVER TAB ---- */
+    .discover-section-title {
+      font-size: 13px; font-weight: 700; color: #5f5f5f;
+      padding: 12px 15px 4px;
+    }
+    .countries-row {
+      display: flex; gap: 16px; padding: 7px 15px; overflow-x: auto;
+    }
+    .country-chip { text-align: center; flex-shrink: 0; }
+    .country-chip .flag {
+      width: 30px; height: 20px; border-radius: 2px; margin: 0 auto;
+      background: linear-gradient(#006233 50%, #c1272d 50%);
+    }
+    .country-chip span { font-size: 12px; color: #333; margin-top: 10px; display: block; }
+
+    .featured-country {
+      margin: 3px 15px; height: 72px; border-radius: 10px; overflow: hidden;
+      position: relative;
+    }
+    .featured-country img.bg { width: 100%; height: 100%; object-fit: cover; }
+    .featured-country .content {
+      position: absolute; inset: 0; display: flex; align-items: center;
+    }
+    .featured-country .star { width: 75px; height: 52px; margin-left: 7px; object-fit: contain; }
+    .featured-country .name { font-size: 13px; font-weight: 700; color: #fff; margin-left: 8px; }
+    .featured-country .tops { margin-left: auto; display: flex; gap: 8px; margin-right: 12px; align-items: center; }
+    .featured-country .top-slot { position: relative; width: 34px; height: 34px; }
+    .featured-country .top-slot img.frame { width: 60px; height: 60px; position: absolute; top: -13px; left: -13px; }
+    .featured-country .top-slot img.avatar { width: 34px; height: 34px; border-radius: 50%; object-fit: cover; position: relative; z-index: 1; }
+
+    .gift-wall {
+      margin: 0 15px; height: 73px; border-radius: 10px; overflow: hidden; position: relative;
+    }
+    .gift-wall img.bg { width: 100%; height: 100%; object-fit: cover; }
+    .gift-wall span {
+      position: absolute; left: 22px; top: 50%; transform: translateY(-50%);
+      font-size: 13px; font-weight: 700; color: #fff;
+    }
+
+    .broadcast-card {
+      margin: 0 15px 10px; height: 111px; border-radius: 10px; overflow: hidden;
+    }
+    .broadcast-card img { width: 100%; height: 100%; object-fit: cover; }
+
+    .activities-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+      padding: 0 10px 12px;
+    }
+    .activity-item {
+      border-radius: 10px; overflow: hidden; background: #f5f5f5;
+      height: 90px; display: flex; align-items: center; justify-content: center;
+    }
+    .activity-item img { max-width: 80%; max-height: 70%; object-fit: contain; }
+
+    /* Bottom nav */
+    .bottom-nav {
+      height: 70px; display: flex; background: #fff;
+      border-top: 1px solid #eee;
+    }
+    .tab {
+      flex: 1; display: flex; flex-direction: column; align-items: center;
+      justify-content: flex-end; padding-bottom: 8px; gap: 5px;
+    }
+    .tab img { width: 27px; height: 17px; object-fit: contain; }
+    .tab span { font-size: 10px; color: #999; }
+    .tab.selected span { color: #9036FF; font-weight: 600; }
+
+    /* Gallery */
+    .gallery h2 { font-size: 18px; margin-bottom: 14px; }
+    .gallery h3 { font-size: 14px; color: #9036FF; margin: 18px 0 8px; }
+    .asset-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 10px;
+    }
+    .asset-card {
+      background: #1e1e32; border-radius: 8px; padding: 10px; text-align: center;
+      border: 1px solid #2a2a40;
+    }
+    .asset-card .pv {
+      height: 70px; display: flex; align-items: center; justify-content: center;
+      background: #2a2a40; border-radius: 5px; margin-bottom: 6px; overflow: hidden;
+    }
+    .asset-card .pv.light { background: #fff; }
+    .asset-card .pv.purple { background: linear-gradient(135deg, #9036FF, #6b21c8); }
+    .asset-card .pv img { max-width: 100%; max-height: 66px; object-fit: contain; }
+    .asset-card .nm { font-size: 9px; color: #888; word-break: break-all; }
+
+    .tab-hint {
+      margin-top: 12px; padding: 12px 16px; background: #1e1e32;
+      border-radius: 8px; font-size: 13px; color: #aaa; line-height: 1.6;
+    }
+    .note { margin-top: 24px; padding: 16px 20px; background: #1e1e32; border-radius: 10px; font-size: 13px; color: #aaa; line-height: 1.7; max-width: 1300px; }
+    .note strong { color: #ddd; }
+    .note code { background: #12121f; padding: 2px 5px; border-radius: 3px; color: #9036FF; font-size: 12px; }
+  </style>
+</head>
+<body>
+  <h1>TouchVoice — Group Section</h1>
+  <p class="subtitle">
+    Extracted from <strong>reference layout APK v4.16.0</strong> — the Group bottom-nav tab uses <code>HomeRoomFragment</code>
+    with 3 main sub-tabs: <strong>Related</strong>, <strong>Popular</strong>, <strong>Discover</strong>.
+    Inside <strong>Popular</strong> there is also a <strong>New</strong> sub-section — click Popular / New to switch.
+    All images are real APK assets.
+  </p>
+
+  <div class="layout">
+    <div>
+      <div class="phone">
+        <div class="group-header">
+          <div class="header-bar">
+            <div class="main-tabs">
+              <button type="button" data-panel="related">Related</button>
+              <button type="button" class="active" data-panel="popular">Popular</button>
+              <button type="button" data-panel="discover">Discover</button>
+            </div>
+            <div class="search-btn"><img src=".apk-inspect-temp/group-section-demo/icon_group_search_all.webp" alt="Search" /></div>
+          </div>
+        </div>
+
+        <div class="screen-body">
+          <!-- POPULAR -->
+          <div class="panel active" id="panel-popular">
+            <div class="banner"><img src=".apk-inspect-temp/group-section-demo/group_banner_placeholde.webp" alt="Banner" /></div>
+            <div class="rank-row">
+              <div class="rank-card">
+                <img class="bg" src=".apk-inspect-temp/group-section-demo/icon_popular_rank_power_bg1.webp" alt="" />
+                <span>Family</span>
+                <div class="avatars">
+                  <img src=".apk-inspect-temp/group-section-demo/game_sheep_def_avatar.webp" alt="" />
+                  <img src=".apk-inspect-temp/group-section-demo/game_sheep_def_avatar.webp" alt="" />
+                  <img src=".apk-inspect-temp/group-section-demo/game_sheep_def_avatar.webp" alt="" />
+                </div>
+              </div>
+              <div class="rank-card">
+                <img class="bg" src=".apk-inspect-temp/group-section-demo/popular_rank_famous_bg.webp" alt="" />
+                <span>Rank</span>
+                <div class="avatars">
+                  <img src=".apk-inspect-temp/group-section-demo/game_sheep_def_avatar.webp" alt="" />
+                  <img src=".apk-inspect-temp/group-section-demo/game_sheep_def_avatar.webp" alt="" />
+                </div>
+              </div>
+              <div class="rank-card">
+                <img class="bg" src=".apk-inspect-temp/group-section-demo/icon_popular_rank_cp_bg1.webp" alt="" />
+                <span>CP</span>
+                <div class="avatars">
+                  <img src=".apk-inspect-temp/group-section-demo/game_sheep_def_avatar.webp" alt="" />
+                  <img src=".apk-inspect-temp/group-section-demo/game_sheep_def_avatar.webp" alt="" />
+                </div>
+              </div>
+            </div>
+            <div class="sub-tabs" id="popular-sub-tabs">
+              <button type="button" class="active" data-popular-sub="hot">Popular</button>
+              <button type="button" data-popular-sub="new">New</button>
+            </div>
+
+            <!-- POPULAR sub-section: hot rooms + quick games -->
+            <div class="popular-sub active" id="popular-sub-hot">
+              <div class="video-match">
+                <div class="heart"></div>
+                <span>Video Match</span>
+                <img class="arrow" src=".apk-inspect-temp/group-section-demo/ic_video_match_right.png" alt="" />
+              </div>
+              <div class="quick-row">
+                <div class="quick-item">
+                  <img class="bg" src=".apk-inspect-temp/group-section-demo/ludo_quick_bg.webp" alt="" />
+                  <div class="txt"><div class="title">LUDO</div><div class="sub"><img src=".apk-inspect-temp/group-section-demo/game_handle_icon.webp" alt="" /> Play now</div></div>
+                </div>
+                <div class="quick-item">
+                  <img class="bg" src=".apk-inspect-temp/group-section-demo/uno_quick_bg.webp" alt="" />
+                  <div class="txt"><div class="title">UNO</div><div class="sub"><img src=".apk-inspect-temp/group-section-demo/game_handle_icon.webp" alt="" /> Play now</div></div>
+                </div>
+              </div>
+              <div class="quick-row" style="margin-top:7px;margin-bottom:3px;">
+                <div class="quick-item">
+                  <img class="bg" src=".apk-inspect-temp/group-section-demo/sheep_quick_bg.webp" alt="" />
+                  <div class="txt"><div class="title">Sheep</div><div class="sub"><img src=".apk-inspect-temp/group-section-demo/game_handle_icon.webp" alt="" /> Play now</div></div>
+                </div>
+                <div class="quick-item">
+                  <img class="bg" src=".apk-inspect-temp/group-section-demo/match_quick_bg.webp" alt="" />
+                  <div class="txt"><div class="title">Snake</div><div class="sub"><img src=".apk-inspect-temp/group-section-demo/game_handle_icon.webp" alt="" /> Play now</div></div>
+                </div>
+              </div>
+              <div class="room-item">
+                <img class="avatar" src=".apk-inspect-temp/group-section-demo/group_placeholde.webp" alt="" />
+                <div class="info">
+                  <div class="name">Music Lovers Room</div>
+                  <div class="announce">Welcome! Let's chat and sing together</div>
+                  <div class="meta">
+                    <img class="rocket" src=".apk-inspect-temp/group-section-demo/icon_rocket_green_room_list.webp" alt="" />
+                    <img class="rocket" src=".apk-inspect-temp/group-section-demo/icon_rocket_blue_room_list.webp" alt="" />
+                  </div>
+                </div>
+                <div class="on-mic"><img src=".apk-inspect-temp/group-section-demo/ic_on_mic.webp" alt="" /><span>24</span></div>
+              </div>
+              <div class="room-item">
+                <img class="avatar" src=".apk-inspect-temp/group-section-demo/core_default_group_icon_community.png" alt="" />
+                <div class="info">
+                  <div class="name">Arabic Chat Party</div>
+                  <div class="announce">Daily games and fun conversations</div>
+                  <div class="meta">
+                    <img class="rocket" src=".apk-inspect-temp/group-section-demo/icon_rocket_red_room_list.webp" alt="" />
+                  </div>
+                </div>
+                <div class="on-mic"><img src=".apk-inspect-temp/group-section-demo/ic_on_mic.webp" alt="" /><span>18</span></div>
+              </div>
+              <div class="room-item">
+                <img class="avatar" src=".apk-inspect-temp/group-section-demo/group_placeholde.webp" alt="" />
+                <div class="info">
+                  <div class="name">Night Owls Group</div>
+                  <div class="announce">Open mic every evening at 9PM</div>
+                </div>
+                <div class="on-mic"><img src=".apk-inspect-temp/group-section-demo/ic_on_mic.webp" alt="" /><span>7</span></div>
+              </div>
+            </div>
+
+            <!-- NEW sub-section: latest created groups only -->
+            <div class="popular-sub" id="popular-sub-new">
+              <div class="new-list-wrap">
+                <div class="new-list-header">Latest groups — newly created rooms</div>
+                <div class="room-item fresh">
+                  <img class="avatar" src=".apk-inspect-temp/group-section-demo/group_placeholde.webp" alt="" />
+                  <div class="info">
+                    <div class="name">Fresh Vibes Lounge <span class="new-badge">NEW</span></div>
+                    <div class="announce">Just created — come be the first guest!</div>
+                  </div>
+                  <div class="on-mic"><img src=".apk-inspect-temp/group-section-demo/ic_on_mic.webp" alt="" /><span>3</span></div>
+                </div>
+                <div class="room-item fresh">
+                  <img class="avatar" src=".apk-inspect-temp/group-section-demo/core_default_group_icon_community.png" alt="" />
+                  <div class="info">
+                    <div class="name">Dubai Newcomers <span class="new-badge">NEW</span></div>
+                    <div class="announce">Meet new friends in Dubai</div>
+                  </div>
+                  <div class="on-mic"><img src=".apk-inspect-temp/group-section-demo/ic_on_mic.webp" alt="" /><span>1</span></div>
+                </div>
+                <div class="room-item fresh">
+                  <img class="avatar" src=".apk-inspect-temp/group-section-demo/group_placeholde.webp" alt="" />
+                  <div class="info">
+                    <div class="name">Karaoke Stars 2026 <span class="new-badge">NEW</span></div>
+                    <div class="announce">Sing together every night</div>
+                  </div>
+                  <div class="on-mic"><img src=".apk-inspect-temp/group-section-demo/ic_on_mic.webp" alt="" /><span>5</span></div>
+                </div>
+                <div class="room-item fresh">
+                  <img class="avatar" src=".apk-inspect-temp/group-section-demo/core_default_group_icon_community.png" alt="" />
+                  <div class="info">
+                    <div class="name">Gaming Squad PK <span class="new-badge">NEW</span></div>
+                    <div class="announce">Ludo &amp; UNO battles welcome</div>
+                    <div class="meta">
+                      <img class="rocket" src=".apk-inspect-temp/group-section-demo/icon_rocket_green_room_list.webp" alt="" />
+                    </div>
+                  </div>
+                  <div class="on-mic"><img src=".apk-inspect-temp/group-section-demo/ic_on_mic.webp" alt="" /><span>9</span></div>
+                </div>
+                <div class="room-item fresh">
+                  <img class="avatar" src=".apk-inspect-temp/group-section-demo/group_placeholde.webp" alt="" />
+                  <div class="info">
+                    <div class="name">Late Night Talks <span class="new-badge">NEW</span></div>
+                    <div class="announce">Open mic — all languages welcome</div>
+                  </div>
+                  <div class="on-mic"><img src=".apk-inspect-temp/group-section-demo/ic_on_mic.webp" alt="" /><span>2</span></div>
+                </div>
+                <div class="room-item fresh">
+                  <img class="avatar" src=".apk-inspect-temp/group-section-demo/group_placeholde.webp" alt="" />
+                  <div class="info">
+                    <div class="name">Study Buddies Club <span class="new-badge">NEW</span></div>
+                    <div class="announce">Focus rooms with background music</div>
+                  </div>
+                  <div class="on-mic"><img src=".apk-inspect-temp/group-section-demo/ic_on_mic.webp" alt="" /><span>4</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- RELATED -->
+          <div class="panel" id="panel-related">
+            <div class="my-groups-scroll">
+              <div class="my-group-chip"><img src=".apk-inspect-temp/group-section-demo/group_placeholde.webp" alt="" /><span>My Room</span></div>
+              <div class="my-group-chip"><img src=".apk-inspect-temp/group-section-demo/core_default_group_icon_community.png" alt="" /><span>Friends</span></div>
+              <div class="my-group-chip"><img src=".apk-inspect-temp/group-section-demo/group_placeholde.webp" alt="" /><span>Music</span></div>
+            </div>
+            <div class="create-group">
+              <img src=".apk-inspect-temp/group-section-demo/icon_create_group.webp" alt="" />
+              <div>
+                <div class="t1">Create my group</div>
+                <div class="t2">Start your journey in TouchVoice</div>
+              </div>
+            </div>
+            <div class="pill-row">
+              <button class="pill active" type="button">Recently</button>
+              <button class="pill inactive" type="button">Joined</button>
+            </div>
+            <div class="group-card">
+              <img class="avatar" src=".apk-inspect-temp/group-section-demo/group_placeholde.webp" alt="" />
+              <div class="info">
+                <div class="name">Weekend Hangout</div>
+                <div class="announce">Last visited 2 hours ago</div>
+              </div>
+              <div class="on-mic"><img src=".apk-inspect-temp/group-section-demo/ic_on_mic.webp" alt="" /><span>12</span></div>
+            </div>
+            <div class="group-card">
+              <img class="avatar" src=".apk-inspect-temp/group-section-demo/core_default_group_icon_community.png" alt="" />
+              <div class="info">
+                <div class="name">Study Group</div>
+                <div class="announce">Visited yesterday</div>
+              </div>
+              <div class="on-mic"><img src=".apk-inspect-temp/group-section-demo/ic_on_mic.webp" alt="" /><span>5</span></div>
+            </div>
+            <p style="font-size:12px;color:#999;text-align:center;padding:16px;">Recommended groups load from server</p>
+          </div>
+
+          <!-- DISCOVER -->
+          <div class="panel" id="panel-discover">
+            <div class="discover-section-title">Countries</div>
+            <div class="countries-row">
+              <div class="country-chip"><div class="flag"></div><span>SA</span></div>
+              <div class="country-chip"><div class="flag" style="background:linear-gradient(#b22234 33%,#fff 33% 66%,#3c3b6e 66%)"></div><span>US</span></div>
+              <div class="country-chip"><div class="flag" style="background:#009639"></div><span>EG</span></div>
+              <div class="country-chip"><div class="flag" style="background:linear-gradient(#ff9933 50%,#fff 50%)"></div><span>IN</span></div>
+              <div class="country-chip"><div class="flag" style="background:#e30a17"></div><span>TR</span></div>
+            </div>
+            <div class="featured-country">
+              <img class="bg" src=".apk-inspect-temp/group-section-demo/ic_discover_country_bg.webp" alt="" />
+              <div class="content">
+                <img class="star" src=".apk-inspect-temp/group-section-demo/ic_discover_country_star.png" alt="" />
+                <span class="name">Saudi Arabia</span>
+                <div class="tops">
+                  <div class="top-slot"><img class="frame" src=".apk-inspect-temp/group-section-demo/ic_discover_country_top1.webp" alt="" /><img class="avatar" src=".apk-inspect-temp/group-section-demo/game_sheep_def_avatar.webp" alt="" /></div>
+                  <div class="top-slot"><img class="frame" src=".apk-inspect-temp/group-section-demo/ic_discover_country_top2.webp" alt="" /><img class="avatar" src=".apk-inspect-temp/group-section-demo/game_sheep_def_avatar.webp" alt="" /></div>
+                  <div class="top-slot"><img class="frame" src=".apk-inspect-temp/group-section-demo/ic_discover_country_top3.webp" alt="" /><img class="avatar" src=".apk-inspect-temp/group-section-demo/game_sheep_def_avatar.webp" alt="" /></div>
+                </div>
+              </div>
+            </div>
+            <div class="discover-section-title">Gift wall</div>
+            <div class="gift-wall">
+              <img class="bg" src=".apk-inspect-temp/group-section-demo/ic_discover_gift_bg.webp" alt="" />
+              <span>Gift wall</span>
+            </div>
+            <div class="discover-section-title" style="display:flex;justify-content:space-between;align-items:center;">
+              <span>Broadcast</span>
+              <span style="font-size:11px;font-weight:400;">More ›</span>
+            </div>
+            <div class="broadcast-card">
+              <img src=".apk-inspect-temp/group-section-demo/ic_discover_global_broad_cast_bg.webp" alt="" />
+            </div>
+            <div class="discover-section-title" style="display:flex;justify-content:space-between;align-items:center;">
+              <span>Activities</span>
+              <span style="font-size:11px;font-weight:400;">More ›</span>
+            </div>
+            <div class="activities-grid">
+              <div class="activity-item"><img src=".apk-inspect-temp/group-section-demo/discover_create_activities.webp" alt="" /></div>
+              <div class="activity-item"><img src=".apk-inspect-temp/group-section-demo/discover_icon_online.webp" alt="" /></div>
+              <div class="activity-item"><img src=".apk-inspect-temp/group-section-demo/discover_icon_people.webp" alt="" /></div>
+              <div class="activity-item"><img src=".apk-inspect-temp/group-section-demo/discover_icon_room.webp" alt="" /></div>
+            </div>
+            <div class="discover-section-title">Event</div>
+            <div class="group-card" style="margin-bottom:12px;">
+              <img class="avatar" src=".apk-inspect-temp/group-section-demo/discover_icon_trophy.webp" alt="" style="width:48px;height:48px;border-radius:8px;" />
+              <div class="info">
+                <div class="name">Weekly Ranking Event</div>
+                <div class="announce">Compete for top rewards</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <nav class="bottom-nav">
+          <div class="tab"><img src=".apk-inspect-temp/group-section-demo/icon_random_unselected.webp" alt="" /><span>Match</span></div>
+          <div class="tab selected"><img src=".apk-inspect-temp/group-section-demo/icon_group_selected.webp" alt="" /><span>Group</span></div>
+          <div class="tab"><img src=".apk-inspect-temp/group-section-demo/icon_game_unselected.webp" alt="" /><span>Game</span></div>
+          <div class="tab"><img src=".apk-inspect-temp/group-section-demo/icon_chat_unselected.webp" alt="" /><span>Chat</span></div>
+        </nav>
+      </div>
+      <div class="tab-hint">
+        Click <strong>Related</strong>, <strong>Popular</strong>, or <strong>Discover</strong> in the header.<br/>
+        On <strong>Popular</strong>, also click <strong>Popular / New</strong> to see the New groups list.
+      </div>
+    </div>
+
+    <div class="gallery">
+      <h2>Extracted Group assets (40 files)</h2>
+      <h3>Header &amp; navigation</h3>
+      <div class="asset-grid">
+        <div class="asset-card"><div class="pv purple"><img src=".apk-inspect-temp/group-section-demo/ic_group_top_bg_all.webp" alt="" /></div><div class="nm">ic_group_top_bg_all.webp</div></div>
+        <div class="asset-card"><div class="pv"><img src=".apk-inspect-temp/group-section-demo/icon_group_search_all.webp" alt="" /></div><div class="nm">icon_group_search_all.webp</div></div>
+        <div class="asset-card"><div class="pv"><img src=".apk-inspect-temp/group-section-demo/icon_group_selected.webp" alt="" /></div><div class="nm">icon_group_selected.webp</div></div>
+        <div class="asset-card"><div class="pv"><img src=".apk-inspect-temp/group-section-demo/icon_create_group.webp" alt="" /></div><div class="nm">icon_create_group.webp</div></div>
+      </div>
+      <h3>Popular — ranks &amp; banner</h3>
+      <div class="asset-grid">
+        <div class="asset-card"><div class="pv light"><img src=".apk-inspect-temp/group-section-demo/group_banner_placeholde.webp" alt="" /></div><div class="nm">group_banner_placeholde.webp</div></div>
+        <div class="asset-card"><div class="pv"><img src=".apk-inspect-temp/group-section-demo/icon_popular_rank_power_bg1.webp" alt="" /></div><div class="nm">icon_popular_rank_power_bg1.webp</div></div>
+        <div class="asset-card"><div class="pv"><img src=".apk-inspect-temp/group-section-demo/popular_rank_famous_bg.webp" alt="" /></div><div class="nm">popular_rank_famous_bg.webp</div></div>
+        <div class="asset-card"><div class="pv"><img src=".apk-inspect-temp/group-section-demo/icon_popular_rank_cp_bg1.webp" alt="" /></div><div class="nm">icon_popular_rank_cp_bg1.webp</div></div>
+      </div>
+      <h3>Popular — quick play games</h3>
+      <div class="asset-grid">
+        <div class="asset-card"><div class="pv"><img src=".apk-inspect-temp/group-section-demo/ludo_quick_bg.webp" alt="" /></div><div class="nm">ludo_quick_bg.webp</div></div>
+        <div class="asset-card"><div class="pv"><img src=".apk-inspect-temp/group-section-demo/uno_quick_bg.webp" alt="" /></div><div class="nm">uno_quick_bg.webp</div></div>
+        <div class="asset-card"><div class="pv"><img src=".apk-inspect-temp/group-section-demo/sheep_quick_bg.webp" alt="" /></div><div class="nm">sheep_quick_bg.webp</div></div>
+        <div class="asset-card"><div class="pv"><img src=".apk-inspect-temp/group-section-demo/match_quick_bg.webp" alt="" /></div><div class="nm">match_quick_bg.webp</div></div>
+        <div class="asset-card"><div class="pv light"><img src=".apk-inspect-temp/group-section-demo/game_handle_icon.webp" alt="" /></div><div class="nm">game_handle_icon.webp</div></div>
+      </div>
+      <h3>Room list &amp; rockets</h3>
+      <div class="asset-grid">
+        <div class="asset-card"><div class="pv light"><img src=".apk-inspect-temp/group-section-demo/group_placeholde.webp" alt="" /></div><div class="nm">group_placeholde.webp</div></div>
+        <div class="asset-card"><div class="pv light"><img src=".apk-inspect-temp/group-section-demo/ic_on_mic.webp" alt="" /></div><div class="nm">ic_on_mic.webp</div></div>
+        <div class="asset-card"><div class="pv light"><img src=".apk-inspect-temp/group-section-demo/icon_rocket_green_room_list.webp" alt="" /></div><div class="nm">icon_rocket_green_room_list.webp</div></div>
+        <div class="asset-card"><div class="pv light"><img src=".apk-inspect-temp/group-section-demo/icon_rocket_blue_room_list.webp" alt="" /></div><div class="nm">icon_rocket_blue_room_list.webp</div></div>
+        <div class="asset-card"><div class="pv light"><img src=".apk-inspect-temp/group-section-demo/icon_rocket_red_room_list.webp" alt="" /></div><div class="nm">icon_rocket_red_room_list.webp</div></div>
+      </div>
+      <h3>Discover</h3>
+      <div class="asset-grid">
+        <div class="asset-card"><div class="pv"><img src=".apk-inspect-temp/group-section-demo/ic_discover_country_bg.webp" alt="" /></div><div class="nm">ic_discover_country_bg.webp</div></div>
+        <div class="asset-card"><div class="pv"><img src=".apk-inspect-temp/group-section-demo/ic_discover_gift_bg.webp" alt="" /></div><div class="nm">ic_discover_gift_bg.webp</div></div>
+        <div class="asset-card"><div class="pv"><img src=".apk-inspect-temp/group-section-demo/ic_discover_country_top1.webp" alt="" /></div><div class="nm">ic_discover_country_top1.webp</div></div>
+        <div class="asset-card"><div class="pv"><img src=".apk-inspect-temp/group-section-demo/ic_discover_global_broad_cast_bg.webp" alt="" /></div><div class="nm">ic_discover_global_broad_cast_bg.webp</div></div>
+        <div class="asset-card"><div class="pv light"><img src=".apk-inspect-temp/group-section-demo/discover_create_activities.webp" alt="" /></div><div class="nm">discover_create_activities.webp</div></div>
+        <div class="asset-card"><div class="pv light"><img src=".apk-inspect-temp/group-section-demo/discover_icon_trophy.webp" alt="" /></div><div class="nm">discover_icon_trophy.webp</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="note">
+    <strong>Group page structure (from APK):</strong><br/>
+    • <strong>Header</strong> — purple gradient bg, 3 sub-tabs (Related / Popular / Discover), search icon<br/>
+    • <strong>Popular</strong> — promo banner, Family/Rank/CP leaderboard cards, then two sub-sections:<br/>
+    &nbsp;&nbsp;→ <strong>Popular</strong> tab: Video Match bar, quick-play games (Ludo, UNO, Sheep, Snake), hot live group rooms<br/>
+    &nbsp;&nbsp;→ <strong>New</strong> tab: scrollable list of newly created groups only (<code>LatestGroupAdapter</code>, layout <code>item_group_popular1.xml</code>)<br/>
+    • <strong>Related</strong> — my groups carousel, create group card, Recently/Joined filter, recent &amp; recommended groups<br/>
+    • <strong>Discover</strong> — country flags, featured country with top-3 users, gift wall, global broadcast, activities grid, events list<br/>
+    • <strong>Bottom nav</strong> — Group tab highlighted purple (#9036FF)<br/><br/>
+    Layout files: <code>fragment_home_room.xml</code>, <code>new_view_group_popular.xml</code>, <code>view_my_all_group.xml</code>, <code>view_wrapper_discover.xml</code>, <code>item_group_popular1.xml</code>
+  </div>
+
+  <script>
+    document.querySelectorAll('.main-tabs button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.main-tabs button').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById('panel-' + btn.dataset.panel).classList.add('active');
+      });
+    });
+
+    document.querySelectorAll('#popular-sub-tabs button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('#popular-sub-tabs button').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.popular-sub').forEach(p => p.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById('popular-sub-' + btn.dataset.popularSub).classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>

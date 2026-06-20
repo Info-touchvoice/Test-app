@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TouchVoice — Games Section (extracted from APK)</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #12121f;
+      color: #eee;
+      padding: 28px 20px 60px;
+    }
+    h1 { font-size: 22px; font-weight: 600; margin-bottom: 4px; }
+    .subtitle { color: #888; font-size: 14px; margin-bottom: 28px; max-width: 720px; line-height: 1.5; }
+
+    .main-grid {
+      display: grid;
+      grid-template-columns: 360px 1fr;
+      gap: 32px;
+      align-items: start;
+      max-width: 1280px;
+    }
+    @media (max-width: 960px) { .main-grid { grid-template-columns: 1fr; } }
+
+    /* Phone */
+    .phone {
+      width: 360px;
+      border-radius: 32px;
+      overflow: hidden;
+      border: 2px solid #333;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+      position: sticky;
+      top: 20px;
+    }
+    .screen {
+      height: 740px;
+      overflow-y: auto;
+      overflow-x: hidden;
+      position: relative;
+      background: #0d3d5c url('.apk-inspect-temp/games-section-demo/home_game_bg.webp') center top / cover no-repeat;
+      scrollbar-width: thin;
+      scrollbar-color: #9036FF transparent;
+    }
+    .screen::-webkit-scrollbar { width: 4px; }
+    .screen::-webkit-scrollbar-thumb { background: #9036FF; border-radius: 2px; }
+
+    /* Diamond bar */
+    .diamond-bar {
+      display: flex;
+      align-items: center;
+      height: 23px;
+      margin: 8px 0 0 55px;
+      width: fit-content;
+      background: rgba(0,0,0,0.35);
+      border-radius: 12px;
+      padding: 0 5px;
+      gap: 0;
+    }
+    .diamond-bar img.diamond { width: 16px; height: 14px; margin-left: 5px; }
+    .diamond-bar .amount { font-size: 13px; font-weight: 700; color: #fff; padding: 0 8px; }
+    .diamond-bar img.add { width: 15px; height: 15px; margin-right: 5px; cursor: pointer; }
+
+    /* Quick play banners */
+    .quick-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      padding: 30px 15px 0;
+    }
+    .quick-card {
+      position: relative;
+      aspect-ratio: 22 / 10;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .quick-card > img.banner { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .quick-card .overlay {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column; align-items: flex-end;
+      padding: 17px 13px 0 0;
+    }
+    .quick-card .overlay img.title-img { height: 18px; width: auto; margin-bottom: 9px; }
+    .quick-card .overlay .count {
+      display: flex; align-items: center; gap: 5px;
+      font-size: 13px; font-weight: 700; color: #fff;
+    }
+    .quick-card .overlay .count img { width: 14px; height: 14px; }
+
+    /* Game grid */
+    .game-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px 0;
+      padding: 10px 7.5px 0;
+    }
+    .game-item {
+      padding: 0 7.5px;
+    }
+    .game-item .card {
+      aspect-ratio: 106 / 137;
+      border-radius: 10px;
+      overflow: hidden;
+      background: rgba(255,255,255,0.08);
+    }
+    .game-item .card img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .game-item .label {
+      text-align: center; font-size: 11px; color: #ccc;
+      margin-top: 4px; text-transform: capitalize;
+    }
+
+    /* Section headers */
+    .section-head {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 30px 15px 0;
+    }
+    .section-head h2 { font-size: 18px; font-weight: 700; color: #fff; }
+    .section-head .right { display: flex; align-items: center; gap: 8px; }
+    .section-head .chest { width: 31px; height: 31px; }
+    .broadcast {
+      background: rgba(0,0,0,0.4); border-radius: 12px;
+      padding: 4px 10px; font-size: 10px; color: #ffd700;
+      max-width: 100px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+
+    /* Action buttons */
+    .action-row {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 15px;
+      padding: 16px 15px 0;
+    }
+    .action-btn { position: relative; aspect-ratio: 165 / 61; }
+    .action-btn img.bg { width: 100%; height: 100%; object-fit: fill; display: block; }
+    .action-btn .inner {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column; align-items: flex-end;
+      padding: 9px 12px 0 0;
+    }
+    .action-btn .inner img.title { height: 21px; width: auto; }
+    .action-btn .inner span {
+      font-size: 12px; font-weight: 700; color: #fff; margin-top: 3px;
+    }
+
+    /* Find friends */
+    .find-title {
+      font-size: 18px; font-weight: 700; color: #fff;
+      padding: 20px 15px 10px;
+    }
+    .friend-row {
+      margin: 0 15px 10px;
+      height: 75px;
+      background: url('.apk-inspect-temp/games-section-demo/home_game_item_bg.9.png') stretch;
+      background-size: 100% 100%;
+      border-radius: 12px;
+      display: flex; align-items: center;
+      padding: 0 14px 0 15px;
+      position: relative;
+    }
+    .friend-row .avatar {
+      width: 45px; height: 45px; border-radius: 50%;
+      border: 1px solid #fff; object-fit: cover; flex-shrink: 0;
+    }
+    .friend-row .info { margin-left: 14px; flex: 1; min-width: 0; }
+    .friend-row .name { font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 3px; }
+    .friend-row .meta { display: flex; align-items: center; gap: 9px; }
+    .friend-row .flag {
+      width: 24px; height: 15px; border-radius: 2px;
+      background: linear-gradient(#006233 50%, #c1272d 50%);
+    }
+    .friend-row .age {
+      font-size: 10px; color: #fff; background: #ff6b9d;
+      padding: 1px 6px; border-radius: 8px;
+    }
+    .friend-row .game-badge { width: 48px; height: 25px; object-fit: contain; margin-right: 5px; }
+    .friend-row .enter { width: 24px; height: 24px; flex-shrink: 0; }
+
+    /* Bottom nav */
+    .bottom-nav {
+      position: sticky; bottom: 0; left: 0; right: 0;
+      height: 70px; display: flex;
+      background: rgba(13,61,92,0.95);
+      border-top: 1px solid rgba(255,255,255,0.1);
+      margin-top: 16px;
+    }
+    .tab {
+      flex: 1; display: flex; flex-direction: column;
+      align-items: center; justify-content: flex-end;
+      padding-bottom: 8px; gap: 5px;
+    }
+    .tab img { width: 27px; height: 17px; object-fit: contain; }
+    .tab span { font-size: 10px; color: #999; }
+    .tab.selected span { color: #9036FF; font-weight: 600; }
+
+    /* Asset gallery */
+    .gallery { margin-top: 0; }
+    .gallery h2 { font-size: 18px; margin-bottom: 16px; font-weight: 600; }
+    .gallery h3 { font-size: 14px; color: #9036FF; margin: 20px 0 10px; font-weight: 600; }
+    .asset-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      gap: 12px;
+    }
+    .asset-card {
+      background: #1e1e32;
+      border-radius: 10px;
+      padding: 12px;
+      text-align: center;
+      border: 1px solid #2a2a40;
+    }
+    .asset-card .preview {
+      height: 80px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 8px;
+      background: repeating-conic-gradient(#2a2a40 0% 25%, #333 0% 50%) 50% / 10px 10px;
+      border-radius: 6px;
+      overflow: hidden;
+    }
+    .asset-card .preview.dark-bg { background: #0d3d5c; }
+    .asset-card .preview img { max-width: 100%; max-height: 76px; object-fit: contain; }
+    .asset-card .name { font-size: 10px; color: #888; word-break: break-all; line-height: 1.3; }
+
+    .note {
+      margin-top: 24px; padding: 16px 20px;
+      background: #1e1e32; border-radius: 10px;
+      font-size: 13px; color: #aaa; line-height: 1.7;
+      max-width: 1280px;
+    }
+    .note strong { color: #ddd; }
+    .note code { background: #12121f; padding: 2px 5px; border-radius: 3px; color: #9036FF; font-size: 12px; }
+  </style>
+</head>
+<body>
+  <h1>TouchVoice — Games Section</h1>
+  <p class="subtitle">
+    Full reconstruction from <strong>reference layout APK v4.16.0</strong> using extracted UI assets (42 images).
+    Layouts: <code>fragment_home_game.xml</code>, <code>fragment_home_game_head.xml</code>, <code>item_home_game.xml</code>, <code>item_home_game_room.xml</code>.
+    Game grid icons load from server at runtime; bundled fallbacks shown below.
+  </p>
+
+  <div class="main-grid">
+    <!-- Phone mockup -->
+    <div>
+      <div class="phone">
+        <div class="screen">
+          <!-- Diamond wallet -->
+          <div class="diamond-bar">
+            <img class="diamond" src=".apk-inspect-temp/games-section-demo/bill_diamond.png" alt="" />
+            <span class="amount">12,450</span>
+            <img class="add" src=".apk-inspect-temp/games-section-demo/ludo_prepare_icon_add.webp" alt="" />
+          </div>
+
+          <!-- Ludo + UNO quick play -->
+          <div class="quick-row">
+            <div class="quick-card">
+              <img class="banner" src=".apk-inspect-temp/games-section-demo/home_game_ludo.webp" alt="Ludo" />
+              <div class="overlay">
+                <img class="title-img" src=".apk-inspect-temp/games-section-demo/home_game_ludo_text.webp" alt="LUDO" />
+                <div class="count">
+                  <img src=".apk-inspect-temp/games-section-demo/home_game_game_number.webp" alt="" />
+                  <span>1,284</span>
+                </div>
+              </div>
+            </div>
+            <div class="quick-card">
+              <img class="banner" src=".apk-inspect-temp/games-section-demo/home_game_uno.webp" alt="UNO" />
+              <div class="overlay">
+                <img class="title-img" src=".apk-inspect-temp/games-section-demo/home_game_uno_text.webp" alt="UNO" />
+                <div class="count">
+                  <img src=".apk-inspect-temp/games-section-demo/home_game_game_number.webp" alt="" />
+                  <span>892</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Game grid (3 columns) -->
+          <div class="game-grid">
+            <div class="game-item"><div class="card"><img src=".apk-inspect-temp/games-section-demo/game_item_icon_ludo.webp" alt="" /></div><div class="label">Ludo</div></div>
+            <div class="game-item"><div class="card"><img src=".apk-inspect-temp/games-section-demo/game_item_icon_uno.webp" alt="" /></div><div class="label">UNO</div></div>
+            <div class="game-item"><div class="card"><img src=".apk-inspect-temp/games-section-demo/game_item_icon_domino.webp" alt="" /></div><div class="label">Domino</div></div>
+            <div class="game-item"><div class="card"><img src=".apk-inspect-temp/games-section-demo/game_item_icon_crush.webp" alt="" /></div><div class="label">Crush</div></div>
+            <div class="game-item"><div class="card"><img src=".apk-inspect-temp/games-section-demo/game_item_icon_baloot.webp" alt="" /></div><div class="label">Baloot</div></div>
+            <div class="game-item"><div class="card"><img src=".apk-inspect-temp/games-section-demo/game_item_icon_pk.webp" alt="" /></div><div class="label">PK</div></div>
+            <div class="game-item"><div class="card"><img src=".apk-inspect-temp/games-section-demo/game_item_icon_video.webp" alt="" /></div><div class="label">Video</div></div>
+          </div>
+
+          <!-- Play with friends -->
+          <div class="section-head">
+            <h2>Play with friends</h2>
+            <div class="right">
+              <div class="broadcast">Sara won Ludo!</div>
+              <img class="chest" src=".apk-inspect-temp/games-section-demo/home_game_activity1.webp" alt="Activity" />
+            </div>
+          </div>
+
+          <div class="action-row">
+            <div class="action-btn">
+              <img class="bg" src=".apk-inspect-temp/games-section-demo/home_game_create.webp" alt="" />
+              <div class="inner">
+                <img class="title" src=".apk-inspect-temp/games-section-demo/home_game_create_text.webp" alt="" />
+                <span>Private room</span>
+              </div>
+            </div>
+            <div class="action-btn">
+              <img class="bg" src=".apk-inspect-temp/games-section-demo/home_game_search.webp" alt="" />
+              <div class="inner">
+                <img class="title" src=".apk-inspect-temp/games-section-demo/home_game_search_text.webp" alt="" />
+                <span>Room/Friends</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Find friends list -->
+          <div class="find-title">Find friends</div>
+
+          <div class="friend-row">
+            <img class="avatar" src=".apk-inspect-temp/games-section-demo/game_sheep_def_avatar.webp" alt="" />
+            <div class="info">
+              <div class="name">Aisha_92</div>
+              <div class="meta"><div class="flag"></div><span class="age">♀ 24</span></div>
+            </div>
+            <img class="game-badge" src=".apk-inspect-temp/games-section-demo/game_room_icon_ludo.webp" alt="" />
+            <img class="enter" src=".apk-inspect-temp/games-section-demo/home_game_enter_icon.webp" alt="" />
+          </div>
+
+          <div class="friend-row">
+            <img class="avatar" src=".apk-inspect-temp/games-section-demo/game_sheep_def_avatar.webp" alt="" />
+            <div class="info">
+              <div class="name">MikePlayz</div>
+              <div class="meta"><div class="flag" style="background:linear-gradient(#b22234 33%,#fff 33% 66%,#3c3b6e 66%)"></div><span class="age">♂ 19</span></div>
+            </div>
+            <img class="game-badge" src=".apk-inspect-temp/games-section-demo/game_room_icon_uno.webp" alt="" />
+            <img class="enter" src=".apk-inspect-temp/games-section-demo/home_game_enter_icon.webp" alt="" />
+          </div>
+
+          <div class="friend-row">
+            <img class="avatar" src=".apk-inspect-temp/games-section-demo/game_sheep_def_avatar.webp" alt="" />
+            <div class="info">
+              <div class="name">DominoKing</div>
+              <div class="meta"><div class="flag" style="background:#009639"></div><span class="age">♂ 31</span></div>
+            </div>
+            <img class="game-badge" src=".apk-inspect-temp/games-section-demo/game_room_icon_domino.webp" alt="" />
+            <img class="enter" src=".apk-inspect-temp/games-section-demo/home_game_enter_icon.webp" alt="" />
+          </div>
+
+          <div class="friend-row">
+            <img class="avatar" src=".apk-inspect-temp/games-section-demo/game_sheep_def_avatar.webp" alt="" />
+            <div class="info">
+              <div class="name">CrushQueen</div>
+              <div class="meta"><div class="flag" style="background:linear-gradient(#ff9933 50%,#fff 50%)"></div><span class="age">♀ 22</span></div>
+            </div>
+            <img class="game-badge" src=".apk-inspect-temp/games-section-demo/game_room_icon_crush.webp" alt="" />
+            <img class="enter" src=".apk-inspect-temp/games-section-demo/home_game_enter_icon.webp" alt="" />
+          </div>
+
+          <!-- Bottom nav -->
+          <nav class="bottom-nav">
+            <div class="tab"><img src=".apk-inspect-temp/games-section-demo/icon_random_unselected.webp" alt="" /><span>Match</span></div>
+            <div class="tab"><img src=".apk-inspect-temp/games-section-demo/icon_group_unselected.webp" alt="" /><span>Group</span></div>
+            <div class="tab selected"><img src=".apk-inspect-temp/games-section-demo/icon_game_selected.webp" alt="" /><span>Game</span></div>
+            <div class="tab"><img src=".apk-inspect-temp/games-section-demo/icon_chat_unselected.webp" alt="" /><span>Chat</span></div>
+          </nav>
+        </div>
+      </div>
+    </div>
+
+    <!-- Asset gallery -->
+    <div class="gallery">
+      <h2>All extracted Games assets (42 files)</h2>
+
+      <h3>Screen background &amp; header</h3>
+      <div class="asset-grid">
+        <div class="asset-card"><div class="preview dark-bg"><img src=".apk-inspect-temp/games-section-demo/home_game_bg.webp" alt="" /></div><div class="name">home_game_bg.webp</div></div>
+        <div class="asset-card"><div class="preview"><img src=".apk-inspect-temp/games-section-demo/bill_diamond.png" alt="" /></div><div class="name">bill_diamond.png</div></div>
+        <div class="asset-card"><div class="preview"><img src=".apk-inspect-temp/games-section-demo/ludo_prepare_icon_add.webp" alt="" /></div><div class="name">ludo_prepare_icon_add.webp</div></div>
+        <div class="asset-card"><div class="preview"><img src=".apk-inspect-temp/games-section-demo/home_game_activity1.webp" alt="" /></div><div class="name">home_game_activity1.webp</div></div>
+      </div>
+
+      <h3>Quick play banners — Ludo &amp; UNO</h3>
+      <div class="asset-grid">
+        <div class="asset-card"><div class="preview"><img src=".apk-inspect-temp/games-section-demo/home_game_ludo.webp" alt="" /></div><div class="name">home_game_ludo.webp</div></div>
+        <div class="asset-card"><div class="preview"><img src=".apk-inspect-temp/games-section-demo/home_game_ludo_text.webp" alt="" /></div><div class="name">home_game_ludo_text.webp</div></div>
+        <div class="asset-card"><div class="preview"><img src=".apk-inspect-temp/games-section-demo/home_game_uno.webp" alt="" /></div><div class="name">home_game_uno.webp</div></div>
+        <div class="asset-card"><div class="preview"><img src=".apk-inspect-temp/games-section-demo/home_game_uno_text.webp" alt="" /></div><div class="name">home_game_uno_text.webp</div></div>
+        <div class="asset-card"><div class="preview"><img src=".apk-inspect-temp/games-section-demo/home_game_game_number.webp" alt="" /></div><div class="name">home_game_game_number.webp</div></div>
+      </div>
+
+      <h3>Game grid icons (bundled in APK)</h3>
+      <div class="asset-grid">
+        <div class="asset-card"><div class="preview"><img src=".apk-inspect-temp/games-section-demo/game_item_icon_ludo.webp" alt="" /></div><div class="name">game_item_icon_ludo.webp</div></div>
+        <div class="asset-card"><div class="preview"><img src=".apk-inspect-temp/games-section-demo/game_item_icon_uno.webp" alt="" /></div><div class="name">game_item_icon_uno.webp</div></div>
+        <div class="asset-card"><div class="preview"><img src=".apk-inspect-temp/games-section-demo/game_item_icon_domino.webp" alt="" /></div><div class="name">game_item_icon_domino.webp</div></div>
+        <div class="asset-card"><div class="preview"><img src=".apk-inspect-temp/games-section-demo/game_item_icon_crush.webp" alt="" /></div><div class="name">game_item_icon_crush.webp</div></div>
+        <div class="asset-card"><div class="preview"><img src=".apk-inspect-temp/games-section-demo/game_item_icon_baloot.webp" alt="" /></div><div class="name">game_item_icon_baloot.webp</div></div>
+        <div class="asset-card"><div class="preview"><img src=".apk-inspect-temp/games-section-demo/game_item_icon_pk.webp" alt="" /></div><div class="name">game_item_icon_pk.webp</div></div>
+        <div class="asset-card"><div class="preview"><img src=".apk-inspect-temp/games-section-demo/game_item_icon_video.webp" alt="" /></div><div class="name">game_item_icon_video.webp</div></div>
+      </div>
+
+      <h3>Action buttons — Create room &amp; Search</h3>
+      <div class="asset-grid">
+        <div class="asset-card"><div class="preview"><img src=".apk-inspect-temp/games-section-demo/home_game_create.webp" alt="" /></div><div class="name">home_game_create.webp</div></div>
+        <div class="asset-card"><div class="preview"><img src=".apk-inspect-temp/games-section-demo/home_game_create_text.webp" alt="" /></div><div class="name">home_game_create_text.webp</div></div>
+        <div class="asset-card"><div class="preview"><img src=".apk-inspect-temp/games-section-demo/home_game_search.webp" alt="" /></div><div class="name">home_game_search.webp</div></div>
+        <div class="asset-card"><div class="preview"><img src=".apk-inspect-temp/games-section-demo/home_game_search_text.webp" alt="" /></div><div class="name">home_game_search_text.webp</div></div>
+      </div>
+
+      <h3>Friend room list</h3>
+      <div class="asset-grid">
+        <div class="asset-card"><div class="preview dark-bg"><img src=".apk-inspect-temp/games-section-demo/home_game_item_bg.9.png" alt="" /></div><div class="name">home_game_item_bg.9.png</div></div>
+        <div class="asset-card"><div class="preview"><img src=".apk-inspect-temp/games-section-demo/home_game_enter_icon.webp" alt="" /></div><div class="name">home_game_enter_icon.webp</div></div>
+        <div class="asset-card"><div class="preview"><img src=".apk-inspect-temp/games-section-demo/game_room_icon_ludo.webp" alt="" /></div><div class="name">game_room_icon_ludo.webp</div></div>
+        <div class="asset-card"><div class="preview"><img src=".apk-inspect-temp/games-section-demo/game_room_icon_uno.webp" alt="" /></div><div class="name">game_room_icon_uno.webp</div></div>
+        <div class="asset-card"><div class="preview"><img src=".apk-inspect-temp/games-section-demo/game_room_icon_domino.webp" alt="" /></div><div class="name">game_room_icon_domino.webp</div></div>
+        <div class="asset-card"><div class="preview"><img src=".apk-inspect-temp/games-section-demo/game_room_icon_crush.webp" alt="" /></div><div class="name">game_room_icon_crush.webp</div></div>
+      </div>
+
+      <h3>Room game icons &amp; in-game UI</h3>
+      <div class="asset-grid">
+        <div class="asset-card"><div class="preview"><img src=".apk-inspect-temp/games-section-demo/room_game_ludo_icon.webp" alt="" /></div><div class="name">room_game_ludo_icon.webp</div></div>
+        <div class="asset-card"><div class="preview"><img src=".apk-inspect-temp/games-section-demo/room_game_uno_icon.webp" alt="" /></div><div class="name">room_game_uno_icon.webp</div></div>
+        <div class="asset-card"><div class="preview"><img src=".apk-inspect-temp/games-section-demo/room_game_domino_icon.webp" alt="" /></div><div class="name">room_game_domino_icon.webp</div></div>
+        <div class="asset-card"><div class="preview"><img src=".apk-inspect-temp/games-section-demo/room_game_crush_icon.webp" alt="" /></div><div class="name">room_game_crush_icon.webp</div></div>
+        <div class="asset-card"><div class="preview"><img src=".apk-inspect-temp/games-section-demo/room_game_baloot_icon.webp" alt="" /></div><div class="name">room_game_baloot_icon.webp</div></div>
+        <div class="asset-card"><div class="preview"><img src=".apk-inspect-temp/games-section-demo/game_vs.webp" alt="" /></div><div class="name">game_vs.webp</div></div>
+        <div class="asset-card"><div class="preview"><img src=".apk-inspect-temp/games-section-demo/game_sheep_match_vs.webp" alt="" /></div><div class="name">game_sheep_match_vs.webp</div></div>
+        <div class="asset-card"><div class="preview"><img src=".apk-inspect-temp/games-section-demo/ludo_prepare_icon_start.webp" alt="" /></div><div class="name">ludo_prepare_icon_start.webp</div></div>
+        <div class="asset-card"><div class="preview dark-bg"><img src=".apk-inspect-temp/games-section-demo/ludo_prepare_wait_bg.webp" alt="" /></div><div class="name">ludo_prepare_wait_bg.webp</div></div>
+        <div class="asset-card"><div class="preview"><img src=".apk-inspect-temp/games-section-demo/icon_game_level.webp" alt="" /></div><div class="name">icon_game_level.webp</div></div>
+        <div class="asset-card"><div class="preview"><img src=".apk-inspect-temp/games-section-demo/game_level_medal1.webp" alt="" /></div><div class="name">game_level_medal1.webp</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="note">
+    <strong>What's in the Games section (from APK code):</strong><br/>
+    • <strong>Diamond wallet</strong> — top-left balance + recharge button<br/>
+    • <strong>Quick play</strong> — Ludo &amp; UNO featured banners with live player counts (from API)<br/>
+    • <strong>Game grid</strong> — 3-column scrollable list: Ludo, UNO, Domino, Crush, Baloot, PK, Video (+ more from server)<br/>
+    • <strong>Play with friends</strong> — activity chest, broadcast ticker, Create Private Room, Search Room/Friends<br/>
+    • <strong>Find friends</strong> — scrollable list of users in game rooms (avatar, name, country, age, game badge, enter arrow)<br/>
+    • <strong>Bottom nav</strong> — Game tab highlighted in purple (#9036FF)<br/><br/>
+    <strong>Games supported in APK:</strong> Ludo, UNO, Domino, Crush, Baloot, PK (Sheep Fight), Video chat games, plus H5/web games loaded from server.<br/>
+    <strong>Note:</strong> Friend names/avatars and player counts are loaded live from API — sample data shown for layout demo only.
+  </div>
+</body>
+</html>

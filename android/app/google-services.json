@@ -1,0 +1,98 @@
+{
+  "project_info": {
+    "project_number": "1092328407075",
+    "project_id": "belstream-daa04",
+    "storage_bucket": "belstream-daa04.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1092328407075:android:c2077b1f6187df56ea7196",
+        "android_client_info": {
+          "package_name": "com.dating.rulove"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1092328407075-m93b104pldkih38vetgehabpmn2rcebp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAdEHcQL0xphyKNKb3SXgOzirS002txYCA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1092328407075-m93b104pldkih38vetgehabpmn2rcebp.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1092328407075-3o946j66g05vkrafgjfcq0h5e5j5vggk.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.livestream.touchvoice"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1092328407075:android:fa16682a494750e2ea7196",
+        "android_client_info": {
+          "package_name": "com.livestream.touchvoice"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1092328407075-4phfomgmfse4t4lkbfsoc8rdt061ep9s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.livestream.touchvoice",
+            "certificate_hash": "a2b04e5e9b4e019bde93bb98f1f4934e001b38de"
+          }
+        },
+        {
+          "client_id": "1092328407075-628snmh5dm8splgf72v1j1s8k1iq1mag.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.livestream.touchvoice",
+            "certificate_hash": "9f0d2d3ae7077792f887fa4eba2186efc09a2321"
+          }
+        },
+        {
+          "client_id": "1092328407075-m93b104pldkih38vetgehabpmn2rcebp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAdEHcQL0xphyKNKb3SXgOzirS002txYCA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1092328407075-m93b104pldkih38vetgehabpmn2rcebp.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1092328407075-3o946j66g05vkrafgjfcq0h5e5j5vggk.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.livestream.touchvoice"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

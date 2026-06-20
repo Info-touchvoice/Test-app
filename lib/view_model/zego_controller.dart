@@ -1,0 +1,792 @@
+import 'dart:async';
+import 'dart:convert';
+import 'dart:io';
+import 'dart:typed_data';
+
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:share_plus/share_plus.dart';
+import 'package:tiki/parse/BattleStreamingModel.dart';
+import 'package:tiki/parse/LiveStreamingModel.dart';
+import 'package:tiki/view_model/animation_controller.dart';
+import 'package:tiki/view_model/live_controller.dart';
+import 'package:tiki/view_model/battle_controller.dart';
+import 'package:tiki/view_model/userViewModel.dart';
+import '../helpers/quick_help.dart';
+import '../parse/UserModel.dart';
+import '../utils/Utils.dart';
+import '../utils/theme/colors_constant.dart';
+import '../view/screens/live/multi_live_streaming/widgets/multi_guest_grid_settings.dart';
+import '../view/screens/live/single_live_streaming/single_audience_live/widgets/invitation_dialog.dart';
+import '../view/screens/live/zegocloud/widgets/zego_utils.dart';
+import '../view/screens/live/audio_live_streaming/room_settings/audio_room_layout_helper.dart';
+import '../view/screens/live/zegocloud/zim_zego_sdk/internal/business/audioRoom/layout_config.dart';
+import '../view/screens/live/zegocloud/zim_zego_sdk/internal/business/audioRoom/live_audio_room_seat.dart';
+import '../view/screens/live/zegocloud/zim_zego_sdk/internal/business/business_define.dart';
+import '../view/screens/live/zegocloud/zim_zego_sdk/internal/sdk/zim/Define/zim_room_request.dart';
+import '../view/screens/live/zegocloud/zim_zego_sdk/live_audio_room_manager.dart';
+import '../view/screens/live/zegocloud/zim_zego_sdk/zego_live_streaming_manager.dart';
+import '../view/screens/live/zegocloud/zim_zego_sdk/zego_sdk_manager.dart';
+import '../view/screens/live/zegocloud/zim_zego_sdk/zegocloud_sdk.dart';
+import '../view/widgets/custom_buttons.dart';
+
+
+
+class ZegoController extends GetxController {
+  ZegoLiveRole role;
+  final String streamingType;
+  bool isCameraOn = true;
+
+  UserModel currentUser = Get.find<UserViewModel>().currentUser;
+  var liveStreamingManager = ZegoLiveStreamingManager();
+  var expressService = ZEGOSDKManager().expressService;
+  List<StreamSubscription> subscriptions = [];
+  bool showingPKDialog = false;
+  ZegoScreenCaptureSource? screenSharingSource;
+  final liveAudioRoomManager = ZegoLiveAudioRoomManager.instance;
+  ValueNotifier<bool> isApplyStateNoti = ValueNotifier(false);
+  String? currentRequestID;
+  RoomRequest? myRoomRequest;
+  String appDocumentsPath = '';
+
+
+
+  bool isCameraEnabled = true;
+
+
+  bool isCurrentUserHost(){
+    return liveStreamingManager.isLocalUserHost();
+  }
+
+  Future<void> audienceZegoLiveConfig()async {
+      createEngine(currentUser.getUid.toString(), currentUser.getFullName.toString(), currentUser.getAvatar!.url.toString()).then((value){
+        update();
+        liveStreamingManager.currentUserRoleNoti.value = ZegoLiveRole.audience;
+        expressService.useFrontCamera(true);
+        if(expressService.currentUser!=null)
+        expressService.currentUser!.isCameraFront.value=true;
+        ZEGOSDKManager.instance.loginRoom(Get.find<LiveViewModel>().liveStreamingModel.getAuthor!.getUid.toString(), ZegoScenario.Broadcast).then(
+              (value) {
+                update();
+                if (value.errorCode != 0) {
+                  QuickHelp.showSnackBar(title: 'Something went wrong!');
+            }
+                // Multi-guest: enable speaking indicator based on sound levels.
+                if (value.errorCode == 0 &&
+                    streamingType == LiveStreamingModel.keyTypeMultiGuestLive) {
+                  ZEGOSDKManager.instance.expressService
+                      .startSoundLevelMonitor(millisecond: 200);
+                }
+          },
+        );
+      });
+    }
+
+    streamerZegoLiveConfig(){
+      createEngine(currentUser.getUid.toString(), currentUser.getFullName.toString(), currentUser.getAvatar!.url.toString()).then((value){
+        update();
+        liveStreamingManager.hostNoti.value = ZEGOSDKManager.instance.currentUser;
+        expressService.useFrontCamera(true);
+        if(expressService.currentUser!=null)
+          expressService.currentUser!.isCameraFront.value=true;
+          expressService.currentUser!.isCamerOnNotifier.value=isCameraOn;
+        ZEGOSDKManager.instance.currentUser?.coinsNotifier.value = Get.find<UserViewModel>().currentUser.getCoins ?? 0;
+        ZegoLiveStreamingManager().currentUserRoleNoti.value = ZegoLiveRole.host;
+        ZEGOSDKManager.instance.expressService.turnCameraOn(isCameraOn);
+        ZEGOSDKManager.instance.expressService.turnMicrophoneOn(true);
+        ZEGOSDKManager.instance.expressService.startPreview( );
+        startLive();
+      });
+    }
+
+
+    //----------------- Audio Live Section------------------
+    streamerAudioLiveConfig(){
+      createEngine(
+        currentUser.getUid.toString(),
+        currentUser.getFullName.toString(),
+        currentUser.getAvatar!.url.toString(),
+        scenario: ZegoScenario.HighQualityChatroom,
+      ).then((value) async {
+        // Total mic seats (1–20). Host defaults to seat 1 (Zego index 0).
+        final audioSeats =
+            Get.find<LiveViewModel>().liveStreamingModel.getAudioSeats ?? 8;
+        final rowConfigs =
+            AudioRoomLayoutHelper.buildRowConfigs(audioSeats);
+
+        ZegoLiveAudioRoomManager.instance.initWithConfig(
+            ZegoLiveAudioRoomLayoutConfig(rowConfigs: rowConfigs), ZegoLiveRole.host);
+        await liveAudioRoomManager.loadLocalLockedSeats();
+
+        final roomId = Get
+            .find<LiveViewModel>()
+            .liveStreamingModel
+            .getAuthor!
+            .getUid
+            .toString();
+        final value = await ZEGOSDKManager.instance.loginRoom(
+            roomId, ZegoScenario.HighQualityChatroom, token: '');
+        if (value.errorCode == 0) {
+          ZEGOSDKManager.instance.expressService.startSoundLevelMonitor(millisecond: 200);
+          ZEGOSDKManager().expressService.turnMicrophoneOn(true);
+          await hostTakeSeat();
+          Get.find<LiveViewModel>().startLive();
+        } else {
+          QuickHelp.showSnackBar(title: 'Could not connect to the room. Please try again.');
+        }
+      });
+    }
+
+
+    audienceAudioLiveConfig() {
+      // Keep the same layout for audience so seat indices match between all users.
+      final audioSeats =
+          Get.find<LiveViewModel>().liveStreamingModel.getAudioSeats ?? 8;
+      final rowConfigs = AudioRoomLayoutHelper.buildRowConfigs(audioSeats);
+
+      ZegoLiveAudioRoomManager.instance.initWithConfig(
+          ZegoLiveAudioRoomLayoutConfig(rowConfigs: rowConfigs), ZegoLiveRole.audience);
+      createEngine(
+        currentUser.getUid.toString(),
+        currentUser.getFullName.toString(),
+        currentUser.getAvatar!.url.toString(),
+        scenario: ZegoScenario.HighQualityChatroom,
+      ).then((value) async {
+        update();
+        await liveAudioRoomManager.loadLocalLockedSeats();
+        final roomId =
+            Get.find<LiveViewModel>().liveStreamingModel.getAuthor!.getUid.toString();
+        final loginResult = await ZEGOSDKManager.instance.loginRoom(
+            roomId, ZegoScenario.HighQualityChatroom, token: '');
+        if (loginResult.errorCode == 0) {
+          ZEGOSDKManager.instance.expressService.startSoundLevelMonitor(millisecond: 200);
+          await hostTakeSeat();
+        } else {
+          QuickHelp.showSnackBar(title: 'Could not connect to the room. Please try again.');
+        }
+      }).onError((error, stackTrace) {
+        QuickHelp.showSnackBar(title: 'Something went wrong!');
+      });
+    }
+
+  Future<bool> ensureAudioRoomJoined() async {
+    final roomId =
+        Get.find<LiveViewModel>().liveStreamingModel.getAuthor!.getUid.toString();
+    if (ZEGOSDKManager.instance.isInRoom &&
+        ZEGOSDKManager.instance.expressService.currentRoomID == roomId) {
+      return true;
+    }
+    final result = await ZEGOSDKManager.instance.loginRoom(
+      roomId,
+      ZegoScenario.HighQualityChatroom,
+      token: '',
+    );
+    return result.errorCode == 0;
+  }
+
+  exitCurrentJoinOtherSession(LiveStreamingModel liveStreaming){
+    unSubscribeZegoService().then((value){
+      liveStreamingManager
+            ..leaveRoom()
+            ..uninit();
+        }).then((value) {
+      audienceZegoLiveConfig().then((value){
+        subscribeZegoService();
+      });
+        });
+
+    }
+
+  exitAudioCurrentJoinOtherSession(LiveStreamingModel liveStreaming){
+    unSubscribeAudioZegoService().then((value){
+      liveStreamingManager
+        ..uninit();
+    }).then((value) {
+      audienceAudioLiveConfig().then((value){
+        subscribeZegoAudioService();
+      });
+    });
+
+
+  }
+
+
+  Future<void> hostTakeSeat() async {
+    if (role == ZegoLiveRole.host) {
+      //take seat
+      await liveAudioRoomManager.setSelfHost();
+      final result = await liveAudioRoomManager.takeSeat(0);
+      if (result != null &&
+          !result.errorKeys.contains('0')) {
+        openMicAndStartPublishStream();
+      }
+    }
+  }
+
+  int getLocalUserSeatIndex() {
+    final currentUserID = ZEGOSDKManager.instance.currentUser?.userID;
+    if (currentUserID == null) return -1;
+    for (final element in liveAudioRoomManager.seatList) {
+      if (element.currentUser.value?.userID == currentUserID) {
+        return element.seatIndex;
+      }
+    }
+    return -1;
+  }
+
+  /// Audio Live: take or switch to any empty seat. Host defaults to seat 1 (index 0).
+  Future<void> takeOrSwitchSeat(int toSeatIndex) async {
+    if (liveAudioRoomManager.isSeatIndexLocked(toSeatIndex)) {
+      QuickHelp.showSnackBar(title: 'This seat is locked');
+      return;
+    }
+
+    if (liveAudioRoomManager.isLockSeat.value && role != ZegoLiveRole.host) {
+      QuickHelp.showSnackBar(title: 'Seats are locked by the host');
+      return;
+    }
+
+    if (!await ensureAudioRoomJoined()) {
+      QuickHelp.showSnackBar(title: 'Connecting to room failed. Please try again.');
+      return;
+    }
+
+    final fromSeatIndex = getLocalUserSeatIndex();
+    try {
+      if (fromSeatIndex == -1) {
+        final result = await liveAudioRoomManager.takeSeat(toSeatIndex);
+        if (result == null) return;
+        if (!result.errorKeys.contains(toSeatIndex.toString())) {
+          openMicAndStartPublishStream();
+          update();
+        } else {
+          QuickHelp.showSnackBar(title: 'Seat is already taken');
+        }
+        return;
+      }
+
+      final ok = await liveAudioRoomManager.switchSeatSafely(fromSeatIndex, toSeatIndex);
+      if (!ok) {
+        QuickHelp.showSnackBar(title: 'Seat is already taken');
+      } else {
+        update();
+      }
+    } catch (_) {
+      QuickHelp.showSnackBar(title: 'Could not take seat. Please try again.');
+    }
+  }
+
+  void openMicAndStartPublishStream() {
+    ZEGOSDKManager.instance.expressService.turnCameraOn(false);
+    ZEGOSDKManager.instance.expressService.turnMicrophoneOn(true);
+    ZEGOSDKManager.instance.expressService
+        .startPublishingStream(generateStreamID());
+  }
+
+  String generateStreamID() {
+    final userID = ZEGOSDKManager.instance.currentUser?.userID ?? '';
+    final roomID = ZEGOSDKManager.instance.expressService.currentRoomID;
+    final streamID =
+        '${roomID}_${userID}_${liveAudioRoomManager.roleNoti.value ==
+        ZegoLiveRole.host ? 'host' : 'coHost'}';
+    return streamID;
+  }
+
+  set setLockSeat(bool value){
+    liveAudioRoomManager.isLockSeat = ValueNotifier(value);
+  }
+
+  ZegoLiveAudioRoomSeat getRoomSeatWithIndex(int seatIndex) {
+    for (final element in ZegoLiveAudioRoomManager.instance.seatList) {
+      if (element.seatIndex == seatIndex) {
+        return element;
+      }
+    }
+    return ZegoLiveAudioRoomSeat(0, 0, 0);
+  }
+
+  void updateAudioSeatCount(int coHostCount) {
+    if (streamingType != LiveStreamingModel.keyTypeAudioLive) return;
+    liveAudioRoomManager.reconfigureAudioSeats(coHostCount);
+    update();
+  }
+
+
+  subscribeZegoAudioService(){
+    final zimService = ZEGOSDKManager.instance.zimService;
+    subscriptions.addAll([
+      zimService.onInComingRoomRequestStreamCtrl.stream
+          .listen(onInComingAudioRoomRequest),
+      zimService.onOutgoingRoomRequestAcceptedStreamCtrl.stream
+          .listen(onOutgoingRoomAudioRequestAccepted),
+      zimService.onOutgoingRoomRequestRejectedStreamCtrl.stream
+          .listen(onOutgoingRoomAudioRequestRejected),
+      zimService.onRoomCommandReceivedEventStreamCtrl.stream
+          .listen(onAudioRoomCommandReceived)
+    ]);
+  }
+
+  void onInComingAudioRoomRequest(OnInComingRoomRequestReceivedEvent event) {
+  }
+
+  void onOutgoingRoomAudioRequestAccepted(OnOutgoingRoomRequestAcceptedEvent event) {
+    for (final seat in ZegoLiveAudioRoomManager.instance.seatList) {
+      if (seat.currentUser.value == null) {
+        ZegoLiveAudioRoomManager.instance
+            .takeSeat(seat.seatIndex)
+            .then((value) {
+          isApplyStateNoti.value = false;
+          openMicAndStartPublishStream();
+        });
+        break;
+      }
+    }
+  }
+
+  void onAudioRoomCommandReceived(OnRoomCommandReceivedEvent event) {
+    Map<String, dynamic> messageMap = jsonDecode(event.command);
+    if (messageMap.keys.contains('room_command_type')) {
+      final type = messageMap['room_command_type'];
+      final receiverID = messageMap['receiver_id'];
+      if (receiverID == ZEGOSDKManager().currentUser?.userID) {
+        if (type == RoomCommandType.muteSpeaker) {
+          QuickHelp.showSnackBar(title: '  You have been muted by the host.  ');
+          ZEGOSDKManager().expressService.turnMicrophoneOn(false);
+        } else if (type == RoomCommandType.unMuteSpeaker) {
+          ZEGOSDKManager().expressService.turnMicrophoneOn(true);
+        } else if (type == RoomCommandType.kickOutRoom) {
+          if(streamingType != LiveStreamingModel.keyTypeAudioLive)
+            liveStreamingManager.endCoHost();
+          if(streamingType == LiveStreamingModel.keyTypeAudioLive){
+          liveAudioRoomManager.leaveRoom();
+          Navigator.pop(Get.context!);}
+          QuickHelp.showSnackBar(title: '  The host has removed you from co-hosting.  ');
+        }
+        else if (type == RoomCommandType.requestCameraOff) {
+          if(streamingType == LiveStreamingModel.keyTypeMultiGuestLive)
+            showDialog(
+              context: Get.context!,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  backgroundColor: Color(0xFF494848),
+                  elevation: 2,
+                  clipBehavior: Clip.hardEdge,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(
+                          Radius.circular(10.0))),
+                  title: Text(
+                    'Host want you to enable your camera',
+                    style: TextStyle(
+                        color: AppColors.white, fontSize: 14),
+                  ),
+                  actions: [
+                    Row(
+                      children: [
+                        Expanded(
+                          child: PrimaryButton(
+                            title: "No",
+                            textColor: AppColors.black,
+                            borderRadius: 35,
+                            borderColor:
+                            AppColors.yellowBtnColor,
+                            onTap: () {
+                              Get.back();
+                            },
+                          ),
+                        ),
+                        SizedBox(
+                          width: 10.w,
+                        ),
+                        Expanded(
+                          child: PrimaryButton(
+                            title: "Yes",
+                            textColor: AppColors.black,
+                            borderRadius: 35,
+                            bgColor: AppColors.yellowBtnColor,
+                            onTap: () {
+                              Get.back();
+                              showModalBottomSheet(
+                                context: context,
+                                shape: const RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(20),
+                                    topRight: Radius.circular(20),
+                                  ),
+                                ),
+                                isScrollControlled: true,
+                                backgroundColor: AppColors.grey500,
+                                builder: (context) => Wrap(
+                                  children: [
+                                      MultiGuestGridSettings(ZEGOSDKManager.instance.expressService.currentUser),
+                                  ],
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                );
+              },
+            );
+        }
+      }
+    }
+  }
+
+  void onOutgoingRoomAudioRequestRejected(OnOutgoingRoomRequestRejectedEvent event) {
+    isApplyStateNoti.value = false;
+    currentRequestID = null;
+  }
+
+  //----------------- Audio Live Section------------------
+
+
+  //------------Multi Live Section started------------------------
+  Future<void> applyCoHost() async {
+    final signaling = jsonEncode({
+      'room_request_type': RoomRequestType.audienceApplyToBecomeCoHost,
+    });
+    ZEGOSDKManager.instance.zimService
+        .sendRoomRequest(ZegoLiveStreamingManager.instance.hostNoti.value?.userID ?? '', signaling)
+        .then((value) {
+      isApplyStateNoti.value = true;
+      myRoomRequest = ZEGOSDKManager.instance.zimService
+          .roomRequestMapNoti.value[value.requestID];
+
+    }).catchError((error) {
+      QuickHelp.showAppNotificationAdvanced(title: 'apply to co-host failed!', context: Get.context!);
+
+    });
+  }
+
+  Future<void> cancelCoHostApplication(RoomRequest? myRoomRequest, ValueNotifier<bool> applying)async {
+    ZEGOSDKManager.instance.zimService
+        .cancelRoomRequest(myRoomRequest?.requestID ?? '')
+        .then((value) {
+      applying.value = false;
+    }).catchError((error) {
+      QuickHelp.showAppNotificationAdvanced(title: 'Cancel the application failed!', context: Get.context!);
+
+    });
+
+  }
+
+  Future<void> endCoHost() async {
+    ZegoLiveStreamingManager.instance.endCoHost();
+
+  }
+
+  //------------Multi Live Section ended--------------------------
+
+
+  void startLive() {
+    liveStreamingManager.startLive(Get.find<LiveViewModel>().liveStreamingModel.getAuthor!.getUid.toString()).then((value) {
+      if (value.errorCode != 0) {
+
+        QuickHelp.showSnackBar(title: 'Something went wrong!');
+
+      } else {
+        // Multi-guest: enable speaking indicator based on sound levels.
+        if (streamingType == LiveStreamingModel.keyTypeMultiGuestLive) {
+          ZEGOSDKManager.instance.expressService
+              .startSoundLevelMonitor(millisecond: 200);
+        }
+        ZEGOSDKManager.instance.expressService.startPublishingStream(liveStreamingManager.hostStreamID()).then((value){
+          // Persist room/stream identifiers so admin panel can join the correct room.
+          try {
+            final liveVm = Get.find<LiveViewModel>();
+            liveVm.liveStreamingModel.setRoomId = liveVm.liveStreamingModel.getAuthor!.getUid.toString();
+            liveVm.liveStreamingModel.setStreamId = liveStreamingManager.hostStreamID();
+          } catch (_) {}
+
+          Get.find<LiveViewModel>().startLive();
+          update();
+        });
+      }
+    }).catchError((error) {
+
+        QuickHelp.showSnackBar(title: 'Something went wrong!');
+
+    });
+  }
+
+
+  void sendPkBattleRequest(int uid, BuildContext context){
+    ZegoLiveStreamingManager().sendPKBattlesStartRequest(uid.toString()).then((value) {
+      if (value.info.errorInvitees.map((e) => e.userID).contains(uid.toString())) {
+        QuickHelp.showAppNotificationAdvanced(title: 'start pk failed', context: context);
+      }
+      else{
+        QuickHelp.showAppNotification(title: "The invitation has been sent successfully", context: context, isError: false);
+      }
+    }).catchError((error) {
+      QuickHelp.showAppNotificationAdvanced(title: 'start pk failed', context: context);
+    });
+  }
+
+
+  void subscribeZegoService(){
+    liveStreamingManager.init();
+    final zimService = ZEGOSDKManager().zimService;
+    final expressService = ZEGOSDKManager().expressService;
+
+    subscriptions.addAll([
+      liveStreamingManager.incomingPKRequestStreamCtrl.stream.listen(onIncomingPKRequestReceived),
+      liveStreamingManager.incomingPKRequestCancelStreamCtrl.stream.listen(onIncomingPKRequestCancelled),
+      liveStreamingManager.outgoingPKRequestAcceptStreamCtrl.stream.listen(onOutgoingPKRequestAccepted),
+      liveStreamingManager.outgoingPKRequestRejectedStreamCtrl.stream.listen(onOutgoingPKRequestRejected),
+      liveStreamingManager.incomingPKRequestTimeoutStreamCtrl.stream.listen(onIncomingPKRequestTimeout),
+      zimService.onOutgoingRoomRequestAcceptedStreamCtrl.stream.listen(onOutgoingRoomRequestAccepted),
+      zimService.onOutgoingRoomRequestRejectedStreamCtrl.stream.listen(onOutgoingRoomRequestRejected),
+      zimService.onRoomCommandReceivedEventStreamCtrl.stream.listen(onAudioRoomCommandReceived),
+      if(streamingType != LiveStreamingModel.keyTypeMultiGuestLive)
+      liveStreamingManager.onPKStartStreamCtrl.stream.listen(onPKStart),
+      if(streamingType != LiveStreamingModel.keyTypeMultiGuestLive)
+        liveStreamingManager.onPKEndStreamCtrl.stream.listen(onPKEnd)
+    ]);
+  }
+
+  Future<void> unSubscribeZegoService() async {
+    if(streamingType==LiveStreamingModel.keyTypeSingleLive || streamingType==LiveStreamingModel.keyTypeMultiGuestLive) {
+      // Stop speaking monitor for video rooms.
+      ZEGOSDKManager.instance.expressService.stopSoundLevelMonitor();
+      ZEGOSDKManager()
+          .expressService
+          .stopPlayingStream(
+          '${ZEGOSDKManager().expressService.currentRoomID}_mix');
+
+      liveStreamingManager
+        ..leaveRoom()
+        ..uninit();
+      ZEGOSDKManager.instance.expressService.stopPreview();
+      for (final subscription in subscriptions) {
+        subscription.cancel();
+      }
+    }
+    else if (streamingType==LiveStreamingModel.keyTypeAudioLive)
+      unSubscribeAudioZegoService();
+  }
+
+  Future<void> unSubscribeAudioZegoService()async {
+    // Stop sound level monitor when leaving audio room.
+    ZEGOSDKManager.instance.expressService.stopSoundLevelMonitor();
+    liveAudioRoomManager.leaveRoom();
+
+    for (final subscription in subscriptions) {
+      subscription.cancel();
+    }
+
+  }
+
+
+  void onOutgoingRoomRequestAccepted(OnOutgoingRoomRequestAcceptedEvent event) {
+    isApplyStateNoti.value = false;
+    liveStreamingManager.startCoHost();
+  }
+
+  void onOutgoingRoomRequestRejected(OnOutgoingRoomRequestRejectedEvent event) {
+     isApplyStateNoti.value = false;
+     QuickHelp.showAppNotificationAdvanced(title: 'Your request to co-host with the host has been refused.', context: Get.context!);
+  }
+
+
+  void onPKStart(dynamic event) {
+
+    Get.find<BattleViewModel>().onPkStart();
+
+    Get.find<AnimationViewModel>().loadBattleAnimation();
+
+    if (!ZegoLiveStreamingManager().isLocalUserHost()) {
+      liveStreamingManager.endCoHost();
+    }
+    if (ZegoLiveStreamingManager().isLocalUserHost()) {
+      for (final RoomRequest element in ZEGOSDKManager.instance.zimService.roomRequestMapNoti.value.values.toList()) {
+        // refuseApplyCohost(element);
+      }
+    }
+  }
+
+  void onIncomingPKRequestReceived(IncomingPKRequestEvent event) {
+    if (showingPKDialog) {
+      return;
+    }
+    showingPKDialog = true;
+    showDialog(
+      context: Get.context!,
+      builder: (context) {
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(20)),
+          ),
+          child: InvitationDialog(
+            onAccept: () {
+              liveStreamingManager.acceptPKBattleRequest(event.requestID);
+              Get.find<BattleViewModel>().fetchBattleModelForPlayerSideLogic(int.parse(event.invitation.inviterID!));
+              Get.back(); },
+            avatar: event.invitation.inviterAvatar!,),
+        );
+      },
+    ).whenComplete(() => showingPKDialog = false);
+  }
+
+  void onOutgoingPKRequestAccepted(OutgoingPKRequestAcceptEvent event) {
+
+    // liveStreamingManager.pkService!.isPrimaryHost.value=true;
+    // ZegoLiveStreamingManager.instance.isPrimaryHost.value=true;
+    // ZegoLiveStreamingManager.instance.pkService!.isPrimaryHost.value=true;
+  }
+
+  void onOutgoingPKRequestRejected(OutgoingPKRequestRejectedEvent event) {
+    // ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('pk request is rejected')));
+  }
+
+  void onIncomingPKRequestCancelled(IncomingPKRequestCancelledEvent event) {
+    // if (showingPKDialog) {
+    //   Navigator.pop(context);
+    // }
+  }
+
+  void onIncomingPKRequestTimeout(IncomingPKRequestTimeoutEvent event) {
+    // if (showingPKDialog) {
+    //   Navigator.pop(context);
+    // }
+  }
+
+
+  void onPKEnd(dynamic event){
+    Get.find<BattleViewModel>().onPkEnd();
+  }
+
+
+  Future<void> startScreenSharing() async {
+    screenSharingSource ??= (await ZegoExpressEngine.instance.createScreenCaptureSource())!;
+    await ZegoExpressEngine.instance.setVideoConfig(
+      ZegoVideoConfig.preset(ZegoVideoConfigPreset.Preset720P)..fps = 10,
+      channel: ZegoPublishChannel.Aux,
+    );
+    await ZegoExpressEngine.instance.setVideoSource(ZegoVideoSourceType.ScreenCapture, channel: ZegoPublishChannel.Aux);
+    screenSharingSource!.startCapture().then((value) async {
+      String streamID = '${ZEGOSDKManager().expressService.currentRoomID}_${ZEGOSDKManager().currentUser?.userID ?? ''}_screen';
+      await ZegoExpressEngine.instance.startPublishingStream(streamID, channel: ZegoPublishChannel.Aux);
+      expressService.isSharingScreen.value = true;
+      update();
+
+    });
+  }
+
+  Future<void> stopScreenSharing() async {
+    await screenSharingSource?.stopCapture();
+    await ZegoExpressEngine.instance.stopPreview(channel: ZegoPublishChannel.Aux);
+    if(role == ZegoLiveRole.host){
+    await ZegoExpressEngine.instance.stopPublishingStream(channel: ZegoPublishChannel.Aux);
+    await ZegoExpressEngine.instance.setVideoSource(ZegoVideoSourceType.None, channel: ZegoPublishChannel.Aux);}
+
+    expressService.isSharingScreen.value = false;
+    if ( expressService.hostScreenViewID != null) {
+      await ZegoExpressEngine.instance.destroyCanvasView(expressService.hostScreenViewID!);
+      expressService.hostScreenViewID = null;
+      expressService.hostScreenView.value = null;
+    }
+  }
+  Future<void> requestPermissions() async {
+    // Request storage permissions
+    PermissionStatus storagePermission = await Permission.storage.request();
+
+    if (storagePermission.isGranted) {
+      print("Storage permission granted.");
+    } else if (storagePermission.isDenied) {
+      print("Storage permission denied.");
+    } else if (storagePermission.isPermanentlyDenied) {
+      openAppSettings();
+    }
+  }
+
+  void startLiveStreamRecording(String recordingPath) {
+    // Initialize the ZegoExpressEngine if not already initialized
+    // Start recording the stream
+    requestPermissions().then((value) => ZegoExpressEngine.instance.startRecordingCapturedData(
+        ZegoDataRecordConfig(
+          "$recordingPath/shahid.mp4",
+          ZegoDataRecordType.Default,
+        ), channel:  ZegoPublishChannel.Main
+    ).then((value) {
+    }));
+
+
+  }
+
+  void stopLiveStreamRecording() {
+    ZegoExpressEngine.instance.stopRecordingCapturedData().then((value) {
+
+    });
+  }
+
+  void onSnapshotButtonClickedHost(BuildContext context) {
+    ZegoExpressEngine.instance.takePublishStreamSnapshot().then((result) {
+
+      ZegoUtils.showImage(context, result.image);
+
+    });
+  }
+
+  void onSnapshotButtonClickedAudience(BuildContext context) {
+    ZegoExpressEngine.instance.takePlayStreamSnapshot(ZegoLiveStreamingManager.instance.hostNoti.value!.streamID.toString()).then((result) async {
+
+      ZegoUtils.showImage(context, result.image);
+
+
+    });
+  }
+
+
+  ZegoController(this.role, this.streamingType,{this.isCameraOn=true});
+
+  @override
+  void onInit() {
+    role=this.role;
+    isCameraOn = this.isCameraOn;
+    if(role==ZegoLiveRole.host){
+      if(streamingType==LiveStreamingModel.keyTypeSingleLive || streamingType==LiveStreamingModel.keyTypeMultiGuestLive)
+      streamerZegoLiveConfig();
+      else if(streamingType==LiveStreamingModel.keyTypeAudioLive)
+       streamerAudioLiveConfig();
+    }
+    else{
+      if(streamingType==LiveStreamingModel.keyTypeSingleLive || streamingType==LiveStreamingModel.keyTypeMultiGuestLive)
+        audienceZegoLiveConfig();
+      else if(streamingType==LiveStreamingModel.keyTypeAudioLive)
+        audienceAudioLiveConfig();
+
+    }
+
+    if(streamingType==LiveStreamingModel.keyTypeSingleLive || streamingType==LiveStreamingModel.keyTypeMultiGuestLive)
+    subscribeZegoService();
+    else if (streamingType==LiveStreamingModel.keyTypeAudioLive)
+      subscribeZegoAudioService();
+
+    if (GetPlatform.isAndroid) {
+      getExternalStorageDirectories(type: StorageDirectory.pictures)
+          .then((dir) =>
+      appDocumentsPath = dir == null ? '' : dir.first.path);
+    } else {
+      getApplicationDocumentsDirectory()
+          .then((dir) => appDocumentsPath = dir.path);
+    }
+
+
+    super.onInit();
+  }
+
+  @override
+  void onClose() {
+    unSubscribeZegoService();
+    stopScreenSharing();
+    super.onClose();
+  }
+
+}

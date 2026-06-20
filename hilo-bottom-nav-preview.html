@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TouchVoice — Bottom Navigation (extracted from APK)</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #1a1a2e;
+      color: #eee;
+      min-height: 100vh;
+      padding: 32px 24px 48px;
+    }
+    h1 { font-size: 22px; font-weight: 600; margin-bottom: 6px; }
+    .subtitle { color: #999; font-size: 14px; margin-bottom: 32px; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 28px;
+      max-width: 1200px;
+    }
+    .phone-wrap { display: flex; flex-direction: column; gap: 10px; }
+    .phone-label { font-size: 13px; color: #aaa; font-weight: 500; }
+    .phone {
+      width: 100%;
+      max-width: 320px;
+      border-radius: 28px;
+      overflow: hidden;
+      border: 2px solid #333;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    }
+    .screen {
+      position: relative;
+      height: 520px;
+      display: flex;
+      flex-direction: column;
+    }
+    .screen.dark { background: linear-gradient(180deg, #2d1b4e 0%, #1a0f2e 60%, #120a20 100%); }
+    .screen.light { background: #f5f5f5; }
+    .screen-content {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .placeholder-text {
+      text-align: center;
+      font-size: 13px;
+      opacity: 0.45;
+      line-height: 1.5;
+    }
+    .screen.dark .placeholder-text { color: #fff; }
+    .screen.light .placeholder-text { color: #333; }
+    .bottom-nav {
+      height: 70px;
+      display: flex;
+      align-items: stretch;
+      background: transparent;
+    }
+    .screen.light .bottom-nav {
+      background: #fff;
+      border-top: 1px solid #eee;
+    }
+    .tab {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      padding-bottom: 8px;
+      gap: 5px;
+      cursor: default;
+    }
+    .tab img {
+      width: 27px;
+      height: 17px;
+      object-fit: contain;
+    }
+    .tab span {
+      font-size: 10px;
+      line-height: 1;
+    }
+    .tab.selected span.purple { color: #9036FF; }
+    .tab.selected span.white { color: #ffffff; }
+    .tab.unselected span { color: #999999; }
+    .specs {
+      margin-top: 36px;
+      max-width: 720px;
+      background: #252540;
+      border-radius: 12px;
+      padding: 20px 24px;
+      font-size: 13px;
+      line-height: 1.7;
+      color: #bbb;
+    }
+    .specs strong { color: #ddd; }
+    .specs code { background: #1a1a2e; padding: 2px 6px; border-radius: 4px; font-size: 12px; color: #9036FF; }
+    .icons-row {
+      margin-top: 28px;
+      max-width: 900px;
+    }
+    .icons-row h2 { font-size: 16px; margin-bottom: 14px; font-weight: 600; }
+    .icons-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+    .icon-card {
+      background: #252540;
+      border-radius: 10px;
+      padding: 16px;
+      text-align: center;
+    }
+    .icon-card .label { font-size: 12px; color: #999; margin-bottom: 10px; }
+    .icon-pair { display: flex; justify-content: center; gap: 20px; align-items: center; }
+    .icon-pair img { width: 32px; height: 32px; object-fit: contain; }
+    .icon-pair .state { font-size: 10px; color: #666; margin-top: 4px; }
+    .icon-item { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+    .checker { background: repeating-conic-gradient(#333 0% 25%, #444 0% 50%) 50% / 12px 12px; border-radius: 6px; padding: 8px; }
+  </style>
+</head>
+<body>
+  <h1>TouchVoice Bottom Navigation Bar</h1>
+  <p class="subtitle">Extracted from reference layout APK v4.16.0 — icons &amp; layout specs from decompiled XML + code</p>
+
+  <div class="grid">
+    <div class="phone-wrap">
+      <div class="phone-label">Match tab selected (dark home screen)</div>
+      <div class="phone">
+        <div class="screen dark">
+          <div class="screen-content">
+            <p class="placeholder-text">Home / Match screen<br/>fragment_home_matching</p>
+          </div>
+          <nav class="bottom-nav" aria-label="Main navigation">
+            <div class="tab selected">
+              <img src=".apk-inspect-temp/bottom-nav-demo/icon_random_selected.webp" alt="Match" />
+              <span class="white">Match</span>
+            </div>
+            <div class="tab unselected">
+              <img src=".apk-inspect-temp/bottom-nav-demo/icon_group_unselected.webp" alt="Group" />
+              <span>Group</span>
+            </div>
+            <div class="tab unselected">
+              <img src=".apk-inspect-temp/bottom-nav-demo/icon_game_unselected.webp" alt="Game" />
+              <span>Game</span>
+            </div>
+            <div class="tab unselected">
+              <img src=".apk-inspect-temp/bottom-nav-demo/icon_chat_unselected.webp" alt="Chat" />
+              <span>Chat</span>
+            </div>
+          </nav>
+        </div>
+      </div>
+    </div>
+
+    <div class="phone-wrap">
+      <div class="phone-label">Chat tab selected (light background)</div>
+      <div class="phone">
+        <div class="screen light">
+          <div class="screen-content">
+            <p class="placeholder-text">Chat screen<br/>fragment_home_chat</p>
+          </div>
+          <nav class="bottom-nav" aria-label="Main navigation">
+            <div class="tab unselected">
+              <img src=".apk-inspect-temp/bottom-nav-demo/icon_random_unselected.webp" alt="Match" />
+              <span>Match</span>
+            </div>
+            <div class="tab unselected">
+              <img src=".apk-inspect-temp/bottom-nav-demo/icon_group_unselected.webp" alt="Group" />
+              <span>Group</span>
+            </div>
+            <div class="tab unselected">
+              <img src=".apk-inspect-temp/bottom-nav-demo/icon_game_unselected.webp" alt="Game" />
+              <span>Game</span>
+            </div>
+            <div class="tab selected">
+              <img src=".apk-inspect-temp/bottom-nav-demo/icon_chat_selected.webp" alt="Chat" />
+              <span class="purple">Chat</span>
+            </div>
+          </nav>
+        </div>
+      </div>
+    </div>
+
+    <div class="phone-wrap">
+      <div class="phone-label">Game tab selected</div>
+      <div class="phone">
+        <div class="screen light">
+          <div class="screen-content">
+            <p class="placeholder-text">Game screen<br/>fragment_home_game</p>
+          </div>
+          <nav class="bottom-nav" aria-label="Main navigation">
+            <div class="tab unselected">
+              <img src=".apk-inspect-temp/bottom-nav-demo/icon_random_unselected.webp" alt="Match" />
+              <span>Match</span>
+            </div>
+            <div class="tab unselected">
+              <img src=".apk-inspect-temp/bottom-nav-demo/icon_group_unselected.webp" alt="Group" />
+              <span>Group</span>
+            </div>
+            <div class="tab selected">
+              <img src=".apk-inspect-temp/bottom-nav-demo/icon_game_selected.webp" alt="Game" />
+              <span class="purple">Game</span>
+            </div>
+            <div class="tab unselected">
+              <img src=".apk-inspect-temp/bottom-nav-demo/icon_chat_unselected.webp" alt="Chat" />
+              <span>Chat</span>
+            </div>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="icons-row">
+    <h2>All tab icons (selected vs unselected)</h2>
+    <div class="icons-grid">
+      <div class="icon-card">
+        <div class="label">Match</div>
+        <div class="icon-pair">
+          <div class="icon-item"><div class="checker"><img src=".apk-inspect-temp/bottom-nav-demo/icon_random_selected.webp" alt="" /></div><div class="state">selected</div></div>
+          <div class="icon-item"><div class="checker"><img src=".apk-inspect-temp/bottom-nav-demo/icon_random_unselected.webp" alt="" /></div><div class="state">unselected</div></div>
+        </div>
+      </div>
+      <div class="icon-card">
+        <div class="label">Group</div>
+        <div class="icon-pair">
+          <div class="icon-item"><div class="checker"><img src=".apk-inspect-temp/bottom-nav-demo/icon_group_selected.webp" alt="" /></div><div class="state">selected</div></div>
+          <div class="icon-item"><div class="checker"><img src=".apk-inspect-temp/bottom-nav-demo/icon_group_unselected.webp" alt="" /></div><div class="state">unselected</div></div>
+        </div>
+      </div>
+      <div class="icon-card">
+        <div class="label">Game</div>
+        <div class="icon-pair">
+          <div class="icon-item"><div class="checker"><img src=".apk-inspect-temp/bottom-nav-demo/icon_game_selected.webp" alt="" /></div><div class="state">selected</div></div>
+          <div class="icon-item"><div class="checker"><img src=".apk-inspect-temp/bottom-nav-demo/icon_game_unselected.webp" alt="" /></div><div class="state">unselected</div></div>
+        </div>
+      </div>
+      <div class="icon-card">
+        <div class="label">Chat</div>
+        <div class="icon-pair">
+          <div class="icon-item"><div class="checker"><img src=".apk-inspect-temp/bottom-nav-demo/icon_chat_selected.webp" alt="" /></div><div class="state">selected</div></div>
+          <div class="icon-item"><div class="checker"><img src=".apk-inspect-temp/bottom-nav-demo/icon_chat_unselected.webp" alt="" /></div><div class="state">unselected</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="specs">
+    <strong>Source files in APK:</strong><br/>
+    Layout: <code>res/layout/fragment_home.xml</code> + <code>base_layout_custom_tab_item.xml</code><br/>
+    Tab logic: <code>MainTabLayoutAdapter.kt</code> → 4 tabs: Match, Group, Game, Chat<br/>
+    Bar height: <strong>70dp</strong> · Icon: <strong>27×17dp</strong> · Label: <strong>10sp</strong><br/>
+    Selected color: <strong>#9036FF</strong> (Match uses white <strong>#FFFFFF</strong> on dark bg) · Unselected: <strong>#999999</strong>
+  </div>
+</body>
+</html>

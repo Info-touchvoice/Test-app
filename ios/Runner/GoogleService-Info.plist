@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>1092328407075-3o946j66g05vkrafgjfcq0h5e5j5vggk.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.1092328407075-3o946j66g05vkrafgjfcq0h5e5j5vggk</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>1092328407075-ktcsg38s6ctdv92jvmd3rojgms732ac4.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBt7hbgYE11TUJjCFGSBQahIBziWmnq9co</string>
+	<key>GCM_SENDER_ID</key>
+	<string>1092328407075</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.livestream.touchvoice</string>
+	<key>PROJECT_ID</key>
+	<string>belstream-daa04</string>
+	<key>STORAGE_BUCKET</key>
+	<string>belstream-daa04.firebasestorage.app</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:1092328407075:ios:10e1b1ed9141c1cfea7196</string>
+</dict>
+</plist>
