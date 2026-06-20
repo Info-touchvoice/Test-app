@@ -181,6 +181,7 @@ class _SeatCell extends StatelessWidget {
                 iconSize: metrics.iconSize,
                 nameFontSize: metrics.nameFontSize,
                 labelGap: metrics.labelGap,
+                labelMaxWidth: metrics.cellWidth,
                 compact: metrics.compact,
                 isHost: isHost,
               ),
