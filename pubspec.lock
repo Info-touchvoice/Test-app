@@ -2469,10 +2469,9 @@ packages:
   zego_express_engine:
     dependency: "direct main"
     description:
-      name: zego_express_engine
-      sha256: "2e9ae338f0d934f38c2d94655dcf2392881cf3eb6041bdb1dcbae769c1662ea4"
-      url: "https://pub.dev"
-    source: hosted
+      path: "third_party/zego_express_engine"
+      relative: true
+    source: path
     version: "3.24.1"
   zego_zim:
     dependency: "direct main"

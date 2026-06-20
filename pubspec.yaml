@@ -141,7 +141,8 @@ dependencies:
   fluttertoast: ^9.1.0
 
 
-  zego_express_engine: ^3.24.1
+  zego_express_engine:
+    path: third_party/zego_express_engine
   zego_zim: ^2.29.0+1
   encrypt: ^5.0.1
 #  zego_zim: ^2.12.0
