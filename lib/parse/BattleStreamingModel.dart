@@ -1,6 +1,6 @@
 import 'package:tiki/parse/LiveStreamingModel.dart';
 import 'package:tiki/parse/UserModel.dart';
-import 'package:parse_server_sdk/parse_server_sdk.dart';
+import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 
 import 'TimerModel.dart';
 

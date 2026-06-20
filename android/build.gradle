@@ -1,33 +1,21 @@
-buildscript {
-    ext.kotlin_version = '1.8.22'
-    repositories {
-        google()
-        mavenCentral()
-        maven { url 'https://jitpack.io' }
-
-    }
-
-    dependencies {
-        classpath 'com.android.tools.build:gradle:7.2.2'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath 'com.google.gms:google-services:4.3.15'
-
-        classpath 'com.google.firebase:perf-plugin:1.4.1'
-        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.9.4'
-
-    }
-}
-
 allprojects {
     repositories {
         google()
         mavenCentral()
+        maven { url 'https://jitpack.io' }
         // NOTE: google.bintray.com is deprecated and can break builds due to TLS/cert issues.
         // ExoPlayer + other artifacts are available via google() / mavenCentral().
-        //** add this line
-        configurations.all {
-            resolutionStrategy {
-                force "com.google.android.gms:play-services-location:21.0.1"
+    }
+
+    configurations.configureEach {
+        resolutionStrategy {
+            force "com.google.android.gms:play-services-location:21.0.1"
+            eachDependency { details ->
+                if (details.requested.group == "com.google.firebase" &&
+                        details.requested.name == "firebase-dynamic-links" &&
+                        !details.requested.version) {
+                    details.useVersion "22.1.0"
+                }
             }
         }
     }
@@ -37,8 +25,18 @@ rootProject.buildDir = '../build'
 subprojects {
     project.buildDir = "${rootProject.buildDir}/${project.name}"
     project.evaluationDependsOn(':app')
+
+    gradle.projectsEvaluated {
+        tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach { kotlinTask ->
+            def javaTaskName = kotlinTask.name.replace("Kotlin", "JavaWithJavac")
+            def javaTask = tasks.findByName(javaTaskName)
+            if (javaTask instanceof JavaCompile) {
+                kotlinTask.kotlinOptions.jvmTarget = javaTask.targetCompatibility
+            }
+        }
+    }
 }
 
-task clean(type: Delete) {
-    delete rootProject.buildDir
+tasks.register("clean", Delete) {
+    delete rootProject.layout.buildDirectory
 }

@@ -13,7 +13,7 @@ import 'dart:async';
 import 'dart:io';
 import '../../data/app/setup.dart';
 import '../../helpers/quick_help.dart';
-import 'package:parse_server_sdk/parse_server_sdk.dart';
+import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 
 import '../../parse/UserModel.dart';
 import '../theme/colors_constant.dart';
@@ -127,9 +127,6 @@ static Future<String> _getNewImagePath() async {
 static Future<void> cropPhoto(String path, bool isAvatar, BuildContext context, {bool liveStreamingFile=false, int? avatarNumber, bool backgroundImage=false}) async {
   CroppedFile? croppedFile = await ImageCropper().cropImage(
       sourcePath: path,
-      aspectRatioPresets: [
-        backgroundImage==true ? CropAspectRatioPreset.original : isAvatar == true ? CropAspectRatioPreset.square : CropAspectRatioPreset.ratio16x9,
-      ],
       //maxHeight: 480,
       //maxWidth: 740,
       aspectRatio: backgroundImage==true ? null : isAvatar == true ? CropAspectRatio(ratioX: 4, ratioY: 4) : CropAspectRatio(ratioX: 16, ratioY: 9),

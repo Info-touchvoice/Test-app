@@ -15,7 +15,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart' hide Trans;
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:lottie/lottie.dart';
-import 'package:parse_server_sdk/parse_server_sdk.dart';
+import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tiki/data/app/cloud_params.dart';
@@ -500,7 +500,7 @@ class QuickHelp {
           builder: (context) => widget),
     );
 
-    return result;
+    return result == null ? null : File(result.path);
   }
 
   static void goBack(BuildContext context, {Object? arguments}) {
@@ -1619,7 +1619,7 @@ class QuickHelp {
       rotate: 0,
     );
 
-    return result;
+    return result == null ? null : File(result.path);
   }
 
   static File bytesToFile(Uint8List uint8List) {

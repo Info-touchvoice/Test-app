@@ -1,7 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:parse_server_sdk/parse_server_sdk.dart';
-import 'package:preload_page_view/preload_page_view.dart';
+import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:tiki/utils/colors.dart';
@@ -40,7 +39,7 @@ class _ReelsSingleScreenState extends State<ReelsSingleScreen>
 
   late QueryBuilder<PostsModel> queryBuilder;
 
-  late PreloadPageController _pageController;
+  late PageController _pageController;
   late TabController _tabController;
 
   @override
@@ -49,7 +48,7 @@ class _ReelsSingleScreenState extends State<ReelsSingleScreen>
     QuickHelp.saveCurrentRoute(route: ReelsSingleScreen.route);
 
     _tabController = TabController(length: 2, vsync: this);
-    _pageController = PreloadPageController(keepPage: true);
+    _pageController = PageController(keepPage: true);
     super.initState();
   }
 
@@ -74,11 +73,10 @@ class _ReelsSingleScreenState extends State<ReelsSingleScreen>
   }
 
   Widget initTabs() {
-    return PreloadPageView.builder(
+    return PageView.builder(
       scrollDirection: Axis.horizontal,
       controller: _pageController,
       itemCount: 2,
-      preloadPagesCount: 2,
       onPageChanged: (page) {
         setState(() {
           _tabController.animateTo(page);

@@ -175,7 +175,7 @@ class ZegoUtils {
         }
         encoder.close();
 
-        Share.shareFiles([logZipPath], subject: '日志', text: '分享');
+        Share.shareXFiles([XFile(logZipPath)], subject: '日志', text: '分享');
       }
     };
 

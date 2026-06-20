@@ -4,7 +4,7 @@
 // import 'package:easy_localization/easy_localization.dart';
 // import 'package:flutter/material.dart';
 // import 'package:mime/mime.dart';
-// import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
+// import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 // import 'package:permission_handler/permission_handler.dart';
 // import 'package:shared_preferences/shared_preferences.dart';
 // import 'package:tiki/helpers/quick_actions.dart';

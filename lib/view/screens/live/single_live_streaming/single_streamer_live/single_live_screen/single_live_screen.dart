@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:svgaplayer_flutter/player.dart';
+import 'package:flutter_svga/flutter_svga.dart';
 import 'package:tiki/view/screens/live/single_live_streaming/single_streamer_live/single_live_screen/single_live_streamer_items.dart';
 import 'package:tiki/view_model/live_controller.dart';
 import '../../../../../../view_model/gift_contoller.dart';

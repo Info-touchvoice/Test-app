@@ -6,13 +6,13 @@ import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
+import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tiki/data/app/constants.dart';
 import 'package:tiki/data/app/setup.dart';
-import 'package:wakelock/wakelock.dart';
+import 'package:tiki/compat/wakelock.dart';
 import 'package:tiki/parse/BattleStreamingModel.dart';
 import 'package:tiki/parse/CommentsModel.dart';
 import 'package:tiki/parse/GiftsModel.dart';
@@ -213,7 +213,7 @@ class _AppState extends State<App> with WidgetsBindingObserver {
     // won't sleep/lock. Force-disable it for all non-live routes.
     if (_isLiveRoute(route)) return;
     try {
-      Wakelock.disable();
+      AppWakelock.disable();
     } catch (_) {}
   }
 
@@ -244,7 +244,7 @@ class _AppState extends State<App> with WidgetsBindingObserver {
       _ensureWakelockCorrectForRoute(Get.currentRoute);
     } else {
       try {
-        Wakelock.disable();
+        AppWakelock.disable();
       } catch (_) {}
     }
   }

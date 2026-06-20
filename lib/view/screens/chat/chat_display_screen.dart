@@ -3,7 +3,7 @@ import 'package:fade_shimmer/fade_shimmer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart' hide Trans;
-import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
+import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 import 'package:tiki/utils/constants/app_constants.dart';
 import 'package:tiki/utils/routes/app_routes.dart';
 import 'package:tiki/utils/theme/colors_constant.dart';

@@ -4,7 +4,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart' hide Trans;
-import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
+import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:tiki/parse/PostsModel.dart';
 import 'package:tiki/utils/constants/typography.dart';
@@ -183,8 +183,8 @@ class _PostReelScreenState extends State<PostReelScreen> {
             ElevatedButton(
               onPressed: savePost,
               style: ElevatedButton.styleFrom(
-                primary: AppColors.yellowBtnColor,
-                onPrimary: Colors.black,
+                backgroundColor: AppColors.yellowBtnColor,
+                foregroundColor: Colors.black,
                 minimumSize:
                     Size(double.infinity, 50), // <-- matches the height
                 shape: RoundedRectangleBorder(

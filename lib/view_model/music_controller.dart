@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
-import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
+import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 
 import '../parse/MusicModel.dart';
 

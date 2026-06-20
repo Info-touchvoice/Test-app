@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:tiki/view/screens/reels/feed/videoutils/video.dart';
 import 'package:tiki/view/screens/reels/feed/videoutils/video_item_config.dart';
+import 'package:video_player/video_player.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
 import '../../../../../helpers/quick_actions.dart';
@@ -58,7 +59,8 @@ class VideoItemWidget<V extends VideoInfo> extends StatefulWidget {
 
 class _VideoItemWidgetState<V extends VideoInfo>
     extends State<VideoItemWidget<V>> {
-  late CachedVideoPlayerPlusController? _videoPlayerController;
+  CachedVideoPlayerPlus? _cachedVideoPlayer;
+  VideoPlayerController? _videoPlayerController;
   bool initialized = false;
   bool actualDisposed = false;
   bool isEnded = false;
@@ -170,8 +172,9 @@ class _VideoItemWidgetState<V extends VideoInfo>
   void dispose() {
     if (initialized && _videoPlayerController != null) {
       _videoPlayerController!.removeListener(_videoListener);
-      _videoPlayerController!.dispose();
+      _cachedVideoPlayer!.dispose();
       _videoPlayerController = null;
+      _cachedVideoPlayer = null;
     }
 
     actualDisposed = true;
@@ -185,12 +188,13 @@ class _VideoItemWidgetState<V extends VideoInfo>
 
     if (widget.videoInfo.file != null) {
       // Use cached file if available
-      _videoPlayerController = CachedVideoPlayerPlusController.file(
+      _cachedVideoPlayer = CachedVideoPlayerPlus.file(
         widget.videoInfo.file,
       );
-      _videoPlayerController!.addListener(_videoListener);
-      _videoPlayerController!.initialize().then((_) {
+      _cachedVideoPlayer!.initialize().then((_) {
         if (!mounted) return;
+        _videoPlayerController = _cachedVideoPlayer!.controller;
+        _videoPlayerController!.addListener(_videoListener);
         setState(() {
           _videoPlayerController!.setLooping(widget.config.loop);
           initialized = true;
@@ -199,14 +203,15 @@ class _VideoItemWidgetState<V extends VideoInfo>
     } else {
       // Start network player immediately for faster loading
       // Cache check happens in parallel but doesn't block initialization
-      _videoPlayerController = CachedVideoPlayerPlusController.network(
-        widget.videoInfo.url!,
+      _cachedVideoPlayer = CachedVideoPlayerPlus.networkUrl(
+        Uri.parse(widget.videoInfo.url!),
       );
-      _videoPlayerController!.addListener(_videoListener);
       
       // Start initialization immediately without waiting for cache check
-      _videoPlayerController!.initialize().then((_) {
+      _cachedVideoPlayer!.initialize().then((_) {
         if (!mounted) return;
+        _videoPlayerController = _cachedVideoPlayer!.controller;
+        _videoPlayerController!.addListener(_videoListener);
         setState(() {
           _videoPlayerController!.setLooping(widget.config.loop);
           initialized = true;
@@ -281,7 +286,7 @@ class _VideoItemWidgetState<V extends VideoInfo>
     return Center(
       child: AspectRatio(
         child: VisibilityDetector(
-            child: CachedVideoPlayerPlus(_videoPlayerController!),
+            child: VideoPlayer(_videoPlayerController!),
             onVisibilityChanged: _handleVisibilityDetector,
             key: Key('key_${widget.currentPageIndex}')),
         aspectRatio: _videoPlayerController!.value.aspectRatio,
@@ -309,7 +314,7 @@ class _VideoItemWidgetState<V extends VideoInfo>
         child: VisibilityDetector(
             onVisibilityChanged: _handleVisibilityDetector,
             key: Key('key_${widget.currentPageIndex}'),
-            child: CachedVideoPlayerPlus(_videoPlayerController!)),
+            child: VideoPlayer(_videoPlayerController!)),
         maxHeight: screenRatio > previewRatio
             ? screenH
             : screenW / previewW * previewH,

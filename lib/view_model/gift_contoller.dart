@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:audioplayers/audioplayers.dart';
 import 'package:get/get.dart';
-import 'package:svgaplayer_flutter/svgaplayer_flutter.dart';
+import 'package:flutter_svga/flutter_svga.dart';
 
 import '../utils/constants/app_constants.dart';
 

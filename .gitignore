@@ -37,6 +37,7 @@
 .pub-cache/
 .pub/
 /build/
+third_party/zego_express_engine/android/libs/
 
 # Web related
 lib/generated_plugin_registrant.dart

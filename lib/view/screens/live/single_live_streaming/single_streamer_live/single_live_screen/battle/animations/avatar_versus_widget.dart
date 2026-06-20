@@ -6,7 +6,7 @@ import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:lottie/lottie.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
-import 'package:svgaplayer_flutter/player.dart';
+import 'package:flutter_svga/flutter_svga.dart';
 import 'package:tiki/utils/constants/app_constants.dart';
 import 'package:tiki/utils/theme/colors_constant.dart';
 import 'package:tiki/view_model/animation_controller.dart';

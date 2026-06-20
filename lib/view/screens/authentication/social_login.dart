@@ -9,7 +9,7 @@ import 'package:tiki/helpers/quick_help.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:parse_server_sdk/parse_server_sdk.dart';
+import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:tiki/services/dynamic_link_service.dart';
 import 'package:tiki/view/screens/dispatch_screen.dart';
@@ -32,12 +32,20 @@ class SocialLogin {
     if (result.status == LoginStatus.success) {
       QuickHelp.showLoadingDialog(context);
 
+      final accessToken = result.accessToken;
+      if (accessToken is! ClassicToken) {
+        QuickHelp.hideLoadingDialog(context);
+        QuickHelp.showAppNotificationAdvanced(
+            context: context, title: "auth.fb_login_error".tr());
+        return;
+      }
+
       final ParseResponse response = await ParseUser.loginWith(
           "facebook",
           facebook(
-            result.accessToken!.token,
-            result.accessToken!.userId,
-            result.accessToken!.expires,
+            accessToken.tokenString,
+            accessToken.userId,
+            accessToken.expires,
           ));
 
       if (response.success) {

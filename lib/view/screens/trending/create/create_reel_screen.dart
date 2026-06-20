@@ -11,7 +11,8 @@ import 'package:path_provider/path_provider.dart';
 import 'package:tiki/view/screens/trending/create/post_reel_screen.dart';
 import 'package:tiki/view/widgets/base_scaffold.dart';
 import 'package:uuid/uuid.dart';
-import 'package:video_thumbnail/video_thumbnail.dart';
+import 'package:get_thumbnail_video/index.dart';
+import 'package:get_thumbnail_video/video_thumbnail.dart';
 import 'package:wechat_assets_picker/wechat_assets_picker.dart';
 
 import '../../../../helpers/quick_help.dart';
