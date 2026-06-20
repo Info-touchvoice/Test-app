@@ -20,6 +20,10 @@ import '../../../utils/shared_manager.dart';
 
 class SocialLogin {
   static Future<void> loginFacebook(BuildContext context, SharedPreferences preferences) async {
+    if (!Setup.isFacebookSdkEnabled) {
+      return;
+    }
+
     final result = await FacebookAuth.i.login(
       permissions: [
         'email',
@@ -79,6 +83,11 @@ class SocialLogin {
   }
 
   static void getFbUserDetails(UserModel user, BuildContext context, SharedPreferences preferences) async {
+    if (!Setup.isFacebookSdkEnabled) {
+      QuickHelp.hideLoadingDialog(context);
+      return;
+    }
+
     final _userData = await FacebookAuth.i.getUserData(
       fields:
           "id,email,name,first_name,last_name,gender,birthday,picture.width(920).height(920),location",

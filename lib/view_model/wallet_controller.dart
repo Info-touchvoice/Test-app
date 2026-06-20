@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
+import 'package:tiki/data/app/setup.dart';
 import 'package:tiki/helpers/quick_help.dart';
 import 'package:tiki/parse/PaymentsModel.dart';
 import 'package:tiki/parse/UserModel.dart';
@@ -194,6 +195,8 @@ class WalletController extends GetxController {
   }
 
   Future<void> _attachStoreProducts(List<WalletPlanItem> plans) async {
+    if (!Setup.isPurchasesEnabled) return;
+
     final keys = plans.map((e) => e.productKey).where((k) => k.isNotEmpty).toSet().toList();
     if (keys.isEmpty) return;
 
@@ -218,6 +221,8 @@ class WalletController extends GetxController {
 
   Future<void> purchasePlan(WalletPlanItem plan, BuildContext context) async {
     if (isPurchasing.value) return;
+
+    if (!Setup.isPurchasesEnabled) return;
 
     if (plan.productKey.isEmpty || plan.storeProduct == null) {
       QuickHelp.showAppNotificationAdvanced(

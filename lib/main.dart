@@ -166,8 +166,10 @@ Future<void> _initFirebase() async {
 
 Future<void> _warmUpAppServices() async {
   try {
-    await PurchaseApi.init();
-    await initPlatformState();
+    if (Setup.isPurchasesEnabled) {
+      await PurchaseApi.init();
+      await initPlatformState();
+    }
     if (QuickHelp.isMobile()) {
       await MobileAds.instance.initialize();
     }
@@ -176,6 +178,10 @@ Future<void> _warmUpAppServices() async {
 }
 
 Future<void> initPlatformState() async {
+  if (!Setup.isPurchasesEnabled) {
+    return;
+  }
+
   if (Setup.isDebug) {
     await Purchases.setLogLevel(LogLevel.verbose);
   }
@@ -187,7 +193,9 @@ Future<void> initPlatformState() async {
   } else if (QuickHelp.isIOSPlatform()) {
     configuration = PurchasesConfiguration(Config.publicIosSdkKey);
   }
-  await Purchases.configure(configuration!);
+  if (configuration != null) {
+    await Purchases.configure(configuration);
+  }
 }
 
 class App extends StatefulWidget {
@@ -283,6 +291,10 @@ class _AppState extends State<App> with WidgetsBindingObserver {
   }
 
   logoutUserPurchase() async {
+    if (!Setup.isPurchasesEnabled) {
+      return;
+    }
+
     if (!await Purchases.isAnonymous) {
       await Purchases.logOut().then((value) => print("purchase logout"));
     }
