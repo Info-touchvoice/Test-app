@@ -26,7 +26,7 @@ subprojects {
     project.buildDir = "${rootProject.buildDir}/${project.name}"
     project.evaluationDependsOn(':app')
 
-    afterEvaluate {
+    gradle.projectsEvaluated {
         tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach { kotlinTask ->
             def javaTaskName = kotlinTask.name.replace("Kotlin", "JavaWithJavac")
             def javaTask = tasks.findByName(javaTaskName)
