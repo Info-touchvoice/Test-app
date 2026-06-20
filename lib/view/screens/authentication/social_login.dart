@@ -14,6 +14,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:tiki/services/dynamic_link_service.dart';
 import 'package:tiki/view/screens/dispatch_screen.dart';
 
+import '../../../services/google_sign_in_diagnostics.dart';
 import '../../../services/google_sign_in_factory.dart';
 import '../../../utils/shared_manager.dart';
 
@@ -145,10 +146,19 @@ class SocialLogin {
 
   static final GoogleSignIn _googleSignIn = GoogleSignInFactory.create();
 
+  static Future<GoogleSignInAccount?> _signInWithDiagnostics() async {
+    try {
+      return await _googleSignIn.signIn();
+    } catch (error, stackTrace) {
+      GoogleSignInDiagnostics.logSignInException(error, stackTrace);
+      rethrow;
+    }
+  }
+
   static Future<void> googleLogin(BuildContext context, SharedPreferences preferences) async {
     try {
       await _googleSignIn.signOut();
-      GoogleSignInAccount? account = await _googleSignIn.signIn();
+      GoogleSignInAccount? account = await _signInWithDiagnostics();
       if (account == null) {
         // User cancelled
         return;
@@ -203,7 +213,11 @@ class SocialLogin {
         QuickHelp.showAppNotificationAdvanced(context: context, title: "not_connected".tr());
       } else {
         QuickHelp.showAppNotificationAdvanced(
-            context: context, title: "auth.gg_login_error".tr());
+            context: context,
+            title: "Google Sign-In failed",
+            message: GoogleSignInDiagnostics.snackbarMessage(error),
+            messageMaxLines: null,
+            notificationHeight: 220);
       }
 
       await _googleSignIn.signOut();

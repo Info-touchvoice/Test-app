@@ -12,8 +12,19 @@ import '../helpers/quick_help.dart';
 import '../parse/UserModel.dart';
 import '../utils/datoo_exeption.dart';
 import '../view/screens/authentication/social_login.dart';
+import '../services/google_sign_in_diagnostics.dart';
 
 class AuthViewModel extends GetxController {
+  Future<GoogleSignInAccount?> _signInWithDiagnostics(
+      GoogleSignIn googleSignIn) async {
+    try {
+      return await googleSignIn.signIn();
+    } catch (error, stackTrace) {
+      GoogleSignInDiagnostics.logSignInException(error, stackTrace);
+      rethrow;
+    }
+  }
+
   Future<User?> signUpWithGoogle(
       GoogleSignIn _googleSignIn,
       FirebaseAuth firebaseAuth,
@@ -23,7 +34,7 @@ class AuthViewModel extends GetxController {
       // await _googleSignIn.signOut();
 
       final GoogleSignInAccount? googleSignInAccount =
-          await _googleSignIn.signIn();
+          await _signInWithDiagnostics(_googleSignIn);
       
       // Check if user cancelled the sign-in
       if (googleSignInAccount == null) {
@@ -142,8 +153,10 @@ class AuthViewModel extends GetxController {
         print('Google Sign-In Error: $error');
         QuickHelp.showAppNotificationAdvanced(
             context: context, 
-            title: "auth.gg_login_error".tr(),
-            message: error.toString());
+            title: "Google Sign-In failed",
+            message: GoogleSignInDiagnostics.snackbarMessage(error),
+            messageMaxLines: null,
+            notificationHeight: 220);
       }
 
       await _googleSignIn.signOut();
@@ -160,7 +173,7 @@ class AuthViewModel extends GetxController {
       await _googleSignIn.signOut();
       
       final GoogleSignInAccount? googleSignInAccount =
-          await _googleSignIn.signIn();
+          await _signInWithDiagnostics(_googleSignIn);
       
       // Check if user cancelled the sign-in
       if (googleSignInAccount == null) {
@@ -304,7 +317,9 @@ class AuthViewModel extends GetxController {
         QuickHelp.showAppNotificationAdvanced(
             context: context, 
             title: errorMessage,
-            message: error.toString());
+            message: GoogleSignInDiagnostics.snackbarMessage(error),
+            messageMaxLines: null,
+            notificationHeight: 220);
       }
 
       await _googleSignIn.signOut();
