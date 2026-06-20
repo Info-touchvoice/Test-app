@@ -2476,10 +2476,9 @@ packages:
   zego_zim:
     dependency: "direct main"
     description:
-      name: zego_zim
-      sha256: "84dc64f3699c38bb788fc37d8b29e4c9d417dbbaa2d070000e4260e9862c3350"
-      url: "https://pub.dev"
-    source: hosted
+      path: "third_party/zego_zim"
+      relative: true
+    source: path
     version: "2.29.0+1"
 sdks:
   dart: ">=3.12.0 <4.0.0"

@@ -1,0 +1,49 @@
+PODS:
+  - emoji_picker_flutter (0.0.1):
+    - FlutterMacOS
+  - FlutterMacOS (1.0.0)
+  - path_provider_foundation (0.0.1):
+    - Flutter
+    - FlutterMacOS
+  - shared_preferences_foundation (0.0.1):
+    - Flutter
+    - FlutterMacOS
+  - zego_zim (2.9.0):
+    - FlutterMacOS
+    - ZIM_macOS (= 2.9.0)
+  - ZIM_macOS (2.9.0)
+
+DEPENDENCIES:
+  - emoji_picker_flutter (from `Flutter/ephemeral/.symlinks/plugins/emoji_picker_flutter/macos`)
+  - FlutterMacOS (from `Flutter/ephemeral`)
+  - path_provider_foundation (from `Flutter/ephemeral/.symlinks/plugins/path_provider_foundation/macos`)
+  - shared_preferences_foundation (from `Flutter/ephemeral/.symlinks/plugins/shared_preferences_foundation/macos`)
+  - zego_zim (from `Flutter/ephemeral/.symlinks/plugins/zego_zim/macos`)
+
+SPEC REPOS:
+  trunk:
+    - ZIM_macOS
+
+EXTERNAL SOURCES:
+  emoji_picker_flutter:
+    :path: Flutter/ephemeral/.symlinks/plugins/emoji_picker_flutter/macos
+  FlutterMacOS:
+    :path: Flutter/ephemeral
+  path_provider_foundation:
+    :path: Flutter/ephemeral/.symlinks/plugins/path_provider_foundation/macos
+  shared_preferences_foundation:
+    :path: Flutter/ephemeral/.symlinks/plugins/shared_preferences_foundation/macos
+  zego_zim:
+    :path: Flutter/ephemeral/.symlinks/plugins/zego_zim/macos
+
+SPEC CHECKSUMS:
+  emoji_picker_flutter: 533634326b1c5de9a181ba14b9758e6dfe967a20
+  FlutterMacOS: 85f90bfb3f1703249cf1539e4dfbff31e8584698
+  path_provider_foundation: c68054786f1b4f3343858c1e1d0caaded73f0be9
+  shared_preferences_foundation: 986fc17f3d3251412d18b0265f9c64113a8c2472
+  zego_zim: 2b52077b04770a3b700e38bc5b3d1e1c974e1063
+  ZIM_macOS: e860e2a5a636e022fb36bd349c7fd30bd1a475b2
+
+PODFILE CHECKSUM: a884f6dd3f7494f3892ee6c81feea3a3abbf9153
+
+COCOAPODS: 1.11.3

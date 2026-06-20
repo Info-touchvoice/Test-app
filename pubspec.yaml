@@ -143,7 +143,8 @@ dependencies:
 
   zego_express_engine:
     path: third_party/zego_express_engine
-  zego_zim: ^2.29.0+1
+  zego_zim:
+    path: third_party/zego_zim
   encrypt: ^5.0.1
 #  zego_zim: ^2.12.0
 #  zego_express_engine: ^3.9.0
