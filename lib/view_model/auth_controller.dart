@@ -43,22 +43,22 @@ class AuthViewModel extends GetxController {
       print('  account ID: ${googleSignInAccount.id}');
       print('  account email: ${googleSignInAccount.email}');
 
-      // Check for accessToken (required)
-      if (googleSignInAuthentication.accessToken == null) {
+      // Firebase and Parse both need the Google tokens produced by the native
+      // Android configuration generated from google-services.json.
+      if (googleSignInAuthentication.accessToken == null ||
+          googleSignInAuthentication.idToken == null) {
         QuickHelp.hideLoadingDialog(context);
-        print('ERROR: Missing Access Token');
         QuickHelp.showAppNotificationAdvanced(
             context: context,
             title: "auth.gg_login_error".tr(),
-            message: "Missing Access Token. Please try signing in again.");
+            message: "Missing Google token(s). Please try signing in again.");
         await _googleSignIn.signOut();
         return null;
       }
 
-      // Try Firebase auth - it might work even without idToken initially
       final AuthCredential credential = GoogleAuthProvider.credential(
-        accessToken: googleSignInAuthentication.accessToken,
-        idToken: googleSignInAuthentication.idToken,
+        accessToken: googleSignInAuthentication.accessToken!,
+        idToken: googleSignInAuthentication.idToken!,
       );
 
       final UserCredential userCredential =
@@ -66,27 +66,12 @@ class AuthViewModel extends GetxController {
       final User? user = userCredential.user;
 
       if (user != null) {
-        // Parse "google" login requires a Google ID token. If it's missing,
-        // this is almost always a Google/Firebase configuration issue.
-        String? idTokenToUse = googleSignInAuthentication.idToken;
-
-        // Final check - if still no idToken, show error
-        if (idTokenToUse == null) {
-          QuickHelp.hideLoadingDialog(context);
-          QuickHelp.showAppNotificationAdvanced(
-              context: context,
-              title: "auth.gg_login_error".tr(),
-              message: "ID Token is missing. Please:\n1. Add SHA-1 fingerprint in Firebase Console\n2. Wait a few minutes\n3. Download new google-services.json\n4. Restart the app");
-          await _googleSignIn.signOut();
-          return null;
-        }
-
         final ParseResponse response = await ParseUser.loginWith(
             'google',
             google(
                 googleSignInAuthentication.accessToken!,
                 googleSignInAccount.id,
-                idTokenToUse));
+                googleSignInAuthentication.idToken!));
 
         if (response.success) {
           UserModel? user = await ParseUser.currentUser();
@@ -195,22 +180,22 @@ class AuthViewModel extends GetxController {
       print('  account ID: ${googleSignInAccount.id}');
       print('  account email: ${googleSignInAccount.email}');
 
-      // Check for accessToken (required)
-      if (googleSignInAuthentication.accessToken == null) {
+      // Firebase and Parse both need the Google tokens produced by the native
+      // Android configuration generated from google-services.json.
+      if (googleSignInAuthentication.accessToken == null ||
+          googleSignInAuthentication.idToken == null) {
         QuickHelp.hideLoadingDialog(context);
-        print('ERROR: Missing Access Token');
         QuickHelp.showAppNotificationAdvanced(
             context: context,
             title: "auth.gg_login_error".tr(),
-            message: "Missing Access Token. Please try signing in again.");
+            message: "Missing Google token(s). Please try signing in again.");
         await _googleSignIn.signOut();
         return null;
       }
 
-      // Try Firebase auth - it might work even without idToken initially
       final AuthCredential credential = GoogleAuthProvider.credential(
-        accessToken: googleSignInAuthentication.accessToken,
-        idToken: googleSignInAuthentication.idToken,
+        accessToken: googleSignInAuthentication.accessToken!,
+        idToken: googleSignInAuthentication.idToken!,
       );
 
       final UserCredential userCredential =
@@ -226,27 +211,12 @@ class AuthViewModel extends GetxController {
           'id': user.uid
         }, SetOptions(merge: true));
 
-        // Parse "google" login requires a Google ID token. If it's missing,
-        // this is almost always a Google/Firebase configuration issue.
-        String? idTokenToUse = googleSignInAuthentication.idToken;
-
-        // Final check - if still no idToken, show error
-        if (idTokenToUse == null) {
-          QuickHelp.hideLoadingDialog(context);
-          QuickHelp.showAppNotificationAdvanced(
-              context: context,
-              title: "auth.gg_login_error".tr(),
-              message: "ID Token is missing. Please:\n1. Add SHA-1 fingerprint in Firebase Console\n2. Wait a few minutes\n3. Download new google-services.json\n4. Restart the app");
-          await _googleSignIn.signOut();
-          return null;
-        }
-
         final ParseResponse response = await ParseUser.loginWith(
             'google',
             google(
                 googleSignInAuthentication.accessToken!,
                 googleSignInAccount.id,
-                idTokenToUse));
+                googleSignInAuthentication.idToken!));
 
         if (response.success) {
           UserModel? user = await ParseUser.currentUser();
@@ -328,7 +298,7 @@ class AuthViewModel extends GetxController {
             error.toString().contains('DEVELOPER_ERROR')) {
           errorMessage = "Google Sign-In configuration error. Please check:\n"
               "1. SHA-1 fingerprint is added in Firebase Console\n"
-              "2. OAuth client ID is configured\n"
+              "2. Firebase Google provider is configured\n"
               "3. Package name matches: com.livestream.touchvoice";
         }
         QuickHelp.showAppNotificationAdvanced(

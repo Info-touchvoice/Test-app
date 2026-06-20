@@ -172,7 +172,7 @@ class SocialLogin {
 
       final ParseResponse response = await ParseUser.loginWith(
           'google',
-          google(authentication.accessToken!, _googleSignIn.currentUser!.id,
+          google(authentication.accessToken!, account.id,
               authentication.idToken!));
       if (response.success) {
         UserModel? user = await ParseUser.currentUser();
