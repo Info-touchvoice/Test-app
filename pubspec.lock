@@ -181,10 +181,10 @@ packages:
     dependency: "direct main"
     description:
       name: cached_video_player_plus
-      sha256: c671d60a59a018401c07def77d49c749b394b4c6ff489b2b3ceff9ab06822f27
+      sha256: b7560ea4c5f6d3f2ab3cf1bfbdb35e454bd2860f71f2d38bc6a935e450b5b094
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.0"
+    version: "4.1.0"
   camera:
     dependency: "direct main"
     description:
@@ -2262,26 +2262,26 @@ packages:
     dependency: transitive
     description:
       name: video_player
-      sha256: "74b86e63529cf5885130c639d74cd2f9232e7c8a66cbecbddd1dcb9dbd060d1e"
+      sha256: "48a7bdaa38a3d50ec10c78627abdbfad863fdf6f0d6e08c7c3c040cfd80ae36f"
       url: "https://pub.dev"
     source: hosted
-    version: "2.7.2"
+    version: "2.11.1"
   video_player_android:
     dependency: transitive
     description:
       name: video_player_android
-      sha256: dc31c60ae591aa3ccb2d460c3690ceceb86cbb826e73428d817a37650dc4e229
+      sha256: "5d18d04084cc0cfc7afde39d0a308d4041e8ae6e9d5255bc086c263998dd1201"
       url: "https://pub.dev"
     source: hosted
-    version: "2.4.2"
+    version: "2.9.6"
   video_player_avfoundation:
     dependency: transitive
     description:
       name: video_player_avfoundation
-      sha256: "9d8585be0d63943f0dc46e0aed6697a715f64d7faab39b6053ecf9b6da3ca01d"
+      sha256: "9338f3ec22774f88146b22f13273a446719b1da010fd200c4d1d97802156ac58"
       url: "https://pub.dev"
     source: hosted
-    version: "2.4.1"
+    version: "2.9.7"
   video_player_platform_interface:
     dependency: transitive
     description:
@@ -2294,10 +2294,10 @@ packages:
     dependency: transitive
     description:
       name: video_player_web
-      sha256: fb3bbeaf0302cb0c31340ebd6075487939aa1fe3b379d1a8784ef852b679940e
+      sha256: "9f3c00be2ef9b76a95d94ac5119fb843dca6f2c69e6c9968f6f2b6c9e7afbdeb"
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.15"
+    version: "2.4.0"
   visibility_detector:
     dependency: transitive
     description:
