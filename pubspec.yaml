@@ -233,11 +233,6 @@ flutter:
     - assets/png/touchvoice_games/
     - assets/png/hilo_wallet/
     - assets/png/hilo_audio_room/
-    - assets/png/hilo_audio_room/ic_group_trophy.webp
-    - assets/png/hilo_audio_room/icon_group_support.webp
-    - assets/png/hilo_audio_room/group_activity_icon.webp
-    - assets/png/hilo_audio_room/arrow_right2.webp
-    - assets/png/hilo_audio_room/icon_information_report.webp
 
 
 
