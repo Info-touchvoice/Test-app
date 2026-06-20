@@ -29,6 +29,7 @@ import '../../view/screens/dashboard/subscription/subscription.dart';
 import '../../view/screens/dashboard/verified_member/verified_member_screen.dart';
 import '../../view/screens/dashboard/wallet/transaction_history.dart';
 import '../../view/screens/dashboard/wallet/wallet.dart';
+import '../../view/screens/demo/short_id_demo_screen.dart';
 import '../../view/screens/home/home_screen/search_screen.dart';
 import '../../view/screens/live/audio_live_streaming/audio_audience_live/audio_audience_live_screen.dart';
 import '../../view/screens/live/audio_live_streaming/audio_streamer_live/audio_streamer_live_screen.dart';
@@ -144,6 +145,7 @@ class AppRoutes {
   static const String generalSetting = '/generalSetting';
   static const String dislikeSetting = '/dislikeSetting';
   static const String createPostScreen = '/createPostScreen';
+  static const String shortIdDemoScreen = '/shortIdDemoScreen';
 
   static List<GetPage> pages = [
     GetPage(
@@ -313,5 +315,6 @@ class AppRoutes {
     GetPage(name: generalSetting, page: () => GeneralSetting()),
     GetPage(name: dislikeSetting, page: () => DislikeSetting()),
     GetPage(name: createPostScreen, page: () => CreatePostScreen()),
+    GetPage(name: shortIdDemoScreen, page: () => const ShortIdDemoScreen()),
   ];
 }

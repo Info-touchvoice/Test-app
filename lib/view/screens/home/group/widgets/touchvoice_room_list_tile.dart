@@ -1,6 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:tiki/model/short_id_model.dart';
+import 'package:tiki/view/widgets/short_id_badge.dart';
 
 import '../../../../../model/popular_card_model.dart';
 import '../../../../../utils/constants/typography.dart';
@@ -72,6 +74,10 @@ class TouchVoiceRoomListTile extends StatelessWidget {
                             color: TouchVoiceGroupColors.titleText,
                           ),
                         ),
+                      ),
+                      SizedBox(width: 6.w),
+                      const ShortIdBadge.compact(
+                        shortId: ShortIdModel.eventSample,
                       ),
                       if (showNewBadge) ...[
                         SizedBox(width: 6.w),

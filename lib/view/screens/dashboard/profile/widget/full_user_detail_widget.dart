@@ -5,11 +5,13 @@ import 'package:get/get.dart';
 
 import '../../../../../helpers/quick_help.dart';
 import '../../../../../helpers/quick_actions.dart';
+import '../../../../../model/short_id_model.dart';
 import '../../../../../parse/UserModel.dart';
 import '../../../../../utils/constants/app_constants.dart';
 import '../../../../../utils/routes/app_routes.dart';
 import '../../../../../utils/theme/colors_constant.dart';
 import '../../../../../view_model/userViewModel.dart';
+import '../../../../widgets/short_id_badge.dart';
 
 class FullUserDetailsWidget extends StatelessWidget {
   final UserModel? userModel;
@@ -71,13 +73,21 @@ class FullUserDetailsWidget extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              userModel?.getFullName ?? '',
-              style: TextStyle(
-                fontSize: 16.sp,
-                fontWeight: FontWeight.w700,
-                color: primaryText,
+            Flexible(
+              child: Text(
+                userModel?.getFullName ?? '',
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  fontSize: 16.sp,
+                  fontWeight: FontWeight.w700,
+                  color: primaryText,
+                ),
               ),
+            ),
+            SizedBox(width: 8.w),
+            const ShortIdBadge.compact(
+              shortId: ShortIdModel.normalSample,
             ),
             if (userModel?.isVerified ?? false) ...[
               SizedBox(

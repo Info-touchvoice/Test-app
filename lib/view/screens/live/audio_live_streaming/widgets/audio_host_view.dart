@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:tiki/model/short_id_model.dart';
+import 'package:tiki/view/widgets/short_id_badge.dart';
 import 'package:tiki/view_model/live_controller.dart';
 
 import '../../../../../../../utils/constants/app_constants.dart';
@@ -135,13 +137,19 @@ class AudioHostView extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Center(
+            Flexible(
               child: Text(
                 liveViewModel.liveStreamingModel.getAuthor!.getFullName!,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
                 style: TextStyle(
                   color: Color(0xFFFFFFFF),
                 ),
               ),
+            ),
+            SizedBox(width: 6.w),
+            const ShortIdBadge.compact(
+              shortId: ShortIdModel.legendSample,
             ),
           ],
         ),
