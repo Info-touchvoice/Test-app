@@ -33,7 +33,6 @@ import 'package:tiki/parse/WithdrawModel.dart';
 import 'package:tiki/parse/BannerModel.dart';
 import 'package:devicelocale/devicelocale.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'firebase_options.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:tiki/parse/UserModel.dart';
 import 'package:tiki/data/app/navigation_service.dart';
@@ -156,11 +155,10 @@ void main() async {
 
 Future<void> _initFirebase() async {
   try {
-    await Firebase.initializeApp(
-      options: DefaultFirebaseOptions.currentPlatform,
-    );
+    await Firebase.initializeApp();
   } catch (e) {
-    print('Error firebase initialize');
+    print('Error firebase initialize: $e');
+    rethrow;
   }
 }
 
