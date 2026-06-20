@@ -26,24 +26,14 @@ subprojects {
     project.buildDir = "${rootProject.buildDir}/${project.name}"
     project.evaluationDependsOn(':app')
 
-    plugins.withId("com.android.library") {
-        android {
-            compileOptions {
-                sourceCompatibility JavaVersion.VERSION_1_8
-                targetCompatibility JavaVersion.VERSION_1_8
+    afterEvaluate {
+        tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach { kotlinTask ->
+            def javaTaskName = kotlinTask.name.replace("Kotlin", "JavaWithJavac")
+            def javaTask = tasks.findByName(javaTaskName)
+            if (javaTask instanceof JavaCompile) {
+                kotlinTask.kotlinOptions.jvmTarget = javaTask.targetCompatibility
             }
         }
-    }
-
-    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
-        kotlinOptions {
-            jvmTarget = "1.8"
-        }
-    }
-
-    tasks.withType(JavaCompile).configureEach {
-        sourceCompatibility = JavaVersion.VERSION_1_8.toString()
-        targetCompatibility = JavaVersion.VERSION_1_8.toString()
     }
 }
 
