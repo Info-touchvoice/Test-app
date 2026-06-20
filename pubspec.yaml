@@ -81,7 +81,7 @@ dependencies:
 #  intl_phone_number_input: ^0.7.2
 #  pin_code_fields: ^7.4.0
   geolocator: ^10.0.0
-  geocoding: ^2.1.1
+  geocoding: ^4.0.0
   location: ^5.0.0
 
   #Animations and icons
