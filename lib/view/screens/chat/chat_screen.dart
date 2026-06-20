@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart' hide Trans;
-import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
+import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 import 'package:advanced_grouped_list/advanced_grouped_list.dart';
 import 'package:tiki/utils/Utils.dart';
 import 'package:tiki/utils/constants/app_constants.dart';
@@ -108,11 +108,11 @@ class _MessageViewState extends State<MessageView> {
                         init: chatViewModel,
                         builder: (controller) {
                           reversedList = chatViewModel.results.reversed.toList();
-                          return StickyGroupedListView<dynamic, DateTime>(
+                          return AdvancedGroupedListView<dynamic, DateTime>(
                           shrinkWrap: true,
                           elements: reversedList,
                           reverse: true,
-                          order: StickyGroupedListOrder.DESC,
+                          order: AdvancedGroupedListOrder.desc,
                           padding: EdgeInsets.only(bottom: 7.h),
                           // Check first
                           groupBy: (dynamic message) {

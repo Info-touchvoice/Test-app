@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Trans;
-import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
+import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 import 'package:tiki/utils/constants/status.dart';
 import 'package:tiki/utils/routes/app_routes.dart';
 import 'package:tiki/view_model/ranking_controller.dart';

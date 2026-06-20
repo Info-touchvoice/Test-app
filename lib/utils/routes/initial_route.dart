@@ -11,13 +11,13 @@ import '../../view/screens/splash_screen.dart';
 class InitialRoute {
   static Widget initialRoute() {
     return UpgradeAlert(
+      showIgnore: false,
+      showLater: false,
+      barrierDismissible: false,
+      shouldPopScope: () => false,
       upgrader: Upgrader(
         debugDisplayAlways: false,
         debugLogging: Setup.isDebug,
-        showIgnore: false,
-        showLater: false,
-        canDismissDialog: false,
-        shouldPopScope: () => false,
         durationUntilAlertAgain: Duration(seconds: 10),
         minAppVersion: Setup.appVersion,
       ),

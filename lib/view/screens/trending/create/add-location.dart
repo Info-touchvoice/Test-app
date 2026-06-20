@@ -14,7 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 import 'package:location/location.dart' as LocationForAll;
-import 'package:parse_server_sdk/parse_server_sdk.dart';
+import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 import 'package:tiki/view/widgets/base_scaffold.dart';
 
 import '../../../../data/app/setup.dart';

@@ -123,12 +123,12 @@ class _WhisperChatState extends State<WhisperChat> {
                                   snapshot.data as List<dynamic>;
                               var reversedList =
                                   whisperViewModel.results.reversed.toList();
-                              return StickyGroupedListView<dynamic, DateTime>(
+                              return AdvancedGroupedListView<dynamic, DateTime>(
                                 shrinkWrap: true,
                                 padding: EdgeInsets.only(top: 10),
                                 elements: reversedList,
                                 reverse: true,
-                                order: StickyGroupedListOrder.DESC,
+                                order: AdvancedGroupedListOrder.desc,
                                 // Check first
                                 groupBy: (dynamic message) {
                                   if (message.createdAt != null) {

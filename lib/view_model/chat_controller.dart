@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Trans;
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
+import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 import 'package:advanced_grouped_list/advanced_grouped_list.dart';
 import 'package:tiki/parse/MessageListModel.dart';
 import 'package:tiki/utils/theme/colors_constant.dart';

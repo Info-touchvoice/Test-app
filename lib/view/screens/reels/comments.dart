@@ -9,7 +9,7 @@ import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'dart:ui';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tiki/compat/like_button.dart';
-import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
+import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 import 'package:tiki/utils/theme/colors_constant.dart';
 
 import '../../../helpers/quick_actions.dart';

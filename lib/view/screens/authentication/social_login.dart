@@ -9,7 +9,7 @@ import 'package:tiki/helpers/quick_help.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:parse_server_sdk/parse_server_sdk.dart';
+import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:tiki/services/dynamic_link_service.dart';
 import 'package:tiki/view/screens/dispatch_screen.dart';

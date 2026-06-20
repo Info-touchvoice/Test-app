@@ -1,6 +1,6 @@
 
 import 'package:get/get.dart';
-import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
+import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 import 'package:tiki/view_model/userViewModel.dart';
 import '../parse/StoreModel.dart';
 import '../parse/UserModel.dart';

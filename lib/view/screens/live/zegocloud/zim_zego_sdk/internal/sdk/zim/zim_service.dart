@@ -109,7 +109,10 @@ class ZIMService {
     currentZimUserInfo = ZIMUserInfo()
       ..userID = userID
       ..userName = userName;
-    await ZIM.getInstance()!.login(currentZimUserInfo!, token);
+    await ZIM.getInstance()!.login(
+      userID,
+      ZIMLoginConfig(userName: userName, token: token ?? ''),
+    );
   }
 
   Future<void> disconnectUser() async {

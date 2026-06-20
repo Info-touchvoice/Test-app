@@ -1,7 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Trans;
-import 'package:parse_server_sdk/parse_server_sdk.dart';
+import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tiki/view_model/communityController.dart';
 import 'package:tiki/view_model/userViewModel.dart';

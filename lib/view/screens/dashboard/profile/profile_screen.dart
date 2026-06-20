@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
+import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 import 'package:tiki/view/screens/dashboard/profile/widget/full_user_detail_widget.dart';
 import 'package:tiki/view/screens/dashboard/profile/widget/saved_reels.dart';
 import 'package:tiki/view/screens/dashboard/profile/widget/user_bio.dart';
