@@ -32,12 +32,20 @@ class SocialLogin {
     if (result.status == LoginStatus.success) {
       QuickHelp.showLoadingDialog(context);
 
+      final accessToken = result.accessToken;
+      if (accessToken is! ClassicToken) {
+        QuickHelp.hideLoadingDialog(context);
+        QuickHelp.showAppNotificationAdvanced(
+            context: context, title: "auth.fb_login_error".tr());
+        return;
+      }
+
       final ParseResponse response = await ParseUser.loginWith(
           "facebook",
           facebook(
-            result.accessToken!.token,
-            result.accessToken!.userId,
-            result.accessToken!.expires,
+            accessToken.tokenString,
+            accessToken.userId,
+            accessToken.expires,
           ));
 
       if (response.success) {
