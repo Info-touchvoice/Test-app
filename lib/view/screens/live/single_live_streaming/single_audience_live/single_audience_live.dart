@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:svgaplayer_flutter/player.dart';
+import 'package:flutter_svga/flutter_svga.dart';
 import 'package:tiki/view/screens/live/single_live_streaming/single_audience_live/widgets/gift_animation_view.dart';
 import 'package:tiki/view/widgets/base_scaffold.dart';
 import 'package:tiki/view_model/live_controller.dart';

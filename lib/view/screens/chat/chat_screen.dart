@@ -5,7 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart' hide Trans;
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
-import 'package:sticky_grouped_list/sticky_grouped_list.dart';
+import 'package:advanced_grouped_list/advanced_grouped_list.dart';
 import 'package:tiki/utils/Utils.dart';
 import 'package:tiki/utils/constants/app_constants.dart';
 import 'package:tiki/view/screens/chat/widgets/message_view_bottom_bar.dart';

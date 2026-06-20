@@ -2,7 +2,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Trans;
 import 'package:parse_server_sdk/parse_server_sdk.dart';
-import 'package:preload_page_view/preload_page_view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tiki/view_model/communityController.dart';
 import 'package:tiki/view_model/userViewModel.dart';
@@ -40,7 +39,7 @@ class _ReelsHomeScreenState extends State<ReelsHomeScreen>
 
   late QueryBuilder<PostsModel> queryBuilder;
 
-  late PreloadPageController _pageController;
+  late PageController _pageController;
   late TabController _tabController;
   // Reels relies on CommunityController for some shared state. Keep it typed so GetX can find it.
   final CommunityController<VideoInfo> communityController =
@@ -51,7 +50,7 @@ class _ReelsHomeScreenState extends State<ReelsHomeScreen>
     QuickHelp.saveCurrentRoute(route: ReelsHomeScreen.route);
 
     _tabController = TabController(length: 2, vsync: this);
-    _pageController = PreloadPageController(keepPage: true);
+    _pageController = PageController(keepPage: true);
     super.initState();
   }
 
@@ -99,11 +98,10 @@ class _ReelsHomeScreenState extends State<ReelsHomeScreen>
   }
 
   Widget initTabs(UserModel? currentUser) {
-    return PreloadPageView.builder(
+    return PageView.builder(
       scrollDirection: Axis.horizontal,
       controller: _pageController,
       itemCount: 2,
-      preloadPagesCount: 2,
       onPageChanged: (page) {
         setState(() {
           _tabController.animateTo(page);

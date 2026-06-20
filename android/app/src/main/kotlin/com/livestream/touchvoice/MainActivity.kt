@@ -1,6 +1,7 @@
 package com.livestream.touchvoice
 
 import android.content.Context
+import android.view.WindowManager
 import io.flutter.embedding.android.FlutterFragmentActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
@@ -8,6 +9,7 @@ import io.flutter.plugins.googlemobileads.GoogleMobileAdsPlugin
 
 class MainActivity : FlutterFragmentActivity() {
     private val CHANNEL = "com.livestream.touchvoice/context_channel"
+    private val WAKELOCK_CHANNEL = "com.livestream.touchvoice/wakelock"
     private var flutterContext: Context? = null
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
@@ -26,6 +28,21 @@ class MainActivity : FlutterFragmentActivity() {
                     }
                 } else {
                     result.notImplemented()
+                }
+            }
+
+        MethodChannel(flutterEngine.dartExecutor.binaryMessenger, WAKELOCK_CHANNEL)
+            .setMethodCallHandler { call, result ->
+                when (call.method) {
+                    "enable" -> {
+                        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+                        result.success(null)
+                    }
+                    "disable" -> {
+                        window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+                        result.success(null)
+                    }
+                    else -> result.notImplemented()
                 }
             }
     }

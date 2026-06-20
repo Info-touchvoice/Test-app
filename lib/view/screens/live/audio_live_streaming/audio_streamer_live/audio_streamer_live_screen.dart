@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:svgaplayer_flutter/player.dart';
+import 'package:flutter_svga/flutter_svga.dart';
 import 'package:tiki/parse/LiveStreamingModel.dart';
 import 'package:tiki/view/screens/live/zegocloud/zim_zego_sdk/internal/business/business_define.dart';
 import 'package:tiki/view_model/live_controller.dart';

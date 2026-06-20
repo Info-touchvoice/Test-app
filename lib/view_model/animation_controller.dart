@@ -8,8 +8,8 @@ import 'package:flutter/foundation.dart';
 import 'package:get/get.dart' hide Response;
 import 'package:lottie/lottie.dart';
 
-import 'package:svgaplayer_flutter/parser.dart';
-import 'package:svgaplayer_flutter/player.dart';
+import 'package:flutter_svga/flutter_svga.dart';
+import 'package:flutter_svga/flutter_svga.dart';
 import '../utils/constants/app_constants.dart';
 
 

@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
-import 'package:preload_page_view/preload_page_view.dart';
 import 'package:tiki/main.dart';
 import 'package:tiki/utils/constants/status.dart';
 import 'package:tiki/view/screens/reels/feed/videoutils/screen_config.dart';
@@ -81,7 +80,7 @@ class _VideoNewFeedScreenState<V extends VideoInfo>
   /// PageController
   ///
   //late PageController _pageController;
-  late PreloadPageController _pageController;
+  late PageController _pageController;
 
   /// Current page is on screen
   ///
@@ -134,7 +133,7 @@ class _VideoNewFeedScreenState<V extends VideoInfo>
   @override
   void initState() {
     super.initState();
-    _pageController = PreloadPageController(keepPage: widget.keepPage);
+    _pageController = PageController(keepPage: widget.keepPage);
     _pageController.addListener(_scrollListener);
     WidgetsBinding.instance.addObserver(this);
 
@@ -351,14 +350,13 @@ class _VideoNewFeedScreenState<V extends VideoInfo>
                   ),
             );
           }
-          return PreloadPageView.builder(
+          return PageView.builder(
             scrollDirection: Axis.vertical,
             controller: _pageController,
             itemCount: widget.singleReel == false ? videosList.length : 1,
             // Preloading too many pages starts multiple video initializations/downloads at once,
             // which can saturate bandwidth and cause constant buffering. Keep it small.
-            preloadPagesCount: 2,
-            pageSnapping: true,
+                  pageSnapping: true,
             onPageChanged: (page) {
               UserModel? user = widget.singleReel == false
                   ? videosList[page].currentUser

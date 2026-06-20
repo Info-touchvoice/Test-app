@@ -18,7 +18,7 @@ import 'package:tiki/view_model/ranking_controller.dart';
 import 'package:tiki/view_model/userViewModel.dart';
 import 'package:tiki/view_model/youtube_controller.dart';
 import 'package:tiki/view_model/zego_controller.dart';
-import 'package:wakelock/wakelock.dart';
+import 'package:tiki/compat/wakelock.dart';
 
 import '../data/app/setup.dart';
 import '../helpers/quick_help.dart';
@@ -339,7 +339,7 @@ class LiveViewModel extends GetxController {
     } catch (_) {}
 
     try {
-      await Wakelock.disable();
+      await AppWakelock.disable();
     } catch (_) {}
 
     // Navigate host to end screen (same as when they end manually)
@@ -667,7 +667,7 @@ class LiveViewModel extends GetxController {
     } catch (_) {}
 
     try {
-      await Wakelock.disable();
+      await AppWakelock.disable();
     } catch (_) {}
   }
 
@@ -702,7 +702,7 @@ class LiveViewModel extends GetxController {
 
     try {
       // Ensure screen can sleep again after forced end.
-      await Wakelock.disable();
+      await AppWakelock.disable();
     } catch (_) {}
   }
 
@@ -1445,7 +1445,7 @@ class LiveViewModel extends GetxController {
       runLiveTimer();
       endPreviousLiveStreaming();
     }
-    Wakelock.enable();
+    AppWakelock.enable();
 
     super.onInit();
   }
@@ -1456,7 +1456,7 @@ class LiveViewModel extends GetxController {
     // This controller can be recreated during camera/device interruptions; ending the live here
     // flips Parse `streaming` to false and breaks admin-side viewing while the host is still live.
     if (role == ZegoLiveRole.host) cancelLiveTimer();
-    Wakelock.disable();
+    AppWakelock.disable();
 
     super.onClose();
   }

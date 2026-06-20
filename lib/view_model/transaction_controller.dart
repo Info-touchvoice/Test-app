@@ -6,7 +6,6 @@ import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 import 'package:tiki/parse/UserModel.dart';
 import 'package:tiki/view_model/ranking_controller.dart';
 import 'package:tiki/view_model/userViewModel.dart';
-import 'package:english_words/english_words.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../data/app/config.dart';
@@ -254,26 +253,16 @@ class TransactionController extends GetxController {
 
   String generateReferenceNumber() {
     final random = Random();
+    const tokens = <String>[
+      'al', 'be', 'cu', 'do', 'el', 'fi', 'go', 'ha', 'io', 'jo',
+      'ka', 'li', 'mo', 'no', 'or', 'pa', 'qu', 'ra', 'si', 'tu',
+      'ur', 'vi', 'wo', 'xi', 'yo', 'za'
+    ];
 
-    // Generate 4 random words with exactly 4 characters each
-    final words = generateWordPairs()
-        .map((wp) => wp.first)
-        .where((word) => word.length == 2)
-        .take(2)
-        .toList();
+    final words = List.generate(2, (_) => tokens[random.nextInt(tokens.length)]);
+    final numbers =
+        List.generate(2, (_) => random.nextInt(100).toString().padLeft(2, '0'));
 
-    // Ensure we have exactly 4 words, regenerate if necessary
-    while (words.length < 2) {
-      words.addAll(generateWordPairs()
-          .map((wp) => wp.first)
-          .where((word) => word.length == 2)
-          .take(2 - words.length));
-    }
-
-    // Generate 4 random numbers, each being 4 digits long
-    final numbers = List.generate(2, (_) => random.nextInt(9999).toString().padLeft(2, '0'));
-
-    // Combine words and numbers
     final combined = <String>[];
     for (var i = 0; i < 2; i++) {
       combined.add(words[i]);
