@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:parse_server_sdk/parse_server_sdk.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../data/app/Config.dart';
+import '../data/app/config.dart';
 import '../data/app/navigation_service.dart';
 import '../helpers/quick_actions.dart';
 import '../helpers/quick_help.dart';
