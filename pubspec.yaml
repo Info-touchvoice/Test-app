@@ -103,7 +103,7 @@ dependencies:
   firebase_auth: ^5.7.0
   google_sign_in: ^6.1.6
   sign_in_with_apple: ^8.1.0
-  flutter_facebook_auth: ^6.0.4
+  flutter_facebook_auth: ^7.1.7
 
   #payments:
 #  purchases_flutter: ^4.10.4

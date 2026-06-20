@@ -27,12 +27,6 @@ subprojects {
     project.evaluationDependsOn(':app')
 
     gradle.projectsEvaluated {
-        if (plugins.hasPlugin("com.android.library")) {
-            android {
-                compileSdk 36
-            }
-        }
-
         tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach { kotlinTask ->
             def javaTaskName = kotlinTask.name.replace("Kotlin", "JavaWithJavac")
             def javaTask = tasks.findByName(javaTaskName)
