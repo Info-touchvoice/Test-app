@@ -394,10 +394,12 @@ TextStyle SafeGoogleFont(
   // Our app also ships custom fonts via `pubspec.yaml` (e.g. SFProDisplay),
   // so we must NOT route those through `GoogleFonts.getFont(...)`.
   final normalized = fontFamily.replaceAll(' ', '').toLowerCase();
-  final isBundledCustomFont = normalized == 'sfprodisplay' || normalized == 'quinlliyk';
+  final isBundledCustomFont = normalized == 'sfprodisplay' ||
+      normalized == 'sourcesanspro' ||
+      normalized == 'quinlliyk';
 
   if (isBundledCustomFont) {
-    final resolvedFamily = normalized == 'sfprodisplay' ? 'SFProDisplay' : 'Quinlliyk';
+    final resolvedFamily = normalized == 'quinlliyk' ? 'Quinlliyk' : 'SFProDisplay';
     final base = textStyle ?? const TextStyle();
     return base.copyWith(
       fontFamily: resolvedFamily,
