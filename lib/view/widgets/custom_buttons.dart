@@ -15,18 +15,18 @@ const double _primaryButtonIconFontSize = 20;
 class PrimaryButton extends StatelessWidget {
   final String? title;
   final Color? bgColor;
-  Color? textColor;
-  TextStyle? textStyle;
+  final Color? textColor;
+  final TextStyle? textStyle;
   final Color? disabledColor;
   final Color? disabledTextColor;
-  Color? borderColor;
+  final Color? borderColor;
   final Function()? onTap;
   final Widget? child;
   final double width;
   final double height;
   final double borderRadius;
   final double fontSize;
-  Gradient? gradient;
+  final Gradient? gradient;
   final String? image;
   final double? imageSize;
 
@@ -51,22 +51,33 @@ class PrimaryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Gradient? effectiveGradient;
+    final Color? effectiveBorderColor;
+    final Color? effectiveTextColor;
+    final TextStyle? effectiveTextStyle;
+
     if (bgColor == AppColors.primaryColor) {
-      gradient = AppColors.secondaryGradient(stops: [0.0, 1.0]);
-      borderColor = null;
-      textColor = AppColors.white;
-      textStyle = null;
+      effectiveGradient = AppColors.secondaryGradient(stops: [0.0, 1.0]);
+      effectiveBorderColor = null;
+      effectiveTextColor = AppColors.white;
+      effectiveTextStyle = null;
+    } else {
+      effectiveGradient = gradient;
+      effectiveBorderColor = borderColor;
+      effectiveTextColor = textColor;
+      effectiveTextStyle = textStyle;
     }
+
     return Container(
       height: height,
       decoration: BoxDecoration(
         // ✅ Use gradient if available, otherwise solid color
-        gradient:
-            gradient ?? (bgColor == null ? AppColors.secondaryGradient() : null),
-        color: gradient == null ? bgColor : null,
+        gradient: effectiveGradient ??
+            (bgColor == null ? AppColors.secondaryGradient() : null),
+        color: effectiveGradient == null ? bgColor : null,
         borderRadius: BorderRadius.circular(borderRadius),
-        border: borderColor != null
-            ? Border.all(color: borderColor!)
+        border: effectiveBorderColor != null
+            ? Border.all(color: effectiveBorderColor)
             : Border.all(color: AppColors.cardBorderColor),
         boxShadow: bgColor == Colors.transparent
             ? null
@@ -96,9 +107,9 @@ class PrimaryButton extends StatelessWidget {
                 if (image != null) SizedBox(width: 8.w),
                 Text(
                   title ?? '',
-                  style: textStyle ??
+                  style: effectiveTextStyle ??
                       sfProDisplayBold.copyWith(
-                        color: textColor ?? Colors.white,
+                        color: effectiveTextColor ?? Colors.white,
                         fontSize: fontSize,
                       ),
                 ),
