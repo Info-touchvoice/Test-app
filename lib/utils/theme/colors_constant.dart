@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 
 class AppColors {
-  const AppColors._();
-
   static const Color background = Color(0xFF090815);
   static const Color secondaryBackground = Color(0xFF111126);
   static const Color cardBackground = Color(0xFF161327);
@@ -16,6 +14,7 @@ class AppColors {
   static const Color success = Color(0xFF00D084);
   static const Color textPrimaryColor = Colors.white;
   static const Color textSecondaryColor = Color(0xFFB9B6D3);
+  static const Color textSecondary = textSecondaryColor;
   static const Color dividerColor = Color(0x14FFFFFF);
   static const Color borderColor = Color(0x1AFFFFFF);
   static const Color cardBorderColor = Color(0x14FFFFFF);
@@ -46,11 +45,11 @@ class AppColors {
   static const Color strokeWhite = borderColor;
   static const Color textWhite = textPrimaryColor;
 
-  static final Color dHintColor = textPrimaryColor.withOpacity(0.7);
-  static final Color lHintColor = textPrimaryColor.withOpacity(0.7);
+  static Color get dHintColor => textPrimaryColor.withOpacity(0.7);
+  static Color get lHintColor => textPrimaryColor.withOpacity(0.7);
   static const Color lTxtColor = textPrimaryColor;
-  static final Color dTxtColor = textPrimaryColor.withOpacity(0.7);
-  static final Color txtBtnColor = primaryPurple.withOpacity(0.85);
+  static Color get dTxtColor => textPrimaryColor.withOpacity(0.7);
+  static Color get txtBtnColor => primaryPurple.withOpacity(0.85);
   static const Color yellowColor = Color(0xFFFFC83D);
   static const Color greyColor = textSecondaryColor;
   static const Color lightOrange = vipGold;
@@ -58,12 +57,12 @@ class AppColors {
   static const Color darkOrange = error;
   static const Color darkBlue = secondaryBackground;
   static const Color progressPinkColor = error;
-  static final Color progressPinkColor2 = error.withOpacity(0.75);
+  static Color get progressPinkColor2 => error.withOpacity(0.75);
   static const Color progressLinearOrangeColor1 = primaryPurple;
   static const Color progressLinearOrangeColor2 = primaryBlue;
   static const Color wishSheetColor = cardBackground;
   static const Color progressLinearGreenColor1 = success;
-  static final Color progressLinearGreenColor2 = success.withOpacity(0.75);
+  static Color get progressLinearGreenColor2 => success.withOpacity(0.75);
   static const Color progressBgColor = secondaryBackground;
   static const Color greyText = textSecondaryColor;
   static const Color orangeContainer = vipGold;
@@ -72,14 +71,14 @@ class AppColors {
   static const Color greyT = textSecondaryColor;
   static const Color primaryColor = primaryPurple;
   static const Color secondaryColor = primaryBlue;
-  static final Color strokeColor = textPrimaryColor.withOpacity(0.10);
+  static Color get strokeColor => textPrimaryColor.withOpacity(0.10);
   static const Color brand = vipGold;
-  static final Color textFieldFilledColor = textPrimaryColor.withOpacity(0.08);
-  static final Color white07 = textPrimaryColor.withOpacity(0.07);
-  static final Color white10 = textPrimaryColor.withOpacity(0.10);
-  static final Color white20 = textPrimaryColor.withOpacity(0.20);
-  static final Color white50 = textPrimaryColor.withOpacity(0.50);
-  static final Color white80 = textPrimaryColor.withOpacity(0.80);
+  static Color get textFieldFilledColor => textPrimaryColor.withOpacity(0.08);
+  static Color get white07 => textPrimaryColor.withOpacity(0.07);
+  static Color get white10 => textPrimaryColor.withOpacity(0.10);
+  static Color get white20 => textPrimaryColor.withOpacity(0.20);
+  static Color get white50 => textPrimaryColor.withOpacity(0.50);
+  static Color get white80 => textPrimaryColor.withOpacity(0.80);
   static const Color sunshineYellow = vipGold;
   static const Color goldGlow = vipGold;
   static const Color violetVibe = primaryPurple;
@@ -91,8 +90,8 @@ class AppColors {
   static const Color emeraldGreen = success;
   static const Color explorerGreen = success;
   static const Color red = error;
-  static final Color lTextFieldFilled = textPrimaryColor.withOpacity(0.08);
-  static final Color dTextFieldFilled = textPrimaryColor.withOpacity(0.08);
+  static Color get lTextFieldFilled => textPrimaryColor.withOpacity(0.08);
+  static Color get dTextFieldFilled => textPrimaryColor.withOpacity(0.08);
   static const Color orange = vipGold;
   static const Color yellowish = vipGold;
   static const Color yellow = vipGold;
@@ -100,16 +99,16 @@ class AppColors {
   static const Color darkPurple = secondaryBackground;
   static const Color grey = textSecondaryColor;
   static const Color blurPurple100 = primaryPurple;
-  static final Color blurPurple50 = primaryPurple.withOpacity(0.5);
-  static final Color blurYellow20 = vipGold.withOpacity(0.2);
-  static final Color textWhite70 = textPrimaryColor.withOpacity(0.7);
+  static Color get blurPurple50 => primaryPurple.withOpacity(0.5);
+  static Color get blurYellow20 => vipGold.withOpacity(0.2);
+  static Color get textWhite70 => textPrimaryColor.withOpacity(0.7);
 
-  static final List<Color> darkBGGradientColor = [
+  static List<Color> get darkBGGradientColor => const [
     background,
     secondaryBackground,
   ];
 
-  static final List<Color> lightBGGradientColor = [
+  static List<Color> get lightBGGradientColor => const [
     background,
     secondaryBackground,
   ];
