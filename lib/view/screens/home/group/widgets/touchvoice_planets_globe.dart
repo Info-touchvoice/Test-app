@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../../utils/constants/typography.dart';
+import '../../../../../utils/theme/colors_constant.dart';
 
 const _kGlobeFrontScale = 0.42;
 
@@ -225,7 +226,7 @@ class _TouchVoicePlanetsGlobeState extends State<TouchVoicePlanetsGlobe>
             'No members online',
             style: sfProDisplayRegular.copyWith(
               fontSize: 13.sp,
-              color: const Color(0xFF999999),
+              color: AppColors.textSecondaryColor,
             ),
           ),
         ),
@@ -306,8 +307,8 @@ class _GlobeAvatarItem extends StatelessWidget {
   final _ProjectedPoint projected;
   final AnimationController pulse;
 
-  static const _ringColor = Color(0xFF62C9FE);
-  static const _nameColor = Color(0xFF333333);
+  static const _ringColor = AppColors.diamondBlue;
+  static const _nameColor = AppColors.textPrimaryColor;
 
   @override
   Widget build(BuildContext context) {
@@ -403,7 +404,7 @@ class _GlobeAvatarCircle extends StatelessWidget {
   final double size;
   final String imageUrl;
 
-  static const _ringColor = Color(0xFF62C9FE);
+  static const _ringColor = AppColors.diamondBlue;
 
   @override
   Widget build(BuildContext context) {
@@ -413,7 +414,7 @@ class _GlobeAvatarCircle extends StatelessWidget {
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         border: Border.all(color: _ringColor, width: 2),
-        color: const Color(0xFFF0F4F8),
+        color: AppColors.cardBackground,
       ),
       child: ClipOval(
         child: SizedBox(
@@ -426,12 +427,12 @@ class _GlobeAvatarCircle extends StatelessWidget {
             height: size,
             placeholder: (_, __) => Icon(
               Icons.person,
-              color: Colors.grey,
+              color: AppColors.textSecondaryColor,
               size: size * 0.45,
             ),
             errorWidget: (_, __, ___) => Icon(
               Icons.person,
-              color: Colors.grey,
+              color: AppColors.textSecondaryColor,
               size: size * 0.45,
             ),
           ),

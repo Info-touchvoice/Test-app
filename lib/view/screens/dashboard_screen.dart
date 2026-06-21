@@ -14,6 +14,7 @@ import 'package:tiki/services/banner_popup_service.dart';
 import '../../parse/UserModel.dart';
 import '../../utils/Utils.dart';
 import '../../utils/constants/app_constants.dart';
+import '../../utils/theme/colors_constant.dart';
 import '../../view_model/chat_list_controller.dart';
 import '../../view_model/communityController.dart';
 import '../../view_model/global_live_stream_controller.dart';
@@ -101,9 +102,9 @@ class _DashboardViewState extends State<DashboardView> {
     });
   }
 
-  static const Color _navGold = Color(0xFFFFD76A);
-  static const Color _navGoldLight = Color(0xFFFFF0C2);
-  static const Color _navInactive = Color(0xB3FFFFFF);
+  static const Color _navGold = AppColors.primaryPurple;
+  static const Color _navGoldLight = AppColors.textPrimaryColor;
+  static const Color _navInactive = AppColors.textSecondaryColor;
 
   String? _navAssetIcon(int index, bool isSelected) {
     if (index == _navHome) {
@@ -155,7 +156,7 @@ class _DashboardViewState extends State<DashboardView> {
       decoration: BoxDecoration(
         boxShadow: [
           BoxShadow(
-            color: _navGold.withOpacity(0.35),
+            color: AppColors.primaryPurple.withOpacity(0.28),
             blurRadius: 8,
             spreadRadius: 0,
           ),
@@ -246,11 +247,11 @@ class _DashboardViewState extends State<DashboardView> {
           alignment: Alignment.bottomCenter,
         ),
         border: Border(
-          top: BorderSide(color: _navGold.withOpacity(0.35), width: 1),
+          top: BorderSide(color: AppColors.borderColor, width: 1),
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.35),
+            color: AppColors.background.withOpacity(0.65),
             blurRadius: 12,
             offset: const Offset(0, -2),
           ),
@@ -262,8 +263,8 @@ class _DashboardViewState extends State<DashboardView> {
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              Colors.black.withOpacity(0.2),
-              Colors.black.withOpacity(0.55),
+              AppColors.secondaryBackground.withOpacity(0.65),
+              AppColors.background.withOpacity(0.92),
             ],
           ),
         ),
@@ -305,13 +306,14 @@ class _DashboardViewState extends State<DashboardView> {
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                       colors: [
-                        Color(0xFFFFF0C2),
-                        Color(0xFFFFD76A),
-                        Color(0xFFC8942A),
+                        AppColors.buttonGradientStart,
+                        AppColors.buttonGradientEnd,
                       ],
                     )
                   : null,
-              color: isSelected ? null : Colors.black.withOpacity(0.25),
+              color: isSelected
+                  ? null
+                  : AppColors.secondaryBackground.withOpacity(0.72),
               border: Border.all(
                 color: isSelected ? _navGoldLight : _navGold.withOpacity(0.45),
                 width: 1.5,
@@ -319,7 +321,7 @@ class _DashboardViewState extends State<DashboardView> {
               boxShadow: isSelected
                   ? [
                       BoxShadow(
-                        color: _navGold.withOpacity(0.5),
+                        color: AppColors.primaryPurple.withOpacity(0.38),
                         blurRadius: 14,
                         spreadRadius: 1,
                       ),
@@ -402,12 +404,12 @@ class BNBCustomPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = const Color(0xff252626)
+      ..color = AppColors.secondaryBackground
       ..style = PaintingStyle.fill;
     final path = Path()..moveTo(0, 20);
 
     final borderPaint = Paint()
-      ..color = const Color(0xff454646)
+      ..color = AppColors.borderColor
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1;
 
@@ -425,7 +427,7 @@ class BNBCustomPainter extends CustomPainter {
 
     path.lineTo(0, size.height);
     path.close();
-    canvas.drawShadow(path, Colors.black.withOpacity(0.10), 20, true);
+    canvas.drawShadow(path, AppColors.background.withOpacity(0.30), 20, true);
 
     canvas.drawPath(path, borderPaint);
 

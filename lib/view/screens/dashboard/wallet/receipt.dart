@@ -6,6 +6,7 @@ import 'package:tiki/helpers/quick_help.dart';
 import 'package:tiki/view/widgets/base_scaffold.dart';
 
 import '../../../../utils/constants/app_constants.dart';
+import '../../../../utils/theme/colors_constant.dart';
 import '../../../../view_model/userViewModel.dart';
 
 
@@ -69,8 +70,15 @@ class Receipt extends StatelessWidget {
                   height: 453.23.h,
                   width: 343.w,
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: AppColors.cardBackground,
                     borderRadius: BorderRadius.circular(21.11.r),
+                    border: Border.all(color: AppColors.borderColor),
+                    boxShadow: AppColors.softShadow(
+                      color: Colors.black,
+                      opacity: 0.22,
+                      blurRadius: 22,
+                      offset: const Offset(0, 10),
+                    ),
                   ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -80,7 +88,7 @@ class Receipt extends StatelessWidget {
                       Text(
                         withdraw==true ? "Transfer Successful" : "Payment Successful",
                         style: TextStyle(
-                          color: amberColor,
+                          color: AppColors.success,
                           fontSize: 16.sp,
                           fontWeight: FontWeight.bold,
                         ),
@@ -89,7 +97,7 @@ class Receipt extends StatelessWidget {
                       Text(
                         "\$ ${amount.toStringAsFixed(2)}",
                         style: TextStyle(
-                          color: Colors.black,
+                          color: AppColors.textPrimaryColor,
                           fontSize: 32.sp,
                           fontWeight: FontWeight.w500,
                         ),
@@ -99,7 +107,7 @@ class Receipt extends StatelessWidget {
                       Text(
                         "Withdraw to",
                         style: TextStyle(
-                          color: Colors.black,
+                          color: AppColors.textSecondaryColor,
                           fontSize: 16.sp,
                         ),
                       ),
@@ -122,14 +130,14 @@ class Receipt extends StatelessWidget {
                                 style: TextStyle(
                                   fontSize: 14.sp,
                                   fontWeight: FontWeight.w500,
-                                  color: Colors.black
+                                  color: AppColors.textPrimaryColor
                                 ),
                               ),
                               Text(
                                 "${Get.find<UserViewModel>().currentUser.getUid}",
                                 style: TextStyle(
                                   fontSize: 12.31.sp,
-                                    color: Colors.black.withOpacity(0.6)
+                                    color: AppColors.textSecondaryColor
                                 ),
                               ),
                             ],
@@ -162,7 +170,7 @@ class Receipt extends StatelessWidget {
                                       style: TextStyle(
                                         fontSize: 12.sp,
                                         fontWeight: FontWeight.w400,
-                                        color: Colors.black45,
+                                        color: AppColors.textSecondaryColor,
                                       ),
                                     ),
                                     Text(
@@ -170,7 +178,7 @@ class Receipt extends StatelessWidget {
                                       style: TextStyle(
                                         fontSize: 12.sp,
                                         fontWeight: FontWeight.w600,
-                                        color: Colors.black,
+                                        color: AppColors.textPrimaryColor,
                                       ),
                                     ),
                                   ],
@@ -191,14 +199,14 @@ class Receipt extends StatelessWidget {
                                   style: TextStyle(
                                     fontSize: 15.sp,
                                     fontWeight: FontWeight.bold,
-                                    color: amberColor,
+                                    color: AppColors.vipGold,
                                   ),
                                 ),
                                 Text(
                                   "\$ $amount",
                                   style: TextStyle(
                                     fontSize: 18.sp,
-                                    color: Colors.black,
+                                    color: AppColors.textPrimaryColor,
                                     fontWeight: FontWeight.w500,
                                   ),
                                 ),
@@ -236,13 +244,19 @@ class Receipt extends StatelessWidget {
                 width: 342.w,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(35.r),
-                  color: amberColor,
+                  gradient: AppColors.secondaryGradient(),
+                  boxShadow: AppColors.softShadow(
+                    color: AppColors.primaryPurple,
+                    opacity: 0.20,
+                    blurRadius: 18,
+                    offset: const Offset(0, 8),
+                  ),
                 ),
                 alignment: Alignment.center,
                 child: Text(
                   "Confirm",
                   style: TextStyle(
-                    color: Colors.black,
+                    color: AppColors.textPrimaryColor,
                     fontSize: 16.sp,
                     fontWeight: FontWeight.w600,
                   ),

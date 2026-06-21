@@ -1,63 +1,63 @@
 import 'package:flutter/material.dart';
-const coinColor = Color(0xFFFFE42C);
-const defaultColor = Color(0xFFA0A3B2);
-const earnCashColor = Color(0xFFFF117E);
+const coinColor = Color(0xFFFFC83D);
+const defaultColor = Color(0xFFB9B6D3);
+const earnCashColor = Color(0xFF8B2CF5);
 
-const kPrimaryColor = Color(0xFFFFC107);
-const kSecondaryColor = Color(0xFFB71C1C);
-const kPrimaryLightColor = Color(0xFFD9FFE2);
-const kContentColorLightTheme = Color(0xFF000000);
+const kPrimaryColor = Color(0xFF8B2CF5);
+const kSecondaryColor = Color(0xFF3B82F6);
+const kPrimaryLightColor = Color(0xFF111126);
+const kContentColorLightTheme = Color(0xFFFFFFFF);
 const kContentColorDarkTheme = Color(0xFFFFFFFF);
-const kWarninngColor = Color(0xFFF3BB1C);
-const kErrorColor = Color(0xFFF03738);
+const kWarninngColor = Color(0xFFFFC83D);
+const kErrorColor = Color(0xFFFF4D6D);
 const kTransparentColor = Color(0xFFFFFF);
-const kTicketAppBarBackground = Color(0xFF95999B);
-const kDisabledColor = Color(0xFFE6E9F0);
-const kDisabledGrayColor = Color(0xFF879099);
-const kPrimacyGrayColor = Color(0xFF989898);
-const kSecondaryGrayColor = Color(0xFF787475);
-const kTicketGrayColor = Color(0xFFC4C4C4);
-const kTicketBlueColor = Color(0xFF00C2FF);
-const kTicketYellowColor = Color(0xFFFFE600);
+const kTicketAppBarBackground = Color(0xFF111126);
+const kDisabledColor = Color(0x1AFFFFFF);
+const kDisabledGrayColor = Color(0xFFB9B6D3);
+const kPrimacyGrayColor = Color(0xFFB9B6D3);
+const kSecondaryGrayColor = Color(0xFFB9B6D3);
+const kTicketGrayColor = Color(0x1AFFFFFF);
+const kTicketBlueColor = Color(0xFF3B82F6);
+const kTicketYellowColor = Color(0xFFFFC83D);
 
-const kSettingsBg = Color(0xFFF5F3F3);
+const kSettingsBg = Color(0xFF090815);
 
 const kFacebookColor = Color(0xFF0081FF);
 const kGoogleColor = Color(0xFFEA4435);
 
-const kTabIconDefaultColor = Color(0xFF8B93B1);
+const kTabIconDefaultColor = Color(0xFFB9B6D3);
 const kTabIconSelectedColor = kPrimaryColor;
 
-const Color kGreyColor0 = Color(0xFFF3F5F9);
-const Color kGreyColor1 = Color(0xFFB5B9C5);
-const Color kGreyColor2 = Color(0xFF47525C);
+const Color kGreyColor0 = Color(0xFF161327);
+const Color kGreyColor1 = Color(0xFFB9B6D3);
+const Color kGreyColor2 = Color(0xFFB9B6D3);
 
-const Color kRedColor1 = Color(0xFFFA3967);
+const Color kRedColor1 = Color(0xFFFF4D6D);
 
-const Color kOrangeColor1 = Color(0xFFFFB800);
+const Color kOrangeColor1 = Color(0xFFFFC83D);
 
-const Color kBlueColor1 = Color(0xFF0094FF);
+const Color kBlueColor1 = Color(0xFF3B82F6);
 
 const kDefaultPadding = 20.0;
 
-const kProfileStarsColorPrimary = Color(0xFF00E0AA);
-const kProfileStarsColorSecondary = Color(0xFFFF00B8);
+const kProfileStarsColorPrimary = Color(0xFF00D084);
+const kProfileStarsColorSecondary = Color(0xFF8B2CF5);
 
-const kWelcomeColorUp = Color(0xFF27E150);
-const kWelcomeColorDown = Color(0xFF00E0AA);
-const kPrimaryShadowColor = Color(0xB327E150);
-const kSecondaryShadowColor = Color(0xB300E0AA);
+const kWelcomeColorUp = Color(0xFF8B2CF5);
+const kWelcomeColorDown = Color(0xFF3B82F6);
+const kPrimaryShadowColor = Color(0x338B2CF5);
+const kSecondaryShadowColor = Color(0x333B82F6);
 
-const kPhotosGrayColor = Color(0xFFE6E9F0);
-const kPhotosGrayColorReverse = Color(0xFFCCD2E3);
-const kGrayColor =  Color(0xFF8B93B1); // Color(0xFFCCCCCC);
-const kGrayDark = Color(0xFF767676);
-const kGrayLight = Color(0xFFF6F6F6);
-const kGrayColorThemeLight = Color(0xFF242439);
-const kGreenColor = Color(0xFF15CC79);
+const kPhotosGrayColor = Color(0xFF161327);
+const kPhotosGrayColorReverse = Color(0xFF111126);
+const kGrayColor =  Color(0xFFB9B6D3); // Color(0xFFCCCCCC);
+const kGrayDark = Color(0xFFB9B6D3);
+const kGrayLight = Color(0xFF161327);
+const kGrayColorThemeLight = Color(0xFFB9B6D3);
+const kGreenColor = Color(0xFF00D084);
 
-const kFeatureExtraShowsColor = Color(0xFFF99DF0);
-const kFeatureSpotLightColor = Color(0xFF44A3EA);
+const kFeatureExtraShowsColor = Color(0xFF8B2CF5);
+const kFeatureSpotLightColor = Color(0xFF3B82F6);
 
 // Colors.grey
 const Color kColorsGrey100 = Color(0xFFF5F5F5);

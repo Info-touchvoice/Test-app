@@ -146,7 +146,7 @@ class _TouchVoicePopularTabState extends State<TouchVoicePopularTab> {
       height: 37.h,
       decoration: const BoxDecoration(
         color: TouchVoiceGroupColors.subTabBar,
-        border: Border(bottom: BorderSide(color: Color(0xFFEEEEEE), width: 0.5)),
+        border: Border(bottom: BorderSide(color: TouchVoiceGroupColors.divider, width: 0.5)),
       ),
       child: Row(
         children: [

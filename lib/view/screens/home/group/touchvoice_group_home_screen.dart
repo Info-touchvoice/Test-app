@@ -341,7 +341,7 @@ class _HeaderProfileAvatar extends StatelessWidget {
             end: Alignment.bottomRight,
             colors: [
               Colors.white.withOpacity(0.92),
-              const Color(0xFFFFD76A).withOpacity(0.72),
+              TouchVoiceGroupColors.brandPurple.withOpacity(0.72),
             ],
           ),
           boxShadow: [

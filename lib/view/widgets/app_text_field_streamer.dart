@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../utils/constants/typography.dart';
+import '../../utils/theme/colors_constant.dart';
 
 class AppTextFormSField extends StatelessWidget {
   final TextEditingController controller;
@@ -46,31 +47,40 @@ class AppTextFormSField extends StatelessWidget {
       textInputAction: TextInputAction.none,
       // style:  TextStyle(color:txtColor?? AppColors.kBlack),
       controller: controller,
-      cursorColor: txtColor ?? Colors.white,
+      cursorColor: txtColor ?? AppColors.primaryBlue,
+      style: sfProDisplayRegular.copyWith(
+        fontSize: 18,
+        color: txtColor ?? AppColors.textPrimaryColor,
+      ),
       obscureText: isObSecure,
       maxLines: maxLines,
       onChanged: onChanged,
       decoration: InputDecoration(
         hintText: hintText,
-        hintStyle: textStyle ?? sfProDisplayRegular.copyWith(fontSize: 18, color: Colors.white),
-        fillColor: fillColor,
+        filled: true,
+        hintStyle: textStyle ??
+            sfProDisplayRegular.copyWith(
+              fontSize: 18,
+              color: AppColors.textPrimaryColor.withOpacity(0.70),
+            ),
+        fillColor: fillColor ?? AppColors.textFieldFilledColor,
         prefixIcon: isPrefixIcon ? prefixIcon : null,
         suffixIcon: isSuffixIcon ? suffixIcon : null,
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(borderRadius),
-          borderSide: BorderSide(color: borderColor ?? Colors.transparent),
+          borderSide: BorderSide(color: borderColor ?? AppColors.borderColor),
         ),
         focusedBorder: OutlineInputBorder(
           //<-- SEE HERE
             borderRadius: BorderRadius.circular(borderRadius),
-            borderSide: const BorderSide(color: Colors.transparent)),
+            borderSide: const BorderSide(color: AppColors.primaryPurple)),
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(borderRadius), // Adjust the radius as needed
-          borderSide: const BorderSide(color: Colors.red), // Border color when there's an error
+          borderSide: const BorderSide(color: AppColors.error),
         ),
         focusedErrorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(borderRadius), // Adjust the radius as needed
-          borderSide: const BorderSide(color: Colors.red), // Border color when there's an error
+          borderSide: const BorderSide(color: AppColors.error),
         ),
       ),
       validator: validator,

@@ -27,7 +27,7 @@ class TransactionHistory extends StatelessWidget {
         title: Text(
           'Transaction History',
           style: SafeGoogleFont('sfProDisplayMedium', fontSize: 16.sp,
-              color: Get.isDarkMode ? AppColors.white : AppColors.black
+              color: AppColors.textPrimaryColor
           ),
 
         ),
@@ -38,7 +38,7 @@ class TransactionHistory extends StatelessWidget {
             },
             icon: Icon(
               Icons.arrow_back_ios,
-                color: Get.isDarkMode ? AppColors.white : AppColors.black
+                color: AppColors.textPrimaryColor
             )),
 
       ),
@@ -54,9 +54,9 @@ class TransactionHistory extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text("*  ", style: sfProDisplayBlack.copyWith(color: Colors.red),),
+                    Text("*  ", style: sfProDisplayBlack.copyWith(color: AppColors.error),),
                     Text("No Transaction record found", style: sfProDisplayMedium.copyWith(
-                      fontSize: 14.sp, color: Get.isDarkMode ? AppColors.white : AppColors.black
+                      fontSize: 14.sp, color: AppColors.textPrimaryColor
 
 
                     ),),

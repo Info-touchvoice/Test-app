@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tiki/utils/theme/colors_constant.dart';
 
 class TouchVoiceHomeHeaderTheme {
   const TouchVoiceHomeHeaderTheme({
@@ -18,41 +19,41 @@ class TouchVoiceHomeHeaderTheme {
   static const royalPurple = TouchVoiceHomeHeaderTheme(
     id: 'royal_purple',
     name: 'Royal Purple',
-    startColor: Color(0xFF3B0764),
-    endColor: Color(0xFF7E22CE),
-    accentColor: Color(0xFFFFD76A),
+    startColor: AppColors.primaryPurple,
+    endColor: AppColors.primaryBlue,
+    accentColor: AppColors.vipGold,
   );
 
   static const oceanBlue = TouchVoiceHomeHeaderTheme(
     id: 'ocean_blue',
     name: 'Ocean Blue',
-    startColor: Color(0xFF0F172A),
-    endColor: Color(0xFF2563EB),
-    accentColor: Color(0xFF7DD3FC),
+    startColor: AppColors.secondaryBackground,
+    endColor: AppColors.primaryBlue,
+    accentColor: AppColors.diamondBlue,
   );
 
   static const emeraldGreen = TouchVoiceHomeHeaderTheme(
     id: 'emerald_green',
     name: 'Emerald Green',
-    startColor: Color(0xFF064E3B),
-    endColor: Color(0xFF10B981),
-    accentColor: Color(0xFFA7F3D0),
+    startColor: AppColors.secondaryBackground,
+    endColor: AppColors.success,
+    accentColor: AppColors.success,
   );
 
   static const sunsetOrange = TouchVoiceHomeHeaderTheme(
     id: 'sunset_orange',
     name: 'Sunset Orange',
-    startColor: Color(0xFF7C2D12),
-    endColor: Color(0xFFF97316),
-    accentColor: Color(0xFFFFD76A),
+    startColor: AppColors.secondaryBackground,
+    endColor: AppColors.vipGold,
+    accentColor: AppColors.vipGold,
   );
 
   static const midnightBlack = TouchVoiceHomeHeaderTheme(
     id: 'midnight_black',
     name: 'Midnight Black',
-    startColor: Color(0xFF111827),
-    endColor: Color(0xFF374151),
-    accentColor: Color(0xFFE5E7EB),
+    startColor: AppColors.background,
+    endColor: AppColors.secondaryBackground,
+    accentColor: AppColors.textPrimaryColor,
   );
 
   static const defaultTheme = royalPurple;

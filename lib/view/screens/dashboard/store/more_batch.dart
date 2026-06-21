@@ -40,8 +40,7 @@ class _MoreBatchState extends State<MoreBatch> {
         title: Text(
           store.selectedTitle,
           style: SafeGoogleFont('sfProDisplayMedium', fontSize: 16.sp,
-              color: Get.isDarkMode ? AppColors.white : AppColors.black
-          ),
+              color: AppColors.textPrimaryColor),
 
         ),
         centerTitle: true,
@@ -51,7 +50,7 @@ class _MoreBatchState extends State<MoreBatch> {
             },
             icon: Icon(
               Icons.arrow_back_ios,
-                color: Get.isDarkMode ? AppColors.white : AppColors.black
+                color: AppColors.textPrimaryColor
             )),
         actions: [IconButton(
             onPressed: () {
@@ -59,7 +58,7 @@ class _MoreBatchState extends State<MoreBatch> {
             },
             icon: Icon(
               Icons.shopping_bag_outlined,
-                color: Get.isDarkMode ? AppColors.white : AppColors.black
+                color: AppColors.textPrimaryColor
             )),],
       ),
       body: GetBuilder<UserViewModel>(
@@ -127,7 +126,7 @@ class _MoreBatchState extends State<MoreBatch> {
                             padding: EdgeInsets.symmetric(horizontal: 7.w, vertical: 14.h),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(8.r),
-                              color: Get.isDarkMode ?  Color(0xff494848)  : AppColors.white
+                              color: AppColors.cardBackground
 
                             ),
                             child: store.selectedTitle == store.title[0] ? SvgPicture.asset(item[index]["image"]) : Image.asset(item[index]["image"]),
@@ -136,7 +135,7 @@ class _MoreBatchState extends State<MoreBatch> {
                           Text(
                             item[index]["name"],
                             style: TextStyle(
-                              color:  Get.isDarkMode ? Colors.white70 : Colors.black.withOpacity(0.7),
+                              color: AppColors.textSecondaryColor,
                               fontSize: 12.sp,
                               fontWeight: FontWeight.w500,
                             ),
@@ -162,8 +161,8 @@ class _MoreBatchState extends State<MoreBatch> {
                                 "1000",
                                 style: TextStyle(
                                   decoration: TextDecoration.lineThrough,
-                                  decorationColor: Get.isDarkMode ? Colors.white70 : Colors.black.withOpacity(0.7),
-                                  color:  Get.isDarkMode ? Colors.white70 : Colors.black.withOpacity(0.7),
+                                  decorationColor: AppColors.textSecondaryColor,
+                                  color: AppColors.textSecondaryColor,
                                   fontWeight: FontWeight.w500,
                                   fontSize: 10.sp,
                                 ),
@@ -177,7 +176,7 @@ class _MoreBatchState extends State<MoreBatch> {
                                 Text(
                                   "Purchased",
                                   style: TextStyle(
-                                    color: AppColors.yellowColor,
+                                    color: AppColors.vipGold,
                                     fontWeight: FontWeight.bold,
                                     fontSize: 15.sp,
                                   ),

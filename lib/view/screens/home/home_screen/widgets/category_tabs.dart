@@ -66,7 +66,7 @@ class _CategoryTabsState extends State<CategoryTabs> {
                 ? Container(
                     height: 2,
                     width: 10.w,
-                    color: Color(0xffEA773F),
+                    color: AppColors.primaryBlue,
                   )
                 : const SizedBox(),
           ],

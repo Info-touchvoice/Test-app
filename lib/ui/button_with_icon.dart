@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tiki/utils/colors.dart';
+import 'package:tiki/utils/theme/colors_constant.dart';
 
 import '../helpers/quick_actions.dart';
 
@@ -49,7 +50,7 @@ class ButtonWithIcon extends StatelessWidget {
     this.onTap,
     this.mainAxisAlignment = MainAxisAlignment.center,
     this.crossAxisAlignment = CrossAxisAlignment.center,
-    this.iconColor = Colors.black,
+    this.iconColor = AppColors.textPrimaryColor,
     this.iconURL,
     this.urlIconColor = kPrimaryColor,
     this.radiusTopRight = 0,
@@ -57,7 +58,7 @@ class ButtonWithIcon extends StatelessWidget {
     this.radiusTopLeft = 0,
     this.radiusBottomLeft = 0,
     this.iconSize = 24.0,
-    this.borderColor = Colors.transparent,
+    this.borderColor = AppColors.cardBorderColor,
     this.borderWidth = 0,
   }) : super(key: key);
 
@@ -78,7 +79,7 @@ class ButtonWithIcon extends StatelessWidget {
             BorderSide(width: borderWidth!, color: borderColor!),
           ),
           backgroundColor: MaterialStateProperty.all<Color>(
-              backgroundColor != null ? backgroundColor! : Colors.grey),
+              backgroundColor ?? AppColors.cardBackground),
           shape: MaterialStateProperty.all(RoundedRectangleBorder(
               borderRadius: BorderRadius.only(
                   topRight: Radius.circular(

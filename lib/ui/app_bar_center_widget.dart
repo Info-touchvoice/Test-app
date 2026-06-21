@@ -1,5 +1,5 @@
-import 'package:tiki/helpers/quick_help.dart';
 import 'package:flutter/material.dart';
+import 'package:tiki/utils/theme/colors_constant.dart';
 
 import '../helpers/quick_actions.dart';
 
@@ -51,13 +51,8 @@ class ToolBarCenterWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Color titleColor = QuickHelp.isDarkModeNoContext()
-        ? Color(0xFFFFFFFF)
-        : Color(0xFF000000);
-
-    Color bgColor = QuickHelp.isDarkModeNoContext()
-        ? Color(0xFF000000)
-        : Color(0xFFFFFFFF);
+    const Color titleColor = AppColors.textPrimaryColor;
+    const Color bgColor = Colors.transparent;
 
     return Scaffold(
       appBar: AppBar(

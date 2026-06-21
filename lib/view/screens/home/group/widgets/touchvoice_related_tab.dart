@@ -99,11 +99,12 @@ class _TouchVoiceRelatedTabState extends State<TouchVoiceRelatedTab> {
         margin: EdgeInsets.fromLTRB(14.w, 8.h, 14.w, 10.h),
         padding: EdgeInsets.all(12.w),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: TouchVoiceGroupColors.cardBg,
           borderRadius: BorderRadius.circular(10.r),
+          border: Border.all(color: TouchVoiceGroupColors.divider),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.12),
+              color: Colors.black.withOpacity(0.22),
               blurRadius: 20,
               offset: const Offset(0, 4),
             ),
@@ -199,11 +200,12 @@ class _TouchVoiceRelatedTabState extends State<TouchVoiceRelatedTab> {
         margin: EdgeInsets.fromLTRB(14.w, 8.h, 14.w, 10.h),
         padding: EdgeInsets.all(16.w),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: TouchVoiceGroupColors.cardBg,
           borderRadius: BorderRadius.circular(10.r),
+          border: Border.all(color: TouchVoiceGroupColors.divider),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.12),
+              color: Colors.black.withOpacity(0.22),
               blurRadius: 20,
               offset: const Offset(0, 4),
             ),
@@ -270,7 +272,10 @@ class _TouchVoiceRelatedTabState extends State<TouchVoiceRelatedTab> {
         constraints: BoxConstraints(minWidth: 71.w, minHeight: 27.h),
         padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 4.h),
         decoration: BoxDecoration(
-          color: active ? const Color(0xFFF0E6FF) : const Color(0xFFF5F5F5),
+          color: active
+              ? TouchVoiceGroupColors.brandPurple.withOpacity(0.18)
+              : TouchVoiceGroupColors.cardBg,
+          border: Border.all(color: TouchVoiceGroupColors.divider),
           borderRadius: BorderRadius.circular(14.r),
         ),
         alignment: Alignment.center,

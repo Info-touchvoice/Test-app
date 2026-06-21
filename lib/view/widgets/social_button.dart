@@ -19,9 +19,15 @@ class SocialButton extends StatelessWidget {
         width: 50.h,
         height: 50.h,
         decoration: BoxDecoration(
-          color: AppColors.kWhite,
-          border: Border.all(color: AppColors.primaryColor, width: 2.5),
+          color: AppColors.cardBackground,
+          border: Border.all(color: AppColors.borderColor, width: 1.5),
           shape: BoxShape.circle,
+          boxShadow: AppColors.softShadow(
+            color: AppColors.primaryPurple,
+            opacity: 0.16,
+            blurRadius: 14,
+            offset: const Offset(0, 6),
+          ),
         ),
         child: Padding(
           padding: const EdgeInsets.all(12.0),

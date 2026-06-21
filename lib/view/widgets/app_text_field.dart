@@ -77,7 +77,7 @@ class AppTextFormField extends StatelessWidget {
           autofocus: autoFocus,
           textInputAction: textInputAction,
           controller: controller,
-          cursorColor: txtColor ?? Colors.white,
+          cursorColor: txtColor ?? AppColors.primaryBlue,
           obscureText: isObSecure,
           maxLines: maxLines,
           onTap: onTap,
@@ -90,28 +90,26 @@ class AppTextFormField extends StatelessWidget {
             hintText: hintText,
             hintStyle: hintStyle ?? sfProDisplayRegular.copyWith(
                 fontSize: 14.sp, color: AppColors.textSecondaryColor),
+            filled: true,
             fillColor: fillColor ?? AppColors.textFieldFilledColor,
             prefixIcon: isPrefixIcon ? prefixIcon : null,
             suffixIcon: isSuffixIcon ? suffixIcon : null,
             enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(borderRadius),
                 borderSide:
-                    BorderSide(color: borderColor ?? Colors.transparent)),
+                    BorderSide(color: borderColor ?? AppColors.borderColor)),
             focusedBorder: OutlineInputBorder(
-                //<-- SEE HERE
                 borderRadius: BorderRadius.circular(borderRadius),
-                borderSide: const BorderSide(color: Colors.transparent)),
+                borderSide: const BorderSide(color: AppColors.primaryPurple)),
             errorBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(
                   borderRadius), // Adjust the radius as needed
-              borderSide: const BorderSide(
-                  color: Colors.red), // Border color when there's an error
+              borderSide: const BorderSide(color: AppColors.error),
             ),
             focusedErrorBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(
                   borderRadius), // Adjust the radius as needed
-              borderSide: const BorderSide(
-                  color: Colors.red), // Border color when there's an error
+              borderSide: const BorderSide(color: AppColors.error),
             ),
           ),
           validator: validator,

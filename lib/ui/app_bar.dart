@@ -1,6 +1,5 @@
-import 'package:tiki/helpers/quick_help.dart';
-import 'package:tiki/utils/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:tiki/utils/theme/colors_constant.dart';
 
 import '../helpers/quick_actions.dart';
 
@@ -64,13 +63,8 @@ class ToolBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    Color titleColor = QuickHelp.isDarkModeNoContext()
-        ? kContentColorDarkTheme
-        : kContentColorLightTheme;
-
-    Color bgColor = QuickHelp.isDarkModeNoContext()
-        ? kContentColorLightTheme
-        : kContentColorDarkTheme;
+    const Color titleColor = AppColors.textPrimaryColor;
+    const Color bgColor = Colors.transparent;
 
     return Scaffold(
       extendBodyBehindAppBar: extendBodyBehindAppBar!,
@@ -84,7 +78,7 @@ class ToolBar extends StatelessWidget {
           icon: leftButtonWidget!= null ? leftButtonWidget! : Icon(leftButtonIcon, color: iconColor != null ? iconColor : titleColor),
           onPressed: onLeftButtonTap as void Function()?,
         ),
-        backgroundColor: backgroundColor != null ? backgroundColor : bgColor,
+        backgroundColor: backgroundColor ?? bgColor,
         title: titleChild != null ? titleChild : Text(title != null ? title! : "", style: TextStyle(color: titleColor),),
         bottomOpacity: 10,
         elevation: elevation,

@@ -7,6 +7,7 @@ import 'package:tiki/view_model/transaction_controller.dart';
 
 import '../../../../utils/Utils.dart';
 import '../../../../utils/constants/app_constants.dart';
+import '../../../../utils/theme/colors_constant.dart';
 
 
 class Checkout extends StatefulWidget {
@@ -61,10 +62,10 @@ class _CheckoutState extends State<Checkout> {
             height: 64.h,
             width: 277.w,
             decoration: BoxDecoration(
-              color: const Color(0xff323232),
+              color: AppColors.cardBackground,
               borderRadius: BorderRadius.circular(50.r),
               border: Border.all(
-                color: const Color(0xff494848),
+                color: AppColors.borderColor,
               ),
             ),
             padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 8.h),
@@ -106,7 +107,7 @@ class _CheckoutState extends State<Checkout> {
                       height: double.infinity,
                       width: double.infinity,
                       decoration: BoxDecoration(
-                        color: const Color(0xff484848),
+                        gradient: AppColors.secondaryGradient(),
                         borderRadius: BorderRadius.circular(30.r),
                       ),
                       alignment: Alignment.center,
@@ -115,7 +116,7 @@ class _CheckoutState extends State<Checkout> {
                         children: [
                           const Icon(
                             Icons.wallet,
-                            color: Color(0xffC1C1C1),
+                            color: AppColors.textPrimaryColor,
                           ),
                           SizedBox(width: 4.w),
                           Text(
@@ -144,10 +145,16 @@ class _CheckoutState extends State<Checkout> {
               ),
               border:  Border.all(
 
-                  color: Color(0xff494848),
+                  color: AppColors.borderColor,
 
               ),
-              color: Colors.transparent,
+              color: AppColors.cardBackground,
+              boxShadow: AppColors.softShadow(
+                color: Colors.black,
+                opacity: 0.22,
+                blurRadius: 22,
+                offset: const Offset(0, -8),
+              ),
             ),
             padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 24.h),
             child: Column(
@@ -166,8 +173,8 @@ class _CheckoutState extends State<Checkout> {
                   child: ListView.builder(
                     itemCount: list.length,
                     itemBuilder: (_, index) => Card(
-                      color: const Color(0xff494848),
-                      surfaceTintColor: const Color(0xff494848),
+                      color: AppColors.secondaryBackground,
+                      surfaceTintColor: AppColors.secondaryBackground,
                       child: ListTile(
                         leading: Image.asset(list[index].image),
                         title: Text(
@@ -180,13 +187,13 @@ class _CheckoutState extends State<Checkout> {
                         trailing: Radio(
                             value: list[index].checkoutEnum,
                             groupValue: selectedMethod,
-                            activeColor: amberColor,
+                            activeColor: AppColors.primaryPurple,
                             fillColor:
                                 MaterialStateProperty.resolveWith((Set states) {
                               if (states.contains(MaterialState.disabled)) {
-                                return amberColor.withOpacity(.32);
+                                return AppColors.primaryPurple.withOpacity(.32);
                               }
-                              return amberColor;
+                              return AppColors.primaryPurple;
                             }),
                             onChanged: (val) {
                               if (val != null) {
@@ -213,7 +220,7 @@ class _CheckoutState extends State<Checkout> {
                     Text(
                       "\$ ${widget.withDrawAmount}",
                       style: TextStyle(
-                        color: amberColor,
+                        color: AppColors.vipGold,
                         fontSize: 24.sp,
                         fontWeight: FontWeight.bold,
                       ),
@@ -234,13 +241,19 @@ class _CheckoutState extends State<Checkout> {
                     width: 342.w,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(35.r),
-                      color: amberColor,
+                      gradient: AppColors.secondaryGradient(),
+                      boxShadow: AppColors.softShadow(
+                        color: AppColors.primaryPurple,
+                        opacity: 0.20,
+                        blurRadius: 18,
+                        offset: const Offset(0, 8),
+                      ),
                     ),
                     alignment: Alignment.center,
                     child: Text(
                       "Confirm",
                       style: TextStyle(
-                        color: Colors.black,
+                        color: AppColors.textPrimaryColor,
                         fontSize: 16.sp,
                         fontWeight: FontWeight.w600,
                       ),

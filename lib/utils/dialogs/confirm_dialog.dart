@@ -36,9 +36,10 @@ class ConfirmDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      backgroundColor: forLive ? AppColors.divider : AppColors.white10,
+      backgroundColor: AppColors.cardBackground,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(AppColors.cardRadius),
+        side: BorderSide(color: AppColors.borderColor),
       ),
       content: Column(
         mainAxisSize: MainAxisSize.min,
@@ -60,7 +61,7 @@ class ConfirmDialog extends StatelessWidget {
                     title: cancelText,
                     width: 140.w,
                     useTextGradient: true,
-                    parentBgColor: AppColors.divider,
+                    parentBgColor: AppColors.cardBackground,
                     borderRadius: 35,
                     textStyle: sfProDisplaySemiBold.copyWith(
                       fontSize: 20.sp,
@@ -106,7 +107,7 @@ class ConfirmDialog extends StatelessWidget {
                   gradient: forLive
                       ? AppColors.secondaryGradient(stops: const [0.0, 1.0])
                       : null,
-                  bgColor: forLive ? null : AppColors.red,
+                    bgColor: forLive ? null : AppColors.error,
                   onTap: onConfirm,
                 ),
               ),
