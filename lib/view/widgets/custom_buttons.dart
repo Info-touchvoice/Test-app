@@ -4,6 +4,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../utils/constants/typography.dart';
 import '../../utils/theme/colors_constant.dart';
 
+const double _primaryButtonHeight = 43;
+const double _primaryButtonFontSize = 20;
+const double _outlineButtonHeight = 43;
+const double _outlineButtonFontSize = 20;
+const double _outlineButtonImageWidth = 20;
+const double _primaryButtonIconHeight = 48;
+const double _primaryButtonIconFontSize = 20;
+
 class PrimaryButton extends StatelessWidget {
   final String? title;
   final Color? bgColor;
@@ -33,11 +41,11 @@ class PrimaryButton extends StatelessWidget {
     required this.onTap,
     this.child,
     this.width = double.infinity,
-    this.height = 43,
+    this.height = _primaryButtonHeight,
     this.borderRadius = AppColors.buttonRadius,
-    this.fontSize = 20,
+    this.fontSize = _primaryButtonFontSize,
     this.gradient,
-    this.image,
+    this.image = null,
     this.imageSize,
   });
 
@@ -125,11 +133,11 @@ class OutlineButton extends StatelessWidget {
     required this.onTap,
     this.child,
     this.width = double.infinity,
-    this.height = 43,
+    this.height = _outlineButtonHeight,
     this.borderRadius = AppColors.buttonRadius,
-    this.fontSize = 20,
-    this.image,
-    this.imageWidth = 20,
+    this.fontSize = _outlineButtonFontSize,
+    this.image = null,
+    this.imageWidth = _outlineButtonImageWidth,
     this.useTextGradient = false, // 👈 default false
     this.parentBgColor = AppColors.background,
   });
@@ -265,9 +273,9 @@ class PrimaryButtonIcon extends StatelessWidget {
     required this.onTap,
     this.child,
     this.width = double.infinity,
-    this.height = 48,
+    this.height = _primaryButtonIconHeight,
     this.borderRadius = AppColors.buttonRadius,
-    this.fontSize = 20,
+    this.fontSize = _primaryButtonIconFontSize,
     required this.icon,
   });
 
