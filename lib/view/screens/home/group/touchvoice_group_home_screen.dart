@@ -13,7 +13,7 @@ import 'widgets/touchvoice_new_tab.dart';
 import 'widgets/touchvoice_popular_tab.dart';
 import 'widgets/touchvoice_related_tab.dart';
 
-/// TouchVoice Group tab layout: Related · Popular · Discover · New.
+/// TouchVoice Group tab layout: Featured · Explore · Trending · Latest.
 class TouchVoiceGroupHomeScreen extends StatefulWidget {
   final UserModel? currentUser;
 
@@ -25,7 +25,7 @@ class TouchVoiceGroupHomeScreen extends StatefulWidget {
 
 class _TouchVoiceGroupHomeScreenState extends State<TouchVoiceGroupHomeScreen>
     with SingleTickerProviderStateMixin {
-  static const _tabLabels = ['Related', 'Popular', 'Discover', 'New'];
+  static const _tabLabels = ['Featured', 'Explore', 'Trending', 'Latest'];
 
   late final TabController _tabController;
 
