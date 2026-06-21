@@ -95,17 +95,27 @@ class RegionWidget extends StatelessWidget {
     final isLightTheme = Theme.of(context).brightness == Brightness.light;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisSize: MainAxisSize.min,
       children: [
         SvgPicture.asset(
           cFlag,
-          height: 32.h,
-          width: 44.w,
+          height: 24,
+          width: 32,
         ),
-        Text(cName,
-            style: sfProDisplayRegular.copyWith(
-                color: isLightTheme ? Colors.black : Colors.white,
-                fontSize: 12.sp))
+        const SizedBox(height: 6),
+        Text(
+          cName,
+          textAlign: TextAlign.center,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: sfProDisplayRegular.copyWith(
+            color: isLightTheme ? Colors.black : Colors.white,
+            fontSize: 13,
+            fontWeight: FontWeight.w500,
+            height: 1.1,
+          ),
+        ),
       ],
     );
   }
