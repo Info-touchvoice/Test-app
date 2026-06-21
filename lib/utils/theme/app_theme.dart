@@ -42,7 +42,7 @@ class AppTheme {
             fontWeight: FontWeight.w700,
           ),
         ),
-        cardTheme: CardTheme(
+        cardTheme: CardThemeData(
           color: AppColors.cardBackground,
           elevation: 0,
           margin: EdgeInsets.zero,
@@ -51,7 +51,7 @@ class AppTheme {
             side: BorderSide(color: AppColors.cardBorderColor),
           ),
         ),
-        dialogTheme: DialogTheme(
+        dialogTheme: DialogThemeData(
           backgroundColor: AppColors.cardBackground,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(AppColors.cardRadius),
@@ -81,7 +81,7 @@ class AppTheme {
           type: BottomNavigationBarType.fixed,
           elevation: 0,
         ),
-        tabBarTheme: const TabBarTheme(
+        tabBarTheme: const TabBarThemeData(
           labelColor: AppColors.textPrimaryColor,
           unselectedLabelColor: AppColors.textSecondaryColor,
           indicatorSize: TabBarIndicatorSize.label,
