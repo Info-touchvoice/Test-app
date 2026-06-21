@@ -63,7 +63,7 @@ class MultiGuestGridSettings extends StatelessWidget {
                               children: [
                                 Image.asset(
                                   AppImagePath.multiGuestExpandIcon,
-                                  color: AppColors.textPrimaryColor,
+                                  color: Colors.white,
                                 ),
                                 SizedBox(
                                   width: 5.w,
@@ -72,7 +72,7 @@ class MultiGuestGridSettings extends StatelessWidget {
                                   'Expand',
                                   style: sfProDisplayMedium.copyWith(
                                       fontSize: 14,
-                                      color: AppColors.textPrimaryColor),
+                                      color: Colors.white),
                                 ),
                               ],
                             ),
@@ -81,7 +81,7 @@ class MultiGuestGridSettings extends StatelessWidget {
                       ],
                     ),
                     SizedBox(height: 10.h),
-                    const Divider(color: AppColors.divider, thickness: 1.2),
+                    Divider(color: AppColors.divider, thickness: 1.2),
                   ],
                 ),
                 SizedBox(height: 30.h),
@@ -193,7 +193,7 @@ class MultiGuestGridSettings extends StatelessWidget {
                                         width: 14.w,
                                         color: micOn
                                             ? AppColors.white
-                                            : AppColors.yellowColor,
+                                            : AppColors.vipGold,
                                       ),
                                     ),
                                   ),
