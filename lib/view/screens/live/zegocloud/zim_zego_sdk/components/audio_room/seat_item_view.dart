@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../../../../../../../utils/Utils.dart';
 import '../../internal/business/audioRoom/live_audio_room_seat.dart';
 import '../../internal/sdk/express/express_service.dart';
 
@@ -215,8 +214,8 @@ class _ZegoSeatItemViewState extends State<ZegoSeatItemView> {
                   Text(
                     // DcV (I1:6847;111:14756)
                     (index+1).toString(),
-                    style: SafeGoogleFont (
-                      'Avenir LT Std',
+                    style: TextStyle(
+                      fontFamily: 'SFProDisplay',
                       fontSize: 10*ffem,
                       height: 1.2575*ffem/fem,
                       color: Color(0xffffffff),
@@ -284,8 +283,8 @@ class _ZegoSeatItemViewState extends State<ZegoSeatItemView> {
                 Text(
                   // DcV (I1:6847;111:14756)
                   (index+1).toString(),
-                  style: SafeGoogleFont (
-                    'Avenir LT Std',
+                  style: TextStyle(
+                    fontFamily: 'SFProDisplay',
                     fontSize: 10*ffem,
                     height: 1.2575*ffem/fem,
                     color: Color(0xffffffff),

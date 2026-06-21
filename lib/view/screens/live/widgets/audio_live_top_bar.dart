@@ -11,7 +11,6 @@ import 'package:tiki/view/screens/live/widgets/subscrption/susbcription_audience
 
 import '../../../../../../view_model/live_controller.dart';
 import '../../../../helpers/quick_actions.dart';
-import '../../../../utils/Utils.dart';
 import '../../../../utils/routes/app_routes.dart';
 import '../../../../view_model/userViewModel.dart';
 import '../audio_live_streaming/widgets/hilo_audio_room_info_sheet.dart';
@@ -377,11 +376,11 @@ class _AudioLiveTopBarState extends State<AudioLiveTopBar> {
                                                 0, 0, 0, 1.h),
                                             child: Text(
                                               'Wish List',
-                                              style: SafeGoogleFont(
-                                                'Fredoka One',
+                                              style:
+                                                  sfProDisplayRegular.copyWith(
                                                 fontSize: 11.sp,
                                                 fontWeight: FontWeight.w400,
-                                                color: Color(0xffffffff),
+                                                color: const Color(0xffffffff),
                                               ),
                                             ),
                                           ),
@@ -494,11 +493,11 @@ class _AudioLiveTopBarState extends State<AudioLiveTopBar> {
                                                     0, 0, 0, 1.h),
                                                 child: Text(
                                                   'Wish List',
-                                                  style: SafeGoogleFont(
-                                                    'Fredoka One',
+                                                  style: sfProDisplayRegular
+                                                      .copyWith(
                                                     fontSize: 11.sp,
                                                     fontWeight: FontWeight.w400,
-                                                    color: Color(0xffffffff),
+                                                    color: const Color(0xffffffff),
                                                   ),
                                                 ),
                                               ),
@@ -513,24 +512,24 @@ class _AudioLiveTopBarState extends State<AudioLiveTopBar> {
                                                   children: [
                                                     TextSpan(
                                                       text: 'Add ',
-                                                      style: SafeGoogleFont(
-                                                        'DM Sans',
+                                                      style: sfProDisplayMedium
+                                                          .copyWith(
                                                         fontSize: 10.sp,
                                                         fontWeight:
                                                             FontWeight.w500,
                                                         color:
-                                                            Color(0xffffffff),
+                                                            const Color(0xffffffff),
                                                       ),
                                                     ),
                                                     TextSpan(
                                                       text: '>',
-                                                      style: SafeGoogleFont(
-                                                        'DM Sans',
+                                                      style: sfProDisplayBold
+                                                          .copyWith(
                                                         fontSize: 10.sp,
                                                         fontWeight:
                                                             FontWeight.w700,
                                                         color:
-                                                            Color(0xffffffff),
+                                                            const Color(0xffffffff),
                                                       ),
                                                     ),
                                                   ],
