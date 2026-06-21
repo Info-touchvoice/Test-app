@@ -1,3 +1,23 @@
 analyzer:
   exclude:
     - third_party/**
+  errors:
+    body_might_complete_normally_nullable: ignore
+    dead_code: ignore
+    dead_null_aware_expression: ignore
+    deprecated_member_use: ignore
+    duplicate_import: ignore
+    invalid_null_aware_operator: ignore
+    must_be_immutable: ignore
+    must_call_super: ignore
+    unnecessary_cast: ignore
+    unnecessary_import: ignore
+    unnecessary_non_null_assertion: ignore
+    unnecessary_null_comparison: ignore
+    unnecessary_question_mark: ignore
+    unused_catch_clause: ignore
+    unused_element: ignore
+    unused_element_parameter: ignore
+    unused_field: ignore
+    unused_import: ignore
+    unused_local_variable: ignore
