@@ -14,7 +14,7 @@ class AppColors {
   static const Color diamondBlue = Color(0xFF38BDF8);
   static const Color error = Color(0xFFFF4D6D);
   static const Color success = Color(0xFF00D084);
-  static const Color textPrimaryColor = Color(0xFFFFFFFF);
+  static const Color textPrimaryColor = Colors.white;
   static const Color textSecondaryColor = Color(0xFFB9B6D3);
   static const Color dividerColor = Color(0x14FFFFFF);
   static const Color borderColor = Color(0x1AFFFFFF);
@@ -36,7 +36,7 @@ class AppColors {
   static const Color white100 = textPrimaryColor;
   static const Color divider = dividerColor;
   static const Color grey400 = secondaryBackground;
-  static const Color grey500 = secondaryBackground;
+  static const Color grey500 = Color(0xFF8E8AA8);
   static const Color grey700 = background;
   static const Color cardBg = cardBackground;
   static const Color card = cardBackground;
@@ -51,10 +51,10 @@ class AppColors {
   static const Color lTxtColor = textPrimaryColor;
   static final Color dTxtColor = textPrimaryColor.withOpacity(0.7);
   static final Color txtBtnColor = primaryPurple.withOpacity(0.85);
-  static const Color yellowColor = vipGold;
+  static const Color yellowColor = Color(0xFFFFC83D);
   static const Color greyColor = textSecondaryColor;
   static const Color lightOrange = vipGold;
-  static const Color yellowBtnColor = primaryPurple;
+  static const Color yellowBtnColor = Color(0xFFFFC83D);
   static const Color darkOrange = error;
   static const Color darkBlue = secondaryBackground;
   static const Color progressPinkColor = error;
@@ -67,7 +67,7 @@ class AppColors {
   static const Color progressBgColor = secondaryBackground;
   static const Color greyText = textSecondaryColor;
   static const Color orangeContainer = vipGold;
-  static const Color purpleColor = primaryPurple;
+  static const Color purpleColor = Color(0xFF8B2CF5);
   static const Color darkPink = error;
   static const Color greyT = textSecondaryColor;
   static const Color primaryColor = primaryPurple;
