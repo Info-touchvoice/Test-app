@@ -75,8 +75,10 @@ void main() async {
       overlays: [SystemUiOverlay.bottom, SystemUiOverlay.top]);
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
-      statusBarIconBrightness: Brightness.dark,
-      statusBarBrightness: Brightness.light));
+      statusBarIconBrightness: Brightness.light,
+      statusBarBrightness: Brightness.dark,
+      systemNavigationBarColor: Color(0xFF090815),
+      systemNavigationBarIconBrightness: Brightness.light));
 
   FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
 
@@ -280,7 +282,7 @@ class _AppState extends State<App> with WidgetsBindingObserver {
                 ScrollConfiguration.of(context).copyWith(overscroll: false),
                 theme: ThemeHelper.lightTheme,
                 darkTheme: ThemeHelper.darkTheme,
-                themeMode: ThemeMode.light,
+                themeMode: ThemeMode.dark,
                 getPages: AppRoutes.pages,
                 initialRoute: AppRoutes.initial,
               );

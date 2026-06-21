@@ -37,19 +37,11 @@ class _LiveHomeViewState extends State<LiveHomeView> {
   }
 
   Color? textColorSelected(bool isSelected, BuildContext context) {
-    // return isSelected ? Colors.black : Colors.white;
-    if (Theme.of(context).brightness == Brightness.light) {
-      return Colors.black;
-    }
-    return isSelected ? Colors.black : Colors.white;
+    return AppColors.textPrimaryColor;
   }
 
   Color borderColorSelected(bool isSelected, BuildContext context) {
-    // return isSelected ? null : Colors.white70;
-    if (Theme.of(context).brightness == Brightness.light) {
-      return Colors.black;
-    }
-    return isSelected ? AppColors.primaryColor : Colors.white;
+    return isSelected ? AppColors.primaryColor : AppColors.borderColor;
   }
 
   @override

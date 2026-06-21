@@ -82,16 +82,17 @@ class _TouchVoiceBannerCarouselState extends State<TouchVoiceBannerCarousel> {
 
   Widget _placeholder() {
     return Container(
-      color: const Color(0xFFE8E8E8),
+      color: TouchVoiceGroupColors.cardBg,
       child: const Center(child: CircularProgressIndicator(strokeWidth: 2)),
     );
   }
 
   Widget _errorWidget() {
     return Container(
-      color: const Color(0xFFE8E8E8),
+      color: TouchVoiceGroupColors.cardBg,
       alignment: Alignment.center,
-      child: Icon(Icons.live_tv, size: 36.sp, color: Colors.grey),
+      child: Icon(Icons.live_tv,
+          size: 36.sp, color: TouchVoiceGroupColors.subText),
     );
   }
 

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart' as dot_env;
-import 'package:get/get.dart';
 import 'package:tiki/utils/constants/app_constants.dart';
 import 'package:tiki/utils/theme/colors_constant.dart';
 
@@ -18,9 +17,10 @@ class AppConfigurations {
   static setSystemPreference ({bool isBottomNav = false}) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
-        statusBarBrightness: Get.isDarkMode ? Brightness.light : Brightness.dark,
-        statusBarIconBrightness: Get.isDarkMode ? Brightness.light : Brightness.dark,
-        systemNavigationBarDividerColor: AppColors.white100.withOpacity(0.1), // Set the divider color if needed
-        systemNavigationBarColor: (Get.isDarkMode || isBottomNav) ? AppColors.navBarColor :  Color(0xff333333)));
+        statusBarBrightness: Brightness.dark,
+        statusBarIconBrightness: Brightness.light,
+        systemNavigationBarIconBrightness: Brightness.light,
+        systemNavigationBarDividerColor: AppColors.dividerColor,
+        systemNavigationBarColor: AppColors.background));
   }
 }

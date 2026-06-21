@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../helpers/quick_help.dart';
+import 'theme/colors_constant.dart';
 
 class LoadingDialog extends Dialog {
 
@@ -16,10 +16,10 @@ class LoadingDialog extends Dialog {
           child: new Container(
             decoration: ShapeDecoration(
               //color: Color(0xffffffff),
-              color: QuickHelp.isDarkMode(context) ? Color(0xFF000000) : Color(0xFFFFFFF),
+              color: AppColors.cardBackground,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(
-                  Radius.circular(8.0),
+                  Radius.circular(AppColors.cardRadius),
                 ),
               ),
             ),
@@ -28,7 +28,7 @@ class LoadingDialog extends Dialog {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 new CircularProgressIndicator(
-                  color: QuickHelp.isDarkMode(context) ? Color(0xFFFFFFF) : Color(0xFFFFC107),
+                  color: AppColors.primaryPurple,
                 ),
               ],
             ),

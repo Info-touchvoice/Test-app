@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tiki/helpers/quick_help.dart';
 import 'package:tiki/utils/constants/typography.dart';
+import 'package:tiki/utils/theme/colors_constant.dart';
 import 'package:tiki/view/screens/dashboard/wallet/hilo_wallet_constants.dart';
 import 'package:tiki/view_model/wallet_controller.dart';
 
@@ -72,16 +73,15 @@ class HiloWalletPlanGrid extends StatelessWidget {
           onTap: () => onTap(plan),
           child: Container(
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: HiloWalletColors.cardBg,
               borderRadius: BorderRadius.circular(14.r),
-              border: Border.all(color: const Color(0xFFEEEEEE)),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.04),
-                  blurRadius: 10,
-                  offset: const Offset(0, 4),
-                ),
-              ],
+              border: Border.all(color: HiloWalletColors.divider),
+              boxShadow: AppColors.softShadow(
+                color: Colors.black,
+                opacity: 0.20,
+                blurRadius: 14,
+                offset: const Offset(0, 6),
+              ),
             ),
             child: Stack(
               children: [
@@ -146,7 +146,7 @@ class HiloWalletPlanGrid extends StatelessWidget {
                               : null,
                           color: currency == WalletPlanCurrency.gold
                               ? null
-                              : HiloWalletColors.brandPurple.withOpacity(0.12),
+                              : HiloWalletColors.brandPurple.withOpacity(0.16),
                           borderRadius: BorderRadius.circular(20.r),
                         ),
                         alignment: Alignment.center,

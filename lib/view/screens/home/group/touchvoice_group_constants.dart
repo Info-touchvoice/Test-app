@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:tiki/utils/theme/colors_constant.dart';
 
 /// Visual tokens for TouchVoice Group tab (`fragment_home_room.xml`).
 class TouchVoiceGroupColors {
-  static const brandPurple = Color(0xFF9036FF);
-  static const filterActive = Color(0xFF8829FE);
-  static const filterInactive = Color(0xFF636B80);
-  static const titleText = Color(0xFF333333);
-  static const subText = Color(0xFF999999);
-  static const sectionTitle = Color(0xFF5F5F5F);
-  static const bodyBg = Color(0xFFFFFFFF);
-  static const divider = Color(0xFFF5F5F5);
-  static const subTabBar = Color(0x1AF4EBFF);
+  static const brandPurple = AppColors.primaryPurple;
+  static const filterActive = AppColors.primaryPurple;
+  static const filterInactive = AppColors.textSecondaryColor;
+  static const titleText = AppColors.textPrimaryColor;
+  static const subText = AppColors.textSecondaryColor;
+  static const sectionTitle = AppColors.textPrimaryColor;
+  static const bodyBg = AppColors.background;
+  static const cardBg = AppColors.cardBackground;
+  static const divider = AppColors.dividerColor;
+  static const subTabBar = AppColors.secondaryBackground;
 }
 
 class TouchVoiceGroupAssets {

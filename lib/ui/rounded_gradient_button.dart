@@ -35,14 +35,14 @@ class RoundedGradientButton extends StatelessWidget {
     this.fontSize,
     this.width,
     this.height,
-    this.borderRadius,
+    this.borderRadius = AppColors.buttonRadius,
     this.borderRadiusTopLeft = 0,
     this.borderRadiusTopRight = 0,
     this.borderRadiusBottomLeft = 0,
     this.borderRadiusBottomRight = 0,
     this.textColor,
     this.shadowColor,
-    this.colors = const [Colors.red, Colors.blue],
+    this.colors = AppColors.buttonGradientColors,
     this.onTap,
   }) : super(key: key);
 
@@ -80,12 +80,17 @@ class RoundedGradientButton extends StatelessWidget {
           child: Ink(
             width: size.width,
             decoration: BoxDecoration(
-              color: AppColors.yellowBtnColor,
-              // gradient: LinearGradient(
-              //   colors: colors,
-              //   begin: Alignment.centerLeft,
-              //   end: Alignment.centerRight,
-              // ),
+              gradient: LinearGradient(
+                colors: colors,
+                begin: Alignment.centerLeft,
+                end: Alignment.centerRight,
+              ),
+              boxShadow: AppColors.softShadow(
+                color: shadowColor ?? AppColors.primaryPurple,
+                opacity: 0.20,
+                blurRadius: 18,
+                offset: const Offset(0, 8),
+              ),
               borderRadius: borderRadius != null
                   ? BorderRadius.all(Radius.circular(borderRadius!))
                   : BorderRadius.only(
@@ -107,7 +112,7 @@ class RoundedGradientButton extends StatelessWidget {
                   fontSize: 16,
                   fontWeight: FontWeight.w700,
                   height: 1.375,
-                  color: Color(0xffffffff),
+                  color: AppColors.textPrimaryColor,
                 ),
               ),
             ),

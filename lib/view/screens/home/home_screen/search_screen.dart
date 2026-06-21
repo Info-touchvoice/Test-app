@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart' hide SearchController;
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:tiki/utils/theme/colors_constant.dart';
 import 'package:tiki/view/widgets/base_scaffold.dart';
 
 import '../../../../view_model/search_controller.dart';
@@ -12,8 +13,7 @@ class SearchScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isLightTheme = Theme.of(context).brightness == Brightness.light;
-    final textColor = isLightTheme ? Colors.black : Colors.white;
+    const textColor = AppColors.textPrimaryColor;
 
     SearchController searchController = Get.put(SearchController());
     return BaseScaffold(
@@ -39,6 +39,7 @@ class SearchScreen extends StatelessWidget {
                   height: 36.h,
                   width: 306.w,
                   child: TextField(
+                    style: const TextStyle(color: AppColors.textPrimaryColor),
                     onChanged: (value) {
                       if (value.isEmpty) {
                         searchController.getRecentPopularUserModel();
@@ -48,13 +49,24 @@ class SearchScreen extends StatelessWidget {
                     },
                     decoration: InputDecoration(
                       filled: true,
-                      fillColor: Color(0xffBCBBBE),
+                      fillColor: AppColors.textFieldFilledColor,
                       hintText: 'Search for username or ID',
-                      hintStyle: TextStyle(color: Colors.black),
-                      prefixIcon: Icon(Icons.search, color: Colors.black),
+                      hintStyle: TextStyle(
+                          color: AppColors.textPrimaryColor.withOpacity(0.70)),
+                      prefixIcon: Icon(Icons.search,
+                          color: AppColors.textSecondaryColor),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(90.0),
-                        borderSide: BorderSide.none,
+                        borderSide: BorderSide(color: AppColors.borderColor),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(90.0),
+                        borderSide: BorderSide(color: AppColors.borderColor),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(90.0),
+                        borderSide:
+                            const BorderSide(color: AppColors.primaryPurple),
                       ),
                       contentPadding: EdgeInsets.symmetric(vertical: 10.h),
                     ),

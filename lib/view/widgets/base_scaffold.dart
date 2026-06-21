@@ -36,25 +36,19 @@ class BaseScaffold extends StatelessWidget {
       AppConfigurations.setSystemPreference(isBottomNav: bottomNavigationBar);
     }
 
-    final bool isDark = Theme.of(context).brightness == Brightness.dark;
-
     return Material(
       child: Container(
         decoration: BoxDecoration(
-          color: isDark ? AppColors.darkBGColor : AppColors.lightBGColor,
+          color: AppColors.background,
           gradient: RadialGradient(
             center: Alignment.topRight,
-            radius: 0.85,
-            colors: isDark
-                ? [
-                    AppColors.darkBGShadeColor.withOpacity(0.95),
-                    AppColors.darkBGColor,
-                  ]
-                : [
-                    AppColors.lightShadeColor.withOpacity(0.95),
-                    AppColors.lightBGColor,
-                  ],
-            stops: const [0.0, 1.0],
+            radius: 1.15,
+            colors: [
+              AppColors.primaryPurple.withOpacity(0.22),
+              AppColors.secondaryBackground.withOpacity(0.78),
+              AppColors.background,
+            ],
+            stops: const [0.0, 0.46, 1.0],
           ),
         ),
         child: Scaffold(
@@ -131,7 +125,7 @@ class BaseScaffold extends StatelessWidget {
                       onTap: () {},
                       child: CircleAvatar(
                         radius: 30.w,
-                        backgroundColor: Colors.orange.shade300,
+                        backgroundColor: AppColors.primaryPurple,
                         child: Image.asset(
                           AppImagePath.cameraIcon,
                           height: 24.w,

@@ -34,8 +34,7 @@ class _StoreState extends State<Store> {
         title: Text(
           'Store',
           style: SafeGoogleFont('sfProDisplayMedium', fontSize: 16.sp,
-              color: Get.isDarkMode ? AppColors.white : AppColors.black
-          ),
+              color: AppColors.textPrimaryColor),
 
         ),
         centerTitle: true,
@@ -45,7 +44,7 @@ class _StoreState extends State<Store> {
             },
             icon: Icon(
               Icons.arrow_back_ios,
-                color: Get.isDarkMode ? AppColors.white : AppColors.black
+                color: AppColors.textPrimaryColor
             )),
       ),
       body: GetBuilder<UserViewModel>(
@@ -65,7 +64,7 @@ class _StoreState extends State<Store> {
                         bottomRight: Radius.circular(24.r),
                       ),
                       border:  Border.all(
-                        color: Get.isDarkMode ? Color(0xff36383D) : Color(0xff36383D).withOpacity(0.05) ,
+                        color: AppColors.borderColor,
                       ),
                     ),
                     child: Column(
@@ -99,7 +98,7 @@ class _StoreState extends State<Store> {
                       ],
                     ),
                   ),
-                  Container(height: 24.h, color: !Get.isDarkMode ? AppColors.white : null,),
+                  Container(height: 24.h, color: AppColors.background),
                   Container(
                     width: 375.w,
                     decoration: BoxDecoration(
@@ -108,7 +107,7 @@ class _StoreState extends State<Store> {
                         topRight: Radius.circular(24.r),
                       ),
                       border:  Border.all(
-                          color: Get.isDarkMode ? Color(0xff36383D) : Color(0xff36383D).withOpacity(0.05) ,
+                          color: AppColors.borderColor,
                       ),
                     ),
                     padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
@@ -213,7 +212,7 @@ class _StoreState extends State<Store> {
                                             padding: EdgeInsets.symmetric(horizontal: 7.w, vertical: 14.h),
                                             decoration: BoxDecoration(
                                               borderRadius: BorderRadius.circular(8.r),
-                                              color: Get.isDarkMode ? Color(0xff494848) : AppColors.white,
+                                              color: AppColors.cardBackground,
                                             ),
                                             child: index ==0 ? SvgPicture.asset(store.avatarFrames[gridIndex]["image"]) : Image.asset(store.roomDecor[gridIndex]["image"]),
                                           ),
@@ -222,7 +221,7 @@ class _StoreState extends State<Store> {
                                             index ==0 ? store.avatarFrames[gridIndex]["name"]
                                                 : store.roomDecor[gridIndex]["name"],
                                             style: TextStyle(
-                                              color: Get.isDarkMode ? Colors.white70 : AppColors.black.withOpacity(0.7),
+                                              color: AppColors.textSecondaryColor,
                                               fontSize: 12.sp,
                                               fontWeight: FontWeight.w500,
                                             ),
@@ -267,7 +266,7 @@ class _StoreState extends State<Store> {
                                                 Text(
                                                   "Purchased",
                                                   style: TextStyle(
-                                                    color: AppColors.yellowColor,
+                                                    color: AppColors.vipGold,
                                                     fontWeight: FontWeight.bold,
                                                     fontSize: 15.sp,
                                                   ),

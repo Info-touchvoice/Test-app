@@ -33,7 +33,8 @@ class _GradientCupertinoSwitchState extends State<GradientCupertinoSwitch>
           gradient: isOn
               ? AppColors.secondaryGradient(stops: const [0.0, 1.0])
               : null,
-          color: isOn ? null : const Color(0xffcecece),
+          color: isOn ? null : AppColors.secondaryBackground,
+          border: Border.all(color: AppColors.borderColor),
         ),
         child: AnimatedAlign(
           duration: const Duration(milliseconds: 250),
@@ -43,11 +44,11 @@ class _GradientCupertinoSwitchState extends State<GradientCupertinoSwitch>
             width: 26,
             height: 26,
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: AppColors.textPrimaryColor,
               shape: BoxShape.circle,
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.2),
+                  color: AppColors.primaryPurple.withOpacity(0.20),
                   blurRadius: 3,
                   offset: const Offset(0, 2),
                 ),

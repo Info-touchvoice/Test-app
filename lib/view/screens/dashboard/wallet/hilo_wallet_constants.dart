@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:tiki/utils/theme/colors_constant.dart';
 
 class HiloWalletColors {
-  static const purpleLight = Color(0xFFB35BFF);
-  static const purpleDark = Color(0xFF651AF1);
-  static const brandPurple = Color(0xFF9036FF);
-  static const tabSelected = Color(0xFFB244FF);
-  static const diamondOrange = Color(0xFFFF9A41);
-  static const goldPinkStart = Color(0xFFC34FFD);
-  static const goldPinkEnd = Color(0xFFFF4E93);
-  static const textDark = Color(0xFF333333);
-  static const textMuted = Color(0xFF999999);
-  static const divider = Color(0xFFF0F0F0);
-  static const cardBg = Color(0xFFF8F5FF);
+  static const purpleLight = AppColors.primaryPurple;
+  static const purpleDark = AppColors.background;
+  static const brandPurple = AppColors.primaryPurple;
+  static const tabSelected = AppColors.primaryBlue;
+  static const diamondOrange = AppColors.diamondBlue;
+  static const goldPinkStart = AppColors.buttonGradientStart;
+  static const goldPinkEnd = AppColors.buttonGradientEnd;
+  static const textDark = AppColors.textPrimaryColor;
+  static const textMuted = AppColors.textSecondaryColor;
+  static const divider = AppColors.dividerColor;
+  static const cardBg = AppColors.cardBackground;
 }
 
 class HiloWalletAssets {

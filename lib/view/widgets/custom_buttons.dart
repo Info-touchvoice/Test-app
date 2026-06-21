@@ -34,7 +34,7 @@ class PrimaryButton extends StatelessWidget {
     this.child,
     this.width = double.infinity,
     this.height = 43,
-    this.borderRadius = 10,
+    this.borderRadius = AppColors.buttonRadius,
     this.fontSize = 20,
     this.gradient,
     this.image,
@@ -53,10 +53,21 @@ class PrimaryButton extends StatelessWidget {
       height: height,
       decoration: BoxDecoration(
         // ✅ Use gradient if available, otherwise solid color
-        gradient: gradient ?? (bgColor == null ? AppColors.gradient() : null),
+        gradient:
+            gradient ?? (bgColor == null ? AppColors.secondaryGradient() : null),
         color: gradient == null ? bgColor : null,
         borderRadius: BorderRadius.circular(borderRadius),
-        border: borderColor != null ? Border.all(color: borderColor!) : null,
+        border: borderColor != null
+            ? Border.all(color: borderColor!)
+            : Border.all(color: AppColors.cardBorderColor),
+        boxShadow: bgColor == Colors.transparent
+            ? null
+            : AppColors.softShadow(
+                color: AppColors.primaryPurple,
+                opacity: 0.20,
+                blurRadius: 18,
+                offset: const Offset(0, 8),
+              ),
       ),
       child: MaterialButton(
         elevation: 0,
@@ -115,12 +126,12 @@ class OutlineButton extends StatelessWidget {
     this.child,
     this.width = double.infinity,
     this.height = 43,
-    this.borderRadius = 10,
+    this.borderRadius = AppColors.buttonRadius,
     this.fontSize = 20,
     this.image,
     this.imageWidth = 20,
     this.useTextGradient = false, // 👈 default false
-    this.parentBgColor = Colors.black,
+    this.parentBgColor = AppColors.background,
   });
 
   @override
@@ -255,7 +266,7 @@ class PrimaryButtonIcon extends StatelessWidget {
     this.child,
     this.width = double.infinity,
     this.height = 48,
-    this.borderRadius = 10,
+    this.borderRadius = AppColors.buttonRadius,
     this.fontSize = 20,
     required this.icon,
   });
@@ -265,7 +276,7 @@ class PrimaryButtonIcon extends StatelessWidget {
     return MaterialButton(
       height: height.h,
       minWidth: width,
-      color: bgColor,
+      color: bgColor ?? AppColors.primaryPurple,
       disabledColor: disabledColor,
       disabledTextColor: disabledTextColor,
       shape: RoundedRectangleBorder(

@@ -212,7 +212,7 @@ class _TouchVoiceDiscoverTabState extends State<TouchVoiceDiscoverTab> {
               imageUrl: TouchVoiceGroupAssets.discoverActivitiesPhotoUrl,
               fit: BoxFit.cover,
               placeholder: (_, __) => Container(
-                color: const Color(0xFFE8E8E8),
+                color: TouchVoiceGroupColors.cardBg,
                 child: const Center(
                   child: CircularProgressIndicator(strokeWidth: 2),
                 ),
@@ -289,9 +289,10 @@ class _TouchVoiceDiscoverTabState extends State<TouchVoiceDiscoverTab> {
             assetPath,
             fit: BoxFit.cover,
             errorBuilder: (_, __, ___) => Container(
-              color: const Color(0xFFE8E8E8),
+              color: TouchVoiceGroupColors.cardBg,
               alignment: Alignment.center,
-              child: Icon(Icons.live_tv, size: 36.sp, color: Colors.grey),
+              child: Icon(Icons.live_tv,
+                  size: 36.sp, color: TouchVoiceGroupColors.subText),
             ),
           ),
         ),

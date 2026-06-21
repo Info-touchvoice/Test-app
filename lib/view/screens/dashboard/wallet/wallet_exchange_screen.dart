@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:tiki/utils/constants/typography.dart';
+import 'package:tiki/utils/theme/colors_constant.dart';
 import 'package:tiki/view/screens/dashboard/wallet/hilo_wallet_constants.dart';
 import 'package:tiki/view_model/userViewModel.dart';
 import 'package:tiki/view_model/wallet_controller.dart';
@@ -32,9 +33,9 @@ class _WalletExchangeScreenState extends State<WalletExchangeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.background,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios_new_rounded,
@@ -166,11 +167,17 @@ class _WalletExchangeScreenState extends State<WalletExchangeScreen> {
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
-            accent.withOpacity(0.08),
-            Colors.white,
+            accent.withOpacity(0.12),
+            AppColors.cardBackground,
           ],
         ),
-        border: Border.all(color: accent.withOpacity(0.2)),
+        border: Border.all(color: AppColors.borderColor),
+        boxShadow: AppColors.softShadow(
+          color: Colors.black,
+          opacity: 0.20,
+          blurRadius: 16,
+          offset: const Offset(0, 8),
+        ),
       ),
       child: Row(
         children: [
@@ -234,7 +241,7 @@ class _WalletExchangeScreenState extends State<WalletExchangeScreen> {
         Container(
           padding: EdgeInsets.symmetric(horizontal: 14.w),
           decoration: BoxDecoration(
-            color: const Color(0xFFF7F7FA),
+            color: AppColors.cardBackground,
             borderRadius: BorderRadius.circular(14.r),
             border: Border.all(color: HiloWalletColors.divider),
           ),
@@ -247,7 +254,10 @@ class _WalletExchangeScreenState extends State<WalletExchangeScreen> {
                   controller: controller,
                   keyboardType: TextInputType.number,
                   onChanged: onChanged,
-                  style: sfProDisplayBold.copyWith(fontSize: 22.sp),
+                  style: sfProDisplayBold.copyWith(
+                    fontSize: 22.sp,
+                    color: AppColors.textPrimaryColor,
+                  ),
                   decoration: InputDecoration(
                     border: InputBorder.none,
                     hintText: '0',

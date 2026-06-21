@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:tiki/utils/constants/typography.dart';
 import 'package:tiki/utils/routes/app_routes.dart';
+import 'package:tiki/utils/theme/colors_constant.dart';
 import 'package:tiki/view/screens/dashboard/wallet/hilo_wallet_constants.dart';
 import 'package:tiki/view/screens/dashboard/wallet/wallet_exchange_screen.dart';
 import 'package:tiki/view/screens/dashboard/wallet/widgets/hilo_wallet_plan_grid.dart';
@@ -47,10 +48,10 @@ class _WalletState extends State<Wallet> with SingleTickerProviderStateMixin {
     return AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle(
           statusBarColor: Colors.transparent,
-          statusBarIconBrightness: isPurple ? Brightness.light : Brightness.dark,
+          statusBarIconBrightness: Brightness.light,
         ),
         child: Scaffold(
-          backgroundColor: isPurple ? HiloWalletColors.purpleDark : Colors.white,
+          backgroundColor: HiloWalletColors.purpleDark,
           body: Column(
             children: [
               _header(isPurple),
@@ -69,7 +70,7 @@ class _WalletState extends State<Wallet> with SingleTickerProviderStateMixin {
                             ],
                           )
                         : null,
-                    color: isPurple ? null : Colors.white,
+                    color: isPurple ? null : HiloWalletColors.purpleDark,
                   ),
                   child: TabBarView(
                     controller: _tabController,
@@ -90,14 +91,14 @@ class _WalletState extends State<Wallet> with SingleTickerProviderStateMixin {
     final top = MediaQuery.of(context).padding.top;
     return Container(
       padding: EdgeInsets.only(top: top + 8.h, left: 8.w, right: 12.w, bottom: 8.h),
-      color: isPurple ? Colors.transparent : Colors.white,
+      color: Colors.transparent,
       child: Row(
         children: [
           IconButton(
             onPressed: () => Get.back(),
             icon: Icon(
               Icons.arrow_back_ios_new_rounded,
-              color: isPurple ? Colors.white : HiloWalletColors.textDark,
+              color: HiloWalletColors.textDark,
               size: 20.sp,
             ),
           ),
@@ -269,9 +270,13 @@ class _WalletState extends State<Wallet> with SingleTickerProviderStateMixin {
       padding: EdgeInsets.all(20.w),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(18.r),
-        image: const DecorationImage(
-          image: AssetImage(HiloWalletAssets.balanceCardBg),
-          fit: BoxFit.cover,
+        color: HiloWalletColors.cardBg,
+        border: Border.all(color: HiloWalletColors.divider),
+        boxShadow: AppColors.softShadow(
+          color: AppColors.primaryPurple,
+          opacity: 0.14,
+          blurRadius: 18,
+          offset: const Offset(0, 8),
         ),
       ),
       child: Row(

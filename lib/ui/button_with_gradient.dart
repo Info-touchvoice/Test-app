@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tiki/ui/text_with_tap.dart';
+import 'package:tiki/utils/theme/colors_constant.dart';
 
 import '../helpers/quick_actions.dart';
 
@@ -39,13 +40,13 @@ class ButtonWithGradient extends StatelessWidget {
     this.fontSize,
     this.height,
     this.width = 0,
-    this.borderRadius = 0.0,
-    this.textColor = Colors.white,
+    this.borderRadius = AppColors.buttonRadius,
+    this.textColor = AppColors.textPrimaryColor,
     this.borderColor = Colors.transparent,
     this.borderWidth = 0,
-    this.activeBoxShadow = false,
-    this.beginColor = Colors.white,
-    this.endColor = Colors.black,
+    this.activeBoxShadow = true,
+    this.beginColor = AppColors.buttonGradientStart,
+    this.endColor = AppColors.buttonGradientEnd,
     this.onTap,
     this.marginLeft = 0,
     this.marginRight = 0,
@@ -55,11 +56,11 @@ class ButtonWithGradient extends StatelessWidget {
     this.topRightBorder = 0,
     this.bottomLeftBorder = 0,
     this.bottomRightBorder = 0,
-    this.shadowColor = Colors.transparent,
-     this.blurRadius = 10,
-     this.spreadRadius = 1,
+    this.shadowColor = AppColors.primaryPurple,
+     this.blurRadius = 18,
+     this.spreadRadius = 0,
      this.setShadowToBottom = false,
-     this.shadowColorOpacity = 1,
+     this.shadowColorOpacity = 0.20,
      this.svgURL,
 
   }) : super(key: key);
@@ -117,7 +118,7 @@ class ButtonWithGradient extends StatelessWidget {
           backgroundColor: MaterialStateProperty.all(Colors.transparent),
           shape: MaterialStateProperty.all(
             RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(100),
+              borderRadius: BorderRadius.circular(borderRadius!),
             ),
           ),
           shadowColor: MaterialStateProperty.all(Colors.transparent),
