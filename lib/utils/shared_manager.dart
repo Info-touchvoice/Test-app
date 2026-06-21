@@ -102,4 +102,9 @@ class SharedManager {
   bool isBannerAdsOnHomeReelsEnabled(SharedPreferences? preferences){
     return preferences!.getBool(Constants.bannerAdsOnHomeReelsEnabledConfig) ?? Setup.isBannerAdsOnHomeReelsEnabled;
   }
+
+  String getHomeHeaderTheme(SharedPreferences? preferences) {
+    return preferences!.getString(Constants.homeHeaderThemeConfig) ??
+        Setup.homeHeaderTheme;
+  }
 }
