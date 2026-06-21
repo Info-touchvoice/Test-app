@@ -56,11 +56,11 @@ class _HiloAudioRoomBottomBarState extends State<HiloAudioRoomBottomBar> {
       onTap: onTap,
       behavior: HitTestBehavior.opaque,
       child: Padding(
-        padding: EdgeInsets.all(2.w),
+        padding: EdgeInsets.all(1.w),
         child: Image.asset(
           asset,
-          width: 38.w,
-          height: 38.w,
+          width: 34.w,
+          height: 34.w,
           fit: BoxFit.contain,
         ),
       ),
@@ -84,7 +84,6 @@ class _HiloAudioRoomBottomBarState extends State<HiloAudioRoomBottomBar> {
                   onTap: _openSayHi,
                   child: Container(
                     height: 34.h,
-                    constraints: BoxConstraints(minWidth: 106.w),
                     padding: EdgeInsets.symmetric(horizontal: 10.w),
                     decoration: BoxDecoration(
                       color: HiloAudioRoomColors.sayHiPillFill,
@@ -115,29 +114,29 @@ class _HiloAudioRoomBottomBarState extends State<HiloAudioRoomBottomBar> {
                   ),
                 ),
               ),
-              SizedBox(width: 8.w),
+              SizedBox(width: 6.w),
               _actionIcon(
                 _roomSoundMuted
                     ? HiloAudioRoomAssets.soundMuted
                     : HiloAudioRoomAssets.soundOn,
                 onTap: _toggleRoomSound,
               ),
-              SizedBox(width: 8.w),
+              SizedBox(width: 6.w),
               _actionIcon(
                 HiloAudioRoomAssets.messages,
                 onTap: () => HiloAudioRoomChatSheet.show(context),
               ),
-              SizedBox(width: 8.w),
+              SizedBox(width: 6.w),
               _actionIcon(
                 HiloAudioRoomAssets.tools,
                 onTap: () => HiloAudioRoomToolsSheet.show(context),
               ),
-              const Expanded(child: SizedBox.shrink()),
+              SizedBox(width: 6.w),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 8.w),
+                padding: EdgeInsets.symmetric(horizontal: 4.w),
                 child: Image.asset(
                   HiloAudioRoomAssets.game,
-                  width: 32.w,
+                  width: 28.w,
                   height: 25.h,
                   fit: BoxFit.contain,
                 ),
@@ -146,7 +145,7 @@ class _HiloAudioRoomBottomBarState extends State<HiloAudioRoomBottomBar> {
                 onTap: _openGiftSheet,
                 behavior: HitTestBehavior.opaque,
                 child: Padding(
-                  padding: EdgeInsets.only(right: 14.w),
+                  padding: EdgeInsets.only(right: 4.w),
                   child: Image.asset(
                     HiloAudioRoomAssets.gift,
                     width: 30.w,

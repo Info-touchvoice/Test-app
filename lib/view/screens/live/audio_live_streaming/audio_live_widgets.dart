@@ -27,7 +27,7 @@ class AudioLiveWidget extends StatelessWidget {
                 SizedBox(height: 38),
                 AudioLiveTopBar(),
                 Expanded(child: AudioCoHostView()),
-                BottomCard()
+                const BottomCard(isAudioRoom: true)
               ],
             ),
           ),

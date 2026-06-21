@@ -12,10 +12,14 @@ import '../zegocloud/zim_zego_sdk/internal/business/business_define.dart';
 import '../audio_live_streaming/widgets/audio_viewers_strip.dart';
 
 class BottomCard extends StatelessWidget {
+  const BottomCard({Key? key, this.isAudioRoom}) : super(key: key);
+
+  final bool? isAudioRoom;
+
   @override
   Widget build(BuildContext context) {
     LiveViewModel liveViewModel = Get.find();
-    final isAudio = liveViewModel.isAudioLive;
+    final isAudio = isAudioRoom ?? liveViewModel.isAudioLive;
 
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: liveViewModel.isMultiGuest ? 12.w : 0),
