@@ -71,4 +71,8 @@ class Setup {
   // Ads Config
   static final bool isBannerAdsOnHomeReelsEnabled = false;
 
+  // Home header appearance. Admin Parse Config can override this by setting
+  // Constants.homeHeaderThemeConfig to one of the theme ids.
+  static final String homeHeaderTheme = "royal_purple";
+
 }

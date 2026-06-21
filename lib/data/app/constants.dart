@@ -34,6 +34,7 @@ class Constants {
   static String s3SecretKeyConfig = "s3_secret_key";
 
   static String bannerAdsOnHomeReelsEnabledConfig = "banner_ads_reels";
+  static String homeHeaderThemeConfig = "home_header_theme";
 
   static const List<String> getCloudParse = [
     "https://parseapi.back4app.com",
@@ -154,6 +155,7 @@ class Constants {
 
       var bannerAdsOnHomeReelsEnabled =
           config[bannerAdsOnHomeReelsEnabledConfig];
+      var homeHeaderTheme = config[homeHeaderThemeConfig];
 
       prefs.setBool(facebookLoginConfig,
           facebookLogin != null ? facebookLogin : Setup.isFacebookLoginEnabled);
@@ -219,6 +221,11 @@ class Constants {
           bannerAdsOnHomeReelsEnabled != null
               ? bannerAdsOnHomeReelsEnabled
               : Setup.isBannerAdsOnHomeReelsEnabled);
+      prefs.setString(
+          homeHeaderThemeConfig,
+          homeHeaderTheme != null
+              ? homeHeaderTheme.toString()
+              : Setup.homeHeaderTheme);
     } else {
       if (prefs.getBool(facebookLoginConfig) == null)
         prefs.setBool(facebookLoginConfig, Setup.isFacebookLoginEnabled);
@@ -264,6 +271,8 @@ class Constants {
       if (prefs.getBool(bannerAdsOnHomeReelsEnabledConfig) == null)
         prefs.setBool(bannerAdsOnHomeReelsEnabledConfig,
             Setup.isBannerAdsOnHomeReelsEnabled);
+      if (prefs.getString(homeHeaderThemeConfig) == null)
+        prefs.setString(homeHeaderThemeConfig, Setup.homeHeaderTheme);
     }
   }
 
